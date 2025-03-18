@@ -1,8 +1,10 @@
 import Tiles from './tiles.js';
+import Toolbar from './toolbar.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
+        this.toolbar = new Toolbar();   // Create a new toolbar
     }
 
     preload() {
@@ -19,8 +21,6 @@ export default class MainScene extends Phaser.Scene {
             this.load.image(`corn_${i}`, `./public/assets/corn/Corn_stage_${i}.png`);
             this.load.image(`soybean_${i}`, `./public/assets/soybean/Soybean_stage_${i}.png`);
         }
-
-        // TODO: load tools asset
 
         this.load.json('cropData', "./crops.json");
     }
@@ -53,9 +53,6 @@ export default class MainScene extends Phaser.Scene {
             }
         }
 
-        // Current selected tool: checked against when click on tiles
-        this.selectedTool = 'corn_seed';    // TODO: Create a toolbar using buttons and containers
-
         // TODO: Create a status bar to keep track of money and crops weight
 
         // Create a timer to make the crop do things
@@ -69,6 +66,14 @@ export default class MainScene extends Phaser.Scene {
         // Store money and things
         this.money = 0;
         this.weight = 0;    // TODO: Update to store separate of crop
+
+        // Bind keys 1-9 for selecting tools
+        const keys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'];
+        keys.forEach((key, index) => {
+            this.input.keyboard.on(`keydown-${key}`, () => {
+                this.selectedTool = this.toolbar.selectTool(index + 1);
+            });
+        });
     }
 
     // Called on every game frame

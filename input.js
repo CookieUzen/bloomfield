@@ -10,8 +10,9 @@ export default class InputScene extends Phaser.Scene {
 
 	preload() {
         // Keybinder
-		this.keyObjects = this.input.keyboard.addKeys({
-            pause: "p",
+        this.input.keyboard.on('keydown-P', () => {         // Triggers once when P is pressed
+            var mainScene = this.scene.get('MainScene');    // Get the main scene
+            mainScene.togglePause();                        // Toggle pause
         });
 	}
 
@@ -20,10 +21,6 @@ export default class InputScene extends Phaser.Scene {
 	}
 
 	update() {
-        // Pause the game
-        if (this.input.keyboard.checkDown(this.keyObjects.pause, 100)) { // if "p" is pressed for 100ms
-			var mainScene = this.scene.get('MainScene');
-			mainScene.togglePause();
-        }
+
 	}
 }

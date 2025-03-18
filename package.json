@@ -4,6 +4,6 @@
     "phaser": "^3.88.2"
   },
   "scripts": {
-    "dev": "http-server . -o"
+    "dev": "http-server . -o -c-1"
   }
 }

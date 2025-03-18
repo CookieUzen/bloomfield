@@ -1,4 +1,5 @@
 import Tiles from './tiles.js';
+import InputScene from './input.js';
 
 class MainScene extends Phaser.Scene {
     constructor() {
@@ -70,6 +71,14 @@ class MainScene extends Phaser.Scene {
         this.money = 0;
         this.weight = 0;    // TODO: Update to store separate of crop
 
+
+        // Activate the other scene! They get loaded but aren't active
+        this.scene.launch('InputScene');
+    }
+
+    // Called on every game frame
+    update() {
+
     }
 
     // This function handles updating the tiles every second
@@ -80,12 +89,16 @@ class MainScene extends Phaser.Scene {
         }
     }
 
-    // Called on every game frame
-    update() {
-        
+    // Function to pause/unpause the main scene
+    togglePause() {
+        if (this.scene.isActive()) { // if not paused
+            this.scene.pause();
+            console.log("MainScene paused");
+        } else {            // if paused
+            this.scene.resume();
+            console.log("MainScene resumed");
+        }
     }
-
-    
 }
 
 const config = {
@@ -93,7 +106,7 @@ const config = {
     width: 600,
     height: 600,
     physics: { default: 'arcade', arcade: { debug: false } },
-    scene: MainScene
+    scene: [MainScene, InputScene]
 };
 
 const game = new Phaser.Game(config);

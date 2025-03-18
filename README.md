@@ -2,12 +2,11 @@
 
 Source code for the Bloomfield game:
 
-To play, run an http server at root.
+Use node to develop:
 
 ```bash
-python -m http.server
+npm install
+npm run dev
 ```
 
-Using Phaser game library. Library pulled in html.
-
-Maybe we can move this to install with node for offline dev.
+Using Phaser game library. Library pulled via node.

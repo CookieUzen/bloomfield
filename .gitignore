@@ -1,7 +1,3 @@
-# We aren't using nodejs
-package-lock.json
-package.json
-
 # Logs
 logs
 *.log

@@ -22,7 +22,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
             .on('pointerout', () => this.onPointerOut())       // Clear tint when mouse leaves
         ;
 
-        this.scene = scene; // Scene that this tile is in (MainScene)
+        this.scene = scene; // Scene that this tile is in
         this.#crop = null;
         this.#waterLevel = waterLevel;
         this.#defaultTintColor = this.getBlueTint();
@@ -30,7 +30,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         this.#isHovered = false;
         
         // Add this object to the scene
-        scene.add.existing(this);
+        // scene.add.existing(this);
     }
 
     // Method to plant a crop

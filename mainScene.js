@@ -27,29 +27,49 @@ export default class MainScene extends Phaser.Scene {
 
     // Start the game here
     create() {
+
+        // Get scene to place things in the middle
+        let { width, height } = this.sys.game.canvas;
+
+        // Game color
+        this.cameras.main.setBackgroundColor(0xbababa)
+
+        const playField = this.add.container(width/2, height/2)
         // Add background
-        const bg = this.add.image(300, 300, 'background');
+        playField.add(new Phaser.GameObjects.Image(this, 0, 0, 'background'))
 
         // Create a grid to store the farmland
-        const x_num = 7;        // Number of tiles in the x direction
-        const y_num = 7;        // Number of tiles in the y direction
-        const tileSize = 60;    // Size of each tile, in pixels
-        const tileSpacing = 10; // Space between tiles, in pixels
+        // AI DISCLAIMER: I used ChatGPT to help me rewrite this loop because I was too lazy to figure out the
+        // math to calculate the positions myself. I also modified what it came up with to clean up the math
+        // and make the x and y values both work
+        // Define the total grid size
+        const gridSize = 450;   // Total width and height of the grid in pixels
+        const xTileCount = 7;        // Number of tiles in the x direction
+        const yTileCount = 8;        // Number of tiles in the y direction
+        const tileSpacing = 5; // Space between tiles, in pixels
 
-        // Do some math to center it
-        const xOffset = (600 - x_num * tileSize) / 2 + tileSize/2;
-        const yOffset = (600 - y_num * tileSize) / 2 + tileSize/2;
-        
+        // Calculate the actual tile size so that they fit within gridSize, accounting for spacing
+        const tileSizeX = (gridSize - (xTileCount - 1) * tileSpacing) / xTileCount;
+        const tileSizeY = (gridSize - (yTileCount - 1) * tileSpacing) / yTileCount;
+
+        // Calculate the step size (total space each tile occupies, including spacing)
+        const stepSizeX = gridSize / xTileCount;
+        const stepSizeY = gridSize / yTileCount;
+
+        // Calculate the offset to center the grid at (0,0)
+        const offsetX = -gridSize / 2;
+        const offsetY = -gridSize / 2;
+
         // Loop through the grid and create a new tile at each location
-        this.farmland = new Array(x_num*y_num); // This will store all the tiles
-                                                // We don't access it directly, but we need to store it 
-        for (let i = 0; i < x_num; i++) {
-            for (let j = 0; j < y_num; j++) {
-                let x_coord = i * tileSize + xOffset;
-                let y_coord = j * tileSize + yOffset;
-                let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSize-tileSpacing);
-                // newTile.setInteractive();
-                this.farmland[i*x_num + j] = newTile;
+        this.farmland = new Array(xTileCount * yTileCount); // Store all tiles
+
+        for (let i = 0; i < xTileCount; i++) {
+            for (let j = 0; j < yTileCount; j++) {
+                let x_coord = i * stepSizeX + offsetX + tileSizeX/2;
+                let y_coord = j * stepSizeY + offsetY + tileSizeY/2;
+                let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSizeX, tileSizeY);
+                playField.add(newTile);
+                this.farmland[i * xTileCount + j] = newTile;
             }
         }
 
@@ -85,7 +105,7 @@ export default class MainScene extends Phaser.Scene {
     // For things such as growing the crops, drying the soil, etc.
     updateCrops() {
         for (let tile of this.farmland) {
-            tile.update();
+            if (tile) tile.update();
         }
     }
 

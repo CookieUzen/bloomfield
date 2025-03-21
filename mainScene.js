@@ -16,6 +16,10 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('corn_seed', "./public/assets/corn/Corn_seeds.png");
         this.load.image('soybean_seed', "./public/assets/soybean/Soybean_seeds.png");
 
+        // Load tools
+        this.load.image('sickle', "./public/assets/Sickle.png")
+        this.load.image('watering_can', "./public/assets/Watering_can.png")
+
         // Load crops sprites
         for (let i = 1; i <= 4; i++) {
             this.load.image(`corn_${i}`, `./public/assets/corn/Corn_stage_${i}.png`);
@@ -95,13 +99,20 @@ export default class MainScene extends Phaser.Scene {
             });
         });
 
+        // Make current tool follow the mouse around
+        this.toolSprite = this.add.sprite(0, 0, 'watering_can')
+        // const mouseTracker = new Phaser.DOM.RequestAnimationFrame()
+        // mouseTracker.start(this.updateToolSprite(this.toolSprite))
+
+
         // Load UI scene
         this.scene.launch('InputScene');
     }
 
     // Called on every game frame
     update() {
-
+        this.toolSprite.setTexture(this.toolbar.getCurrentTool())
+        this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
     }
 
     // This function handles updating the tiles every second
@@ -122,4 +133,14 @@ export default class MainScene extends Phaser.Scene {
             console.log("MainScene resumed");
         }
     }
+
+    updateToolSprite(sprite) { () => {
+            if (sprite) {
+                sprite.texture = this.toolbar ? this.toolbar.getCurrentTool() : ''
+                sprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
+            }
+        }
+    }
+
+
 }

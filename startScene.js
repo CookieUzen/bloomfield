@@ -1,3 +1,6 @@
+import { UITextButton, UIImageButton } from "./UIButton.js";
+import Tiles from "./tiles.js";
+
 // This is the start scene. It will be the first scene to load and will handle the loading of the other scenes.
 // This is also the Title Screen of the game.
 export default class StartScene extends Phaser.Scene {
@@ -7,6 +10,7 @@ export default class StartScene extends Phaser.Scene {
 
     preload() {
         // Load assets
+        this.load.image('soybean_seed', "./public/assets/soybean/Soybean_seeds.png");
     }
 
     create() {
@@ -29,6 +33,20 @@ export default class StartScene extends Phaser.Scene {
         .on('pointerover', () => {startButton.setStyle({fill: '#ff0'})})
         .on('pointerout', () => {startButton.setStyle({fill: '#fff'})})
 
+        // const testButton = new UITextButton(this, width/2, height/2 + 100, "some message")
+        // this.add.existing(testButton)
+
+        // const testButton2 = new UIImageButton(this, width/2, height/2 + 200, "soybean_seed")
+        // this.add.existing(testButton2)
+
+        // const testGraphic = this.add.graphics()
+
+
+        // testGraphic.fillStyle(0xFFFFFF, 1.0);
+
+        // testGraphic.fillRect(50, 50, 400, 200);
+
+        // testGraphic.strokeRect(50, 50, 400, 200);
 
         // this.scene.start('MainScene');  // stops the start scene
     }

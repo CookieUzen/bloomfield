@@ -94,6 +94,9 @@ export default class MainScene extends Phaser.Scene {
                 this.selectedTool = this.toolbar.selectTool(index + 1);
             });
         });
+
+        // Load UI scene
+        this.scene.launch('InputScene');
     }
 
     // Called on every game frame

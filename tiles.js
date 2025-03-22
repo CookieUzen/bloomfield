@@ -86,10 +86,14 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         // Don't do anything if there is no crop
         if (!this.#crop) return;
 
-        // Drain the water
+        // Don't do anything if the crop is done 
+        // TODO: limit time before harvesting is required?
+        if (this.#crop.isGrown()) return;
+
+        // Drain the water 
         this.water((delta/1000) * -this.#crop.getWaterDrainRate());
 
-        // Grow the crop 1 artificial second per real second
+        // Grow the crop based on the time delta. 
         this.#crop.grow(delta/1000);  // TODO: Grow speed based on water level
 
         // Kill the crop if it's too dry

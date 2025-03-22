@@ -39,7 +39,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
         // Add a new crop object to the tile
         // Copy our own x and y coordinates to the crop
-        this.#crop = new Crop(this.scene, this.x, this.y, cropType);
+        this.#crop = new Crop(this.scene, this, cropType);
         console.log(cropType + " planted");
     }
 

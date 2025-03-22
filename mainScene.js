@@ -65,7 +65,7 @@ export default class MainScene extends Phaser.Scene {
         const offsetY = -gridSize / 2;
 
         // Loop through the grid and create a new tile at each location
-        this.farmland = new Array(xTileCount * yTileCount); // Store all tiles
+        this.farmland = []; // Store all tiles
 
         for (let i = 0; i < xTileCount; i++) {
             for (let j = 0; j < yTileCount; j++) {
@@ -73,7 +73,7 @@ export default class MainScene extends Phaser.Scene {
                 let y_coord = j * stepSizeY + offsetY + tileSizeY/2;
                 let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSizeX, tileSizeY);
                 playField.add(newTile);
-                this.farmland[i * xTileCount + j] = newTile;
+                this.farmland.push(newTile);
             }
         }
 
@@ -119,7 +119,7 @@ export default class MainScene extends Phaser.Scene {
     // For things such as growing the crops, drying the soil, etc.
     updateCrops() {
         for (let tile of this.farmland) {
-            if (tile) tile.update();
+            tile.update();
         }
     }
 

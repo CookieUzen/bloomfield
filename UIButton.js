@@ -34,6 +34,7 @@ export class UITextButton extends Phaser.GameObjects.Container {
         this.add(this.background)
         this.background.setBelow(textSprite)
 
+        // Create the hitbox manually, because containers and graphics don't have any
         this.setInteractive(new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight), Phaser.Geom.Rectangle.Contains)
         .on('pointerdown', () => {if (callback) callback() })  // Handle mouse down
         .on('pointerover', () => {

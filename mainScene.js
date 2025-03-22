@@ -1,5 +1,6 @@
 import Tiles from './tiles.js';
 import Toolbar from './toolbar.js';
+import InputScene from './input.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -36,7 +37,7 @@ export default class MainScene extends Phaser.Scene {
         let { width, height } = this.sys.game.canvas;
 
         // Game color
-        this.cameras.main.setBackgroundColor(0xbababa)
+        this.cameras.main.setBackgroundColor(0x22892D)
 
         const playField = this.add.container(width/2, height/2)
         // Add background
@@ -107,6 +108,7 @@ export default class MainScene extends Phaser.Scene {
 
         // Load UI scene
         this.scene.launch('InputScene');
+        this.scene.bringToTop('InputScene')
     }
 
     // Called on every game frame
@@ -134,6 +136,12 @@ export default class MainScene extends Phaser.Scene {
             this.scene.resume();
             console.log("MainScene resumed");
         }
+    }
+
+    // Function to show the notebook
+    // TODO
+    triggerNotebook() {
+
     }
 
     updateToolSprite(sprite) { () => {

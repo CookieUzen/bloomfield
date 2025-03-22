@@ -39,16 +39,8 @@ export default class StartScene extends Phaser.Scene {
         // const testButton2 = new UIImageButton(this, width/2, height/2 + 200, "soybean_seed")
         // this.add.existing(testButton2)
 
-        // const testGraphic = this.add.graphics()
-
-
-        // testGraphic.fillStyle(0xFFFFFF, 1.0);
-
-        // testGraphic.fillRect(50, 50, 400, 200);
-
-        // testGraphic.strokeRect(50, 50, 400, 200);
-
-        // this.scene.start('MainScene');  // stops the start scene
+        // Temp for debugging
+        this.scene.launch('InputScene');
     }
 
     update() {

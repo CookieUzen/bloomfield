@@ -37,15 +37,20 @@ export default class InputScene extends Phaser.Scene {
 		// Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 
-		const testButton = new UITextButton(this, width/2 + 300, height/2, "some message")
-        this.add.existing(testButton)
-
 		const topButtonRow = []
 		const rightButtonColumn = []
 
 		topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.mainScene.triggerNotebook()}))
 		topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.mainScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
 		topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.mainScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
+		topButtonRow.push(new UITextButton(this, 0, 0, 'fertilizer', () => { }))  
+		topButtonRow.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
+
+		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.mainScene.triggerNotebook()}))
+		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.mainScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
+		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.mainScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
+		rightButtonColumn.push(new UITextButton(this, 0, 0, 'fertilizer', () => { }))  
+		rightButtonColumn.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
 	
 		// Define position and length for row. Basically a horizontal line above the playfield
 		const topRowStartPos = [350, 50]
@@ -56,6 +61,21 @@ export default class InputScene extends Phaser.Scene {
 
 			const buttonX = topRowStartPos[0] + (topRowLen * (buttonIndex / (topButtonRow.length - 1)) )
 			const buttonY = topRowStartPos[1]
+
+			button.setPosition(buttonX, buttonY)
+
+			this.add.existing(button)
+		}
+
+		const rightColStartPos = [950, 150]
+		const rightColLen = 500
+
+		for (const buttonIndex in rightButtonColumn) {
+			const button = rightButtonColumn[buttonIndex]
+
+			const buttonX = rightColStartPos[0]
+			const buttonY = rightColStartPos[1] + (rightColLen * (buttonIndex / (rightButtonColumn.length - 1)) )
+			
 
 			button.setPosition(buttonX, buttonY)
 

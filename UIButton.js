@@ -3,14 +3,22 @@ import { ToolTypes } from './toolbar.js';   // {  } for importing a const
 
 class UIButton extends Phaser.GameObjects.Container {
 
-    constructor(scene, x, y, backgroundSprite, callback) {
+    constructor(scene, x, y) {
         super(scene, x, y)
 
+        // background color for button states
+        this.backgroundDefault = '0xffffff'
+        this.backgroundHover = '0x888888'
+
+        this.textColor = '0x000000'
+
+        // Padding in px
+        this.padding = 20
         
     }
 }
 
-export class UITextButton extends Phaser.GameObjects.Container {
+export class UITextButton extends UIButton {
 
     constructor(scene, x, y, text, callback) {
         super(scene, x, y)
@@ -18,18 +26,16 @@ export class UITextButton extends Phaser.GameObjects.Container {
         // Create text and position accordingly
         const textSprite = new Phaser.GameObjects.Text(scene, 0, 0, text)
         textSprite.setPosition(-textSprite.width/2, -textSprite.height/2)
+        textSprite.setColor(this.textColor)
         this.add(textSprite)
 
-        // Padding in px
-        const padding = 20
-
-        this.buttonWidth = textSprite.width + padding
-        this.buttonHeight = textSprite.height + padding
+        this.buttonWidth = textSprite.width + this.padding
+        this.buttonHeight = textSprite.height + this.padding
 
         // The button background
         this.background = new Phaser.GameObjects.Graphics(scene)
         // Draw the box
-        this.drawButtonBackground(0x555555)
+        this.drawButtonBackground(this.backgroundDefault)
         // Add to container and reorder
         this.add(this.background)
         this.background.setBelow(textSprite)
@@ -38,10 +44,10 @@ export class UITextButton extends Phaser.GameObjects.Container {
         this.setInteractive(new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight), Phaser.Geom.Rectangle.Contains)
         .on('pointerdown', () => {if (callback) callback() })  // Handle mouse down
         .on('pointerover', () => {
-            this.drawButtonBackground(0x222222)
+            this.drawButtonBackground(this.backgroundHover)
         })  // Handle hovering and drag
         .on('pointerout', () => {
-            this.drawButtonBackground(0x555555)
+            this.drawButtonBackground(this.backgroundDefault)
         })  // Clear tint when mouse leaves
 
 
@@ -55,7 +61,7 @@ export class UITextButton extends Phaser.GameObjects.Container {
 
 }
 
-export class UIImageButton extends Phaser.GameObjects.Container {
+export class UIImageButton extends UIButton {
 
     constructor(scene, x, y, image, callback) {
         super(scene, x, y)
@@ -64,16 +70,13 @@ export class UIImageButton extends Phaser.GameObjects.Container {
         const imageSprite = new Phaser.GameObjects.Image(scene, 0, 0, image)
         this.add(imageSprite)
 
-        // Padding in px
-        const padding = 20
-
-        this.buttonWidth = imageSprite.width + padding
-        this.buttonHeight = imageSprite.height + padding
+        this.buttonWidth = imageSprite.width + this.padding
+        this.buttonHeight = imageSprite.height + this.padding
 
         // The button background
         this.background = new Phaser.GameObjects.Graphics(scene)
         // Draw the box
-        this.drawButtonBackground(0x555555)
+        this.drawButtonBackground(this.backgroundDefault)
         // Add to container and reorder
         this.add(this.background)
         this.background.setBelow(imageSprite)
@@ -81,10 +84,10 @@ export class UIImageButton extends Phaser.GameObjects.Container {
         this.setInteractive(new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight), Phaser.Geom.Rectangle.Contains)
         .on('pointerdown', () => {if (callback) callback() })  // Handle mouse down
         .on('pointerover', () => {
-            this.drawButtonBackground(0x222222)
+            this.drawButtonBackground(this.backgroundHover)
         })  // Handle hovering and drag
         .on('pointerout', () => {
-            this.drawButtonBackground(0x555555)
+            this.drawButtonBackground(this.backgroundDefault)
         })  // Clear tint when mouse leaves
 
 

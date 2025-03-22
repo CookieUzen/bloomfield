@@ -79,13 +79,13 @@ export default class MainScene extends Phaser.Scene {
 
         // TODO: Create a status bar to keep track of money and crops weight
 
-        // Create a timer to make the crop do things
-        this.time.addEvent({
-            delay: 1000,
-            loop: true,
-            callbackScope: this,
-            callback: this.updateCrops,
-        });
+        // // Create a timer to make the crop do things
+        // this.time.addEvent({
+        //     delay: 1000,
+        //     loop: true,
+        //     callbackScope: this,
+        //     callback: this.updateCrops,
+        // });
 
         // Store money and things
         this.money = 0;
@@ -110,16 +110,18 @@ export default class MainScene extends Phaser.Scene {
     }
 
     // Called on every game frame
-    update() {
+    update(time, delta) {
         this.toolSprite.setTexture(this.toolbar.getCurrentTool())
         this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
+
+        this.updateCrops(delta)
     }
 
     // This function handles updating the tiles every second
     // For things such as growing the crops, drying the soil, etc.
-    updateCrops() {
+    updateCrops(delta) {
         for (let tile of this.farmland) {
-            tile.update();
+            tile.update(delta);
         }
     }
 

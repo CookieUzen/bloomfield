@@ -80,16 +80,17 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     }
 
     // Method to update the tile (ie. dehydrate the soil, grow the crop, etc.)
-    // called every second
-    update() {
+    // called every frame
+    // delta is in ms
+    update(delta) {
         // Don't do anything if there is no crop
         if (!this.#crop) return;
 
         // Drain the water
-        this.water(-this.#crop.getWaterDrainRate());
+        this.water((delta/1000) * -this.#crop.getWaterDrainRate());
 
         // Grow the crop 1 artificial second per real second
-        this.#crop.grow(1);  // TODO: Grow speed based on water level
+        this.#crop.grow(delta/1000);  // TODO: Grow speed based on water level
 
         // Kill the crop if it's too dry
         if (this.#waterLevel <= 0) {

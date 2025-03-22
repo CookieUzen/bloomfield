@@ -3,6 +3,8 @@ import Toolbar from './toolbar.js';
 
 export default class FieldScene extends Phaser.Scene {
 
+    timeRemaining;  // Time remaining in seconds
+
     constructor() {
         super({ key: 'FieldScene' });
         this.toolbar = new Toolbar();   // Create a new toolbar
@@ -102,13 +104,12 @@ export default class FieldScene extends Phaser.Scene {
 
         // Make current tool follow the mouse around
         this.toolSprite = this.add.sprite(0, 0, 'watering_can')
-        // const mouseTracker = new Phaser.DOM.RequestAnimationFrame()
-        // mouseTracker.start(this.updateToolSprite(this.toolSprite))
-
 
         // Load UI scene
         this.scene.launch('InputScene');
         this.scene.bringToTop('InputScene')
+
+        this.timeRemaining = 500;
     }
 
     // Called on every game frame
@@ -117,6 +118,8 @@ export default class FieldScene extends Phaser.Scene {
         this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
 
         this.updateCrops(delta)
+
+        this.timeRemaining -= delta/1000  // This is perhaps not ideal because it is all just relative, but thats fine its close enough
     }
 
     // This function handles updating the tiles every second

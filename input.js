@@ -82,9 +82,22 @@ export default class InputScene extends Phaser.Scene {
 			this.add.existing(button)
 		}
 
+		this.timeTextBox = this.add.text(100, 100, '')
+
 	}
 
 	update() {
 
+		this.timeTextBox.setText(this.formatTime(this.fieldScene.timeRemaining))
+
 	}
+
+
+	// ChatGPT wrote this
+	formatTime(seconds) {
+		let minutes = Math.floor(seconds / 60);
+		let secs = Math.floor(seconds % 60);
+		return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+	}
+
 }

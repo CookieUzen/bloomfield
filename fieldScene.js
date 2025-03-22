@@ -1,8 +1,8 @@
 import Tiles from './tiles.js';
 import Toolbar from './toolbar.js';
-import InputScene from './input.js';
 
 export default class FieldScene extends Phaser.Scene {
+
     constructor() {
         super({ key: 'FieldScene' });
         this.toolbar = new Toolbar();   // Create a new toolbar

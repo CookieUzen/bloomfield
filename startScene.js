@@ -9,8 +9,7 @@ export default class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        // Load assets
-        this.load.image('soybean_seed', "./public/assets/soybean/Soybean_seeds.png");
+
     }
 
     create() {
@@ -19,10 +18,6 @@ export default class StartScene extends Phaser.Scene {
 
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
-
-        // todo: add a button that loads the next scene
-        // For now we just load the main scene and the input scene straightaway
-        // Feel free to put this code in a button or something
 
         const startButton = this.add.text(0, 0, "Start game!")
         startButton.setStyle({fontSize: 100})
@@ -33,14 +28,6 @@ export default class StartScene extends Phaser.Scene {
         .on('pointerover', () => {startButton.setStyle({fill: '#ff0'})})
         .on('pointerout', () => {startButton.setStyle({fill: '#fff'})})
 
-        // const testButton = new UITextButton(this, width/2, height/2 + 100, "some message")
-        // this.add.existing(testButton)
-
-        // const testButton2 = new UIImageButton(this, width/2, height/2 + 200, "soybean_seed")
-        // this.add.existing(testButton2)
-
-        // Temp for debugging
-        this.scene.launch('InputScene');
     }
 
     update() {

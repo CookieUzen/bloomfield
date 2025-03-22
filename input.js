@@ -4,7 +4,7 @@ import { UITextButton, UIImageButton } from "./UIButton.js";
 // This is done so that we can disable/pause other scenes but still retain input
 export default class InputScene extends Phaser.Scene {
 
-	mainScene;
+	fieldScene;
 
     constructor() {
         super({
@@ -15,7 +15,7 @@ export default class InputScene extends Phaser.Scene {
 
 	preload() {
         
-		this.mainScene = this.scene.get('MainScene'); 
+		this.fieldScene = this.scene.get('FieldScene'); 
 
 		// Load seeds
         this.load.image('corn_seed', "./public/assets/corn/Corn_seeds.png");
@@ -31,7 +31,7 @@ export default class InputScene extends Phaser.Scene {
 
 		// Keybinder
         this.input.keyboard.on('keydown-P', () => {         // Triggers once when P is pressed
-            this.mainScene.togglePause();                        // Toggle pause
+            this.fieldScene.togglePause();                        // Toggle pause
         });
 
 		// Get scene to place things in the middle
@@ -40,15 +40,15 @@ export default class InputScene extends Phaser.Scene {
 		const topButtonRow = []
 		const rightButtonColumn = []
 
-		topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.mainScene.triggerNotebook()}))
-		topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.mainScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
-		topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.mainScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
+		topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
+		topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
+		topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
 		topButtonRow.push(new UITextButton(this, 0, 0, 'fertilizer', () => { }))  
 		topButtonRow.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
 
-		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.mainScene.triggerNotebook()}))
-		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.mainScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
-		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.mainScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
+		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
+		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
+		rightButtonColumn.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
 		rightButtonColumn.push(new UITextButton(this, 0, 0, 'fertilizer', () => { }))  
 		rightButtonColumn.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
 	

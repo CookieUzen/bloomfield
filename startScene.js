@@ -29,7 +29,7 @@ export default class StartScene extends Phaser.Scene {
         // Position in center of the screen by offsetting center coords by half the text size
         startButton.setPosition(width/2 - startButton.width/2, height/2 - startButton.height/2)
         startButton.setInteractive()
-        .on('pointerdown', () => {this.scene.start('MainScene')})
+        .on('pointerdown', () => {this.scene.start('FieldScene')})
         .on('pointerover', () => {startButton.setStyle({fill: '#ff0'})})
         .on('pointerout', () => {startButton.setStyle({fill: '#fff'})})
 

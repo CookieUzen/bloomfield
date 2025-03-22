@@ -2,9 +2,9 @@ import Tiles from './tiles.js';
 import Toolbar from './toolbar.js';
 import InputScene from './input.js';
 
-export default class MainScene extends Phaser.Scene {
+export default class FieldScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'MainScene' });
+        super({ key: 'FieldScene' });
         this.toolbar = new Toolbar();   // Create a new toolbar
     }
 
@@ -131,10 +131,10 @@ export default class MainScene extends Phaser.Scene {
     togglePause() {
         if (this.scene.isActive()) { // if not paused
             this.scene.pause();
-            console.log("MainScene paused");
+            console.log("Field Scene paused");
         } else {            // if paused
             this.scene.resume();
-            console.log("MainScene resumed");
+            console.log("Field Scene resumed");
         }
     }
 

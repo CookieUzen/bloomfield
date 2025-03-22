@@ -17,7 +17,7 @@ Using Phaser game library. Library pulled via node.
 - `public`: assets folder
 - `index.html`: html page which attaches the game
 - `game.js`: configuration for the game (add scenes here)
-- `mainScene.js`: main game scene class
+- `fieldScene.js`: main game scene class
 - `startScene.js`: title page scene, entrypoint of phaser
 - `input.js`: input (keyboard) handler scene
 - `tiles.js`: object class for tiles

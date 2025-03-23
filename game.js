@@ -1,6 +1,7 @@
 import StartScene from './startScene.js';   // Title screen
 import InputScene from './input.js';        // Input handler
 import FieldScene from './fieldScene.js';     // Main game scene
+import RoundEndScene from './roundEnd.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -8,7 +9,7 @@ const config = {
     height: 800,
     physics: { default: 'arcade', arcade: { debug: false } },
     // Store all the available scenes here
-    scene: [StartScene, InputScene, FieldScene]  // Load StartScene first!!!
+    scene: [StartScene, InputScene, FieldScene, RoundEndScene]  // Load StartScene first!!!
 };
 
 const game = new Phaser.Game(config);

@@ -4,6 +4,8 @@ import Toolbar from './toolbar.js';
 export default class FieldScene extends Phaser.Scene {
 
     timeRemaining;  // Time remaining in seconds
+    goalWeight;  // Amount needed to "win"
+    roundNum;  // What round we're on
 
     constructor() {
         super({ key: 'FieldScene' });
@@ -33,8 +35,21 @@ export default class FieldScene extends Phaser.Scene {
     }
 
     // Start the game here
-    create() {
+    create(data) {
 
+        // State setup -----------------------
+
+        // Store money and things
+        this.money = 0;
+        this.weight = 0;    // TODO: Update to store separate of crop
+
+        this.timeRemaining = data.roundTime ? data.roundTime : 30;  // Time for the round to run. Get from passed data if available
+        this.goalWeight = data.goalWeight ? data.goalWeight : 100  // Amount of weight needed to win
+        this.roundNum = data.roundNum ? data.roundNum : 1  // What round are we on?
+
+        // -----------------------------------
+
+        // GameObject setup ------------------
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 
@@ -80,6 +95,26 @@ export default class FieldScene extends Phaser.Scene {
             }
         }
 
+        // Make current tool follow the mouse around
+        this.toolSprite = this.add.sprite(0, 0, 'watering_can')
+        //------------------------------------
+
+        // Engine setup ----------------------
+        // Bind keys 1-9 for selecting tools
+        const keys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'];
+        keys.forEach((key, index) => {
+            this.input.keyboard.on(`keydown-${key}`, () => {
+                this.selectedTool = this.toolbar.selectTool(index + 1);
+            });
+        });
+
+        // Load UI scene
+        this.scene.launch('InputScene');
+        this.scene.bringToTop('InputScene')
+        //------------------------------------
+
+        
+
         // TODO: Create a status bar to keep track of money and crops weight
 
         // // Create a timer to make the crop do things
@@ -90,26 +125,6 @@ export default class FieldScene extends Phaser.Scene {
         //     callback: this.updateCrops,
         // });
 
-        // Store money and things
-        this.money = 0;
-        this.weight = 0;    // TODO: Update to store separate of crop
-
-        // Bind keys 1-9 for selecting tools
-        const keys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'];
-        keys.forEach((key, index) => {
-            this.input.keyboard.on(`keydown-${key}`, () => {
-                this.selectedTool = this.toolbar.selectTool(index + 1);
-            });
-        });
-
-        // Make current tool follow the mouse around
-        this.toolSprite = this.add.sprite(0, 0, 'watering_can')
-
-        // Load UI scene
-        this.scene.launch('InputScene');
-        this.scene.bringToTop('InputScene')
-
-        this.timeRemaining = 500;
     }
 
     // Called on every game frame
@@ -120,6 +135,10 @@ export default class FieldScene extends Phaser.Scene {
         this.updateCrops(delta)
 
         this.timeRemaining -= delta/1000  // This is perhaps not ideal because it is all just relative, but thats fine its close enough
+        
+        if (this.timeRemaining <= 0) {
+            this.endRound()
+        }
     }
 
     // This function handles updating the tiles every second
@@ -147,13 +166,9 @@ export default class FieldScene extends Phaser.Scene {
 
     }
 
-    updateToolSprite(sprite) { () => {
-            if (sprite) {
-                sprite.texture = this.toolbar ? this.toolbar.getCurrentTool() : ''
-                sprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
-            }
-        }
+    endRound() {
+        this.scene.get('InputScene').scene.stop()
+        this.scene.start('RoundEndScene', {money: this.money, weight: this.weight})  // Pass point values to next scene
     }
-
 
 }

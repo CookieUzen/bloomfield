@@ -168,7 +168,7 @@ export default class FieldScene extends Phaser.Scene {
 
     endRound() {
         this.scene.get('InputScene').scene.stop()
-        this.scene.start('RoundEndScene', {money: this.money, weight: this.weight})  // Pass point values to next scene
+        this.scene.start('RoundEndScene', {money: this.money, weight: this.weight, roundNum: this.roundNum})  // Pass point values to next scene
     }
 
 }

@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farming Game</title>
     <script src="node_modules/phaser/dist/phaser.js"></script>
+    <!-- ChatGPT -->
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            margin: 0;
+            background: #222;
+        }
+
+        #game-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
     <script type="module" src="game.js"></script>
+    <div id="game-container"></div> <!-- This div centers the game -->
 </body>
 </html>

@@ -56,21 +56,30 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     }
 
     // Method to harvest the cro
-    harvest() {
+    harvest(discard = false) {  // Don't throw away the crop by default
         // Do nothing if there is no crop
         if (!this.#crop) return;
 
         console.log(this.#crop.getType() + " harvested");
         
         // If the crop is grown, harvest it
-        if (this.#crop.isGrown()) {
+        if (!discard && this.#crop.isGrown()) {
+            // Crop specific data
             let money = this.#crop.getMoneyValue();
             let weight = this.#crop.getWeight();
 
-            this.scene.money += money;
-            this.scene.weight += weight;
+            this.scene.registry.inc('money', money);
 
-            console.log("You earned $" + money + " and " + weight + " kgs of " + this.#crop.getType());
+            // Add the crop to the harvest bin
+            let harvest_bin = this.scene.registry.get('harvest_bin');
+            if (!harvest_bin[this.#crop.getType()]) {
+                harvest_bin[this.#crop.getType()] = 0;
+            }
+
+            harvest_bin[this.#crop.getType()] += 1; // increment by 1, not weight
+                                                    // weight will be accounted when summing up all the crops
+
+            this.scene.registry.inc('roundFoodUnits', weight);  // Add the weight to round food units
         }
 
 

@@ -16,6 +16,15 @@ export default class StartScene extends Phaser.Scene {
         // TODO: Load background and add start button
         console.log("Start Scene triggered");
 
+        // Init some basic variables
+        this.registry.set('money', 0);          // how much money the player has
+        this.registry.set('harvest_bin', {});   // what crops and food units the player had harvested
+        this.registry.set('round', 1);
+        this.registry.set('roundTime', 30);     // how long each round lasts in seconds
+        this.registry.set('goal', 10);         // how much money the player needs to win
+        this.registry.set('totalFoodUnits', 0); // how much food the player has harvested in total
+        this.registry.set('roundFoodUnits', 0); // food harvested in the current round
+
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 
@@ -27,7 +36,6 @@ export default class StartScene extends Phaser.Scene {
         .on('pointerdown', () => {this.scene.start('FieldScene')})
         .on('pointerover', () => {startButton.setStyle({fill: '#ff0'})})
         .on('pointerout', () => {startButton.setStyle({fill: '#fff'})})
-
     }
 
     update() {

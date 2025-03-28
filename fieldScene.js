@@ -4,8 +4,6 @@ import Toolbar from './toolbar.js';
 export default class FieldScene extends Phaser.Scene {
 
     timeRemaining;  // Time remaining in seconds
-    goalWeight;  // Amount needed to "win"
-    roundNum;  // What round we're on
 
     constructor() {
         super({ key: 'FieldScene' });
@@ -35,17 +33,7 @@ export default class FieldScene extends Phaser.Scene {
     }
 
     // Start the game here
-    create(data) {
-
-        // State setup -----------------------
-
-        // Store money and things
-        this.money = 0;
-        this.weight = 0;    // TODO: Update to store separate of crop
-
-        this.timeRemaining = data.roundTime ? data.roundTime : 30;  // Time for the round to run. Get from passed data if available
-        this.goalWeight = data.goalWeight ? data.goalWeight : 100  // Amount of weight needed to win
-        this.roundNum = data.roundNum ? data.roundNum : 1  // What round are we on?
+    create() {
 
         // -----------------------------------
 
@@ -110,21 +98,10 @@ export default class FieldScene extends Phaser.Scene {
 
         // Load UI scene
         this.scene.launch('InputScene');
-        this.scene.bringToTop('InputScene')
         //------------------------------------
 
-        
-
-        // TODO: Create a status bar to keep track of money and crops weight
-
-        // // Create a timer to make the crop do things
-        // this.time.addEvent({
-        //     delay: 1000,
-        //     loop: true,
-        //     callbackScope: this,
-        //     callback: this.updateCrops,
-        // });
-
+        // State setup -----------------------
+        this.startRound();
     }
 
     // Called on every game frame
@@ -166,9 +143,33 @@ export default class FieldScene extends Phaser.Scene {
 
     }
 
+    // This function is called when the starts
+    startRound() {
+        // Temporarily disable input for a bit
+        this.input.enabled = false;
+
+        this.time.delayedCall(200, () => {
+            this.input.enabled = true;
+        })
+
+        this.timeRemaining = this.registry.get('roundTime');  // Time remaining in seconds
+
+        // Clear out all the crops
+        // TODO: Decay mechanic?
+        for (let tile of this.farmland) {
+            tile.harvest(true);   // Throw away the crop instead of earning money/food units
+        }
+
+        // Start the scene again!
+        this.scene.wake();
+        this.scene.get('InputScene').scene.wake()
+        this.scene.bringToTop('InputScene')
+    }
+
     endRound() {
-        this.scene.get('InputScene').scene.stop()
-        this.scene.start('RoundEndScene', {money: this.money, weight: this.weight, roundNum: this.roundNum})  // Pass point values to next scene
+        this.scene.get('InputScene').scene.sleep()
+        this.scene.sleep(); // We don't destroy the scene because we want to keep tiles data intact
+        this.scene.launch('RoundEndScene');
     }
 
 }

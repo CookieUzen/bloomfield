@@ -56,8 +56,6 @@ export default class Crop extends Phaser.GameObjects.Sprite {
         this.#time += seconds
         this.#toNextStage -= seconds
 
-        // console.log(this.type + " has been growing for "+this.time+" seconds");
-
         // Check if the crop is fully grown
         if (this.#growthStage >= 4) {
             this.#grown = true;
@@ -72,7 +70,6 @@ export default class Crop extends Phaser.GameObjects.Sprite {
             // Update the texture
             let newTextureName = this.texture.key.slice(0, -1) + this.#growthStage;    // Chop off the last number, add new growth stage
             this.setTexture(newTextureName);
-            console.log(this.#type + " grew to stage " + this.#growthStage);
         }
 
     }
@@ -121,5 +118,23 @@ export default class Crop extends Phaser.GameObjects.Sprite {
 
     getToNextStage() {
         return this.#toNextStage;
+    }
+
+    // Static function to calculate the total food units from harvest_bin dictionary
+    static calculateTotalFoodUnits(scene, harvest_bin=null) {
+        let total = 0;
+
+        // Get cropData and harvest_bin
+        let cropData = scene.cache.json.get('cropData')
+        if (null == harvest_bin)
+            harvest_bin = scene.registry.get('harvest_bin')
+
+        // Loop over the harvest_bin
+        for (let cropType in harvest_bin) {
+            let weight = cropData[cropType].weight;
+            total += weight;
+        }
+
+        return total;
     }
 }

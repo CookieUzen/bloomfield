@@ -82,15 +82,37 @@ export default class InputScene extends Phaser.Scene {
             this.add.existing(button)
         }
 
-        this.timeTextBox = this.add.text(100, 100, '')
 
+        // Info boxes on the top left corner
+        this.roundTextBox = this.add.text(100, 100, '')
+
+        this.timeTextBox = this.add.text(100, 120, '')
+
+        this.moneyTextBox = this.add.text(100, 140, '')
+
+        // Display goal and current food units
+        this.goalTextBox = this.add.text(100, 160, '')
+
+        this.roundFoodUnitsTextBox = this.add.text(100, 180, '')
     }
 
     update() {
 
-        // Add a little clock to the left?
-        this.timeTextBox.setText(this.formatTime(this.fieldScene.timeRemaining))
+        // Update our info boxes
+        let round = this.registry.get('round')
+        this.roundTextBox.setText(`Round: ${round}`)
 
+        // Add a little clock to the left?
+        let timeRemaining = this.formatTime(this.fieldScene.timeRemaining);
+        this.timeTextBox.setText(`Time: ${timeRemaining}`);
+
+        let money = this.registry.get('money')
+        this.moneyTextBox.setText(`Money: $${money}`)
+
+        let goal = this.registry.get('goal')
+        this.goalTextBox.setText(`Goal: ${goal}`)
+
+        this.roundFoodUnitsTextBox.setText(`Round Food Units: ${this.registry.get('roundFoodUnits')}`)
     }
 
 

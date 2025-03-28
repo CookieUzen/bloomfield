@@ -20,7 +20,7 @@ export default class RoundEndScene extends Phaser.Scene {
 
         let round = this.registry.get("round");
 
-        const startButton = this.add.text(0, 0, `End or round ${round}!`)
+        const startButton = this.add.text(0, 0, `End of round ${round}!`)
         startButton.setStyle({fontSize: 100})
         // Position in center of the screen by offsetting center coords by half the text size
         startButton.setPosition(width/2 - startButton.width/2, height/2 - startButton.height/2)

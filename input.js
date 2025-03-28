@@ -88,6 +88,7 @@ export default class InputScene extends Phaser.Scene {
 
     update() {
 
+        // Add a little clock to the left?
         this.timeTextBox.setText(this.formatTime(this.fieldScene.timeRemaining))
 
     }

@@ -1,7 +1,7 @@
 // Enum like object for tool types
 export const ToolTypes = Object.freeze({
     CORN_SEED: 'corn_seed',
-    SOYBEAN_SEED: 'wheat_seed',
+    SOYBEAN_SEED: 'soybean_seed',
     WATERING_CAN: 'watering_can',
     SICKLE: 'sickle'
 });
@@ -21,6 +21,9 @@ export default class Toolbar {
             ToolTypes.WATERING_CAN,        // etc...
             ToolTypes.SICKLE,            // Up to 9 slots
         ];
+
+        // Set default tool to first slot
+        this.selectTool(1);
 
         console.log("Toolbar created");
     }

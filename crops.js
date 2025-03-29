@@ -7,6 +7,7 @@ export default class Crop extends Phaser.GameObjects.Sprite {
     #time;          // artificial time since planting in seconds
     #health;        // health of the crop, TODO: USE THIS
     #waterDrainRate;   // rate at which water is drained per second
+    #fertilizerUsage;   // rate at which fertilizer is drained per complete growth cycle
     #growthTime;    // time needed to grow the crop, fixed
     #moneyValue;    // money value of the crop
     #weight;        // weight of the crop
@@ -43,6 +44,7 @@ export default class Crop extends Phaser.GameObjects.Sprite {
         this.#health = 100;
 
         this.#waterDrainRate = cropData[type].waterUsage;
+        this.#fertilizerUsage = cropData[type].fertilizerUsage;
         this.#growthTime = cropData[type].growthTime;
         this.#moneyValue = cropData[type].value;
         this.#weight = cropData[type].weight;
@@ -65,7 +67,7 @@ export default class Crop extends Phaser.GameObjects.Sprite {
         // Update growth stage if we have passed the growth time
         if (this.#toNextStage <= 0) {
             this.#growthStage += 1;
-            this.#toNextStage = this.#growthTime / 4;    // Reset the timer
+            this.#toNextStage = this.#growthTime / 3;    // Reset the timer
 
             // Update the texture
             let newTextureName = this.texture.key.slice(0, -1) + this.#growthStage;    // Chop off the last number, add new growth stage
@@ -102,6 +104,10 @@ export default class Crop extends Phaser.GameObjects.Sprite {
 
     getWaterDrainRate() {
         return this.#waterDrainRate;
+    }
+
+    getFertilizerUsage() {
+        return this.#fertilizerUsage;
     }
 
     getGrowthTime() {

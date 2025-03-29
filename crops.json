@@ -3,12 +3,14 @@
     "growthTime": 15,
     "value": 50,
     "weight": 1,
-    "waterUsage": 5
+    "waterUsage": 5,
+    "fertilizerUsage" : 50
   },
   "soybean": {
     "growthTime": 20,
     "value": 100,
     "weight": 1,
-    "waterUsage": 3
+    "waterUsage": 3,
+    "fertilizerUsage" : -40
   }
 }

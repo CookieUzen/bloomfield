@@ -9,6 +9,8 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     // Private variables, use getters and setters!
     #crop;
     #waterLevel;
+    #organicMatLevel;
+    #fertilizerLevel;
     #defaultTintColor;   // For water level stuff
     #isHovered;         // there's prob a better way to do this but I need sleep
 
@@ -31,9 +33,14 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         this.#isHovered = false;
 
         this.alertIcons = {};  // An object of the active alert icons
+
+        this.#organicMatLevel = 100
+        this.#fertilizerLevel = 100
         
-        // Add this object to the scene
-        // scene.add.existing(this);
+        // TODO use icons n stuff for these values
+        this.omLevelText;
+        this.fertLevelText;
+        
     }
 
     // Method to plant a crop
@@ -56,6 +63,18 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         if (this.#waterLevel < 0) this.#waterLevel = 0;
 
         this.#defaultTintColor = this.getBlueTint();
+    }
+
+    // Method to manage fertilizer levels in the soil
+    fertilize(amount) {
+        // Increase the level
+        this.#fertilizerLevel += amount;
+
+        // Cap the level between 0 and 100
+        if (this.#fertilizerLevel > 100) this.#fertilizerLevel = 100;
+        if (this.#fertilizerLevel < 0) this.#fertilizerLevel = 0;
+
+        this.fertLevelText.text = Math.floor(this.#fertilizerLevel)
     }
 
     // Method to harvest the cro
@@ -95,6 +114,21 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     // called every frame
     // delta is in ms
     update(time, delta) {
+
+        // Set these up (doing in the constructor had issues because of the parenting, so we do it here)
+        if (!this.omLevelText) {
+            this.omLevelText = new Phaser.GameObjects.Text(this.scene, this.x - 25, this.y - 25, "")
+            this.scene.add.existing(this.omLevelText)
+            this.parentContainer.add(this.omLevelText)
+        } else {
+            this.omLevelText.text = Math.floor(this.#organicMatLevel)
+        }
+        if (!this.fertLevelText) {
+            this.fertLevelText = new Phaser.GameObjects.Text(this.scene, this.x + 10, this.y - 25, "")
+            this.scene.add.existing(this.fertLevelText)
+            this.parentContainer.add(this.fertLevelText)
+        }
+
         // Don't do anything if there is no crop
         if (!this.#crop) {
             this.hideWaterAlert();
@@ -110,6 +144,9 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
         // Drain the water 
         this.water((delta/1000) * -this.#crop.getWaterDrainRate());
+
+        // Use the fertilizer
+        this.fertilize((delta/1000) * (-this.#crop.getFertilizerUsage() / this.#crop.getGrowthTime()));
 
         // Manage water alert
         this.updateAlertAlphas(time)

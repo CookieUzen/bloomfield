@@ -23,6 +23,9 @@ export default class FieldScene extends Phaser.Scene {
         this.load.image('sickle', "./public/assets/Sickle.png")
         this.load.image('watering_can', "./public/assets/Watering_can.png")
 
+        // Load icons
+        this.load.image('droplet', "./public/assets/Droplet.png")
+
         // Load crops sprites
         for (let i = 1; i <= 4; i++) {
             this.load.image(`corn_${i}`, `./public/assets/corn/Corn_stage_${i}.png`);
@@ -109,7 +112,7 @@ export default class FieldScene extends Phaser.Scene {
         this.toolSprite.setTexture(this.toolbar.getCurrentTool())
         this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
 
-        this.updateCrops(delta)
+        this.updateCrops(time, delta)
 
         this.timeRemaining -= delta/1000  // This is perhaps not ideal because it is all just relative, but thats fine its close enough
         
@@ -120,9 +123,9 @@ export default class FieldScene extends Phaser.Scene {
 
     // This function handles updating the tiles every second
     // For things such as growing the crops, drying the soil, etc.
-    updateCrops(delta) {
+    updateCrops(time, delta) {
         for (let tile of this.farmland) {
-            tile.update(delta);
+            tile.update(time, delta);
         }
     }
 

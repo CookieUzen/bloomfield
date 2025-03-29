@@ -1,3 +1,4 @@
+import AlertIcon from './alertIcon.js';
 import Crop from './crops.js';
 import { ToolTypes } from './toolbar.js';   // {  } for importing a const
 
@@ -28,6 +29,8 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         this.#defaultTintColor = this.getBlueTint();
         this.tint = this.#defaultTintColor; // actually tint the tile
         this.#isHovered = false;
+
+        this.alertIcons = {};  // An object of the active alert icons
         
         // Add this object to the scene
         // scene.add.existing(this);
@@ -91,16 +94,31 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     // Method to update the tile (ie. dehydrate the soil, grow the crop, etc.)
     // called every frame
     // delta is in ms
-    update(delta) {
+    update(time, delta) {
         // Don't do anything if there is no crop
-        if (!this.#crop) return;
+        if (!this.#crop) {
+            this.hideWaterAlert();
+            return;
+        }
 
         // Don't do anything if the crop is done 
         // TODO: limit time before harvesting is required?
-        if (this.#crop.isGrown()) return;
+        if (this.#crop.isGrown()) {
+            this.hideWaterAlert();
+            return;
+        }
 
         // Drain the water 
         this.water((delta/1000) * -this.#crop.getWaterDrainRate());
+
+        // Manage water alert
+        this.updateAlertAlphas(time)
+        
+        if (this.#waterLevel < 50) {
+            this.showWaterAlert()
+        } else {
+            this.hideWaterAlert()
+        }
 
         // Grow the crop based on the time delta. 
         this.#crop.grow(delta/1000);  // TODO: Grow speed based on water level
@@ -137,6 +155,27 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
     getWaterLevel() {
         return this.#waterLevel;
+    }
+
+    updateAlertAlphas(time) {
+        for (const key of Object.keys(this.alertIcons)) {
+            if (!this.alertIcons[key]) return;
+            this.alertIcons[key].update(time)
+        }
+    }
+
+    showWaterAlert() {
+        // Ensure we have one active. AlertIcon adds itself to the scene, so we don't need to that here
+        const prevWaterIcon = this.alertIcons.waterLow
+        this.alertIcons.waterLow = prevWaterIcon ? prevWaterIcon : new AlertIcon(this.scene, "droplet", this)
+    }
+
+    hideWaterAlert() {
+        const prevWaterIcon = this.alertIcons.waterLow
+        if (prevWaterIcon) {  // Water not low but we have an icon active
+            prevWaterIcon.destroy()
+            this.alertIcons.waterLow = null
+        }
     }
 
     // Function to handle clicking on the tile

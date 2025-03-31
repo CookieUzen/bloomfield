@@ -1,5 +1,5 @@
 import Tiles from './tiles.js';
-import Toolbar from './toolbar.js';
+import {NewToolbar, ToolTypes, EquipmentTypes} from './newToolbar.js';
 
 export default class FieldScene extends Phaser.Scene {
 
@@ -7,7 +7,7 @@ export default class FieldScene extends Phaser.Scene {
 
     constructor() {
         super({ key: 'FieldScene' });
-        this.toolbar = new Toolbar();   // Create a new toolbar
+        this.toolbar = new NewToolbar();   // Create a new toolbar
     }
 
     preload() {
@@ -92,12 +92,13 @@ export default class FieldScene extends Phaser.Scene {
 
         // Engine setup ----------------------
         // Bind keys 1-9 for selecting tools
-        const keys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'];
-        keys.forEach((key, index) => {
-            this.input.keyboard.on(`keydown-${key}`, () => {
-                this.selectedTool = this.toolbar.selectTool(index + 1);
-            });
-        });
+        // Moved to: button setup in input.js
+        // const keys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'];
+        // keys.forEach((key, index) => {
+        //     this.input.keyboard.on(`keydown-${key}`, () => {
+        //         this.selectedTool = this.toolbar.selectTool(index + 1);
+        //     });
+        // });
 
         // Load UI scene
         this.scene.launch('InputScene');
@@ -109,7 +110,7 @@ export default class FieldScene extends Phaser.Scene {
 
     // Called on every game frame
     update(time, delta) {
-        this.toolSprite.setTexture(this.toolbar.getCurrentTool())
+        this.toolSprite.setTexture(this.toolbar.getCurrentToolName())
         this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
 
         this.updateCrops(time, delta)

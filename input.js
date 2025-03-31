@@ -1,4 +1,6 @@
 import { UITextButton, UIImageButton } from "./UIButton.js";
+import { ToolTypes, EquipmentTypes } from "./newToolbar.js";
+
 
 // This scene handles all the global keyboard input and mouse input
 // This is done so that we can disable/pause other scenes but still retain input
@@ -41,16 +43,15 @@ export default class InputScene extends Phaser.Scene {
         const rightButtonColumn = []
 
         topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
+        topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))  // TODO keybinds
+        topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))  // TODO not hardcode tool index
         topButtonRow.push(new UITextButton(this, 0, 0, 'fertilizer', () => { }))  
         topButtonRow.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
 
-        rightButtonColumn.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
-        rightButtonColumn.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.selectTool(3)}))  // TODO not hardcode tool index
-        rightButtonColumn.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.selectTool(4)}))  // TODO not hardcode tool index
-        rightButtonColumn.push(new UITextButton(this, 0, 0, 'fertilizer', () => { }))  
-        rightButtonColumn.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
+		const cropData = this.cache.json.get('cropData')
+        for (const crop of Object.keys(cropData)) {
+			rightButtonColumn.push(new UIImageButton(this, 0, 0, crop + '_seed', () => { this.fieldScene.toolbar.setToolSeed(crop)}))  
+		}
     
         // Define position and length for row. Basically a horizontal line above the playfield
         const topRowStartPos = [350, 50]

@@ -1,6 +1,6 @@
 import AlertIcon from './alertIcon.js';
 import Crop from './crops.js';
-import { ToolTypes } from './toolbar.js';   // {  } for importing a const
+import { ToolTypes, EquipmentTypes } from './newToolbar.js';   // {  } for importing a const
 
 // TODO: move these to a config file
 const waterAmount = 30;     // How much water to add when watering
@@ -217,26 +217,21 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
     // Function to handle clicking on the tile
     onPointerDown() {
-        // Get the selected tool from the toolbar
-        var tool = this.scene.toolbar.getCurrentTool();
+        // Get the toolbar
+        const toolBar = this.scene.toolbar;
 
         // check to see what tool is selected
-        if (tool === ToolTypes.CORN_SEED) {
-            this.plant('corn');
+        if (toolBar.currentToolType === ToolTypes.SEED) {
+            this.plant(toolBar.currentSeed);
             return
         }
-
-        if (tool === ToolTypes.SOYBEAN_SEED) {
-            this.plant('soybean');
-            return
-        }
-                
-        if (tool === ToolTypes.WATERING_CAN) {
+        // By now we know that the current tool is an equipment       
+        if (toolBar.currentEquipment === EquipmentTypes.WATERING_CAN) {
             this.water(30);
             return
         }
 
-        if (tool === ToolTypes.SICKLE) {
+        if (toolBar.currentEquipment === EquipmentTypes.SICKLE) {
             this.harvest();
             return
         }

@@ -20,9 +20,11 @@ export default class FieldScene extends Phaser.Scene {
         // Load tools
         this.load.image('sickle', "./public/assets/Sickle.png")
         this.load.image('watering_can', "./public/assets/Watering_can.png")
+        this.load.image('fertilizer', "./public/assets/Nutrients.png")
 
         // Load icons
         this.load.image('droplet', "./public/assets/Droplet.png")
+        this.load.image('downArrow', "./public/assets/Down_arrow.png")
 
         this.load.json('cropData', "./crops.json");
 

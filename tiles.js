@@ -2,12 +2,13 @@ import AlertIcon from './alertIcon.js';
 import Crop from './crops.js';
 import { ToolTypes, EquipmentTypes } from './newToolbar.js';   // {  } for importing a const
 
-// TODO: move these to a config file
-const waterAmount = 30;     // How much water to add when watering
+
 
 export default class Tiles extends Phaser.GameObjects.Sprite {
     // Private variables, use getters and setters!
     #crop;
+    #prevCropName;
+    #prevCropCount;
     #waterLevel;
     #organicMatLevel;
     #fertilizerLevel;
@@ -46,6 +47,17 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     // Method to plant a crop
     plant(cropType) {
         if (this.#crop) return;  // Do nothing if there is already a crop
+
+        if (this.#prevCropName === cropType ) {
+            this.#prevCropCount += 1
+        } else {
+            this.#prevCropName = cropType
+            this.#prevCropCount = 0
+        }
+
+        if (this.#prevCropCount > 0) { 
+            this.showMonocropAlert()
+        }
 
         // Add a new crop object to the tile
         // Copy our own x and y coordinates to the crop
@@ -132,6 +144,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         // Don't do anything if there is no crop
         if (!this.#crop) {
             this.hideWaterAlert();
+            this.hideMonocropAlert()
             return;
         }
 
@@ -139,6 +152,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         // TODO: limit time before harvesting is required?
         if (this.#crop.isGrown()) {
             this.hideWaterAlert();
+            this.hideMonocropAlert()
             return;
         }
 
@@ -158,7 +172,9 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         }
 
         // Grow the crop based on the time delta. 
-        this.#crop.grow(delta/1000);  // TODO: Grow speed based on water level
+        let cropGrowAmount = delta/1000
+        cropGrowAmount *= (Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))  // Increase total grow time if dupe crop
+        this.#crop.grow(cropGrowAmount);  // TODO: Grow speed based on water level
 
         // Kill the crop if it's too dry
         if (this.#waterLevel <= 0) {
@@ -190,6 +206,14 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         return this.#crop;
     }
 
+    getPrevCrop() {
+        return this.#prevCropName;
+    }
+
+    getPrevCropCount() {
+        return this.#prevCropCount;
+    }
+
     getWaterLevel() {
         return this.#waterLevel;
     }
@@ -215,6 +239,20 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         }
     }
 
+    showMonocropAlert() {
+        // Ensure we have one active. AlertIcon adds itself to the scene, so we don't need to that here
+        const prevMonocropIcon = this.alertIcons.monocrop
+        this.alertIcons.monocrop = prevMonocropIcon ? prevMonocropIcon : new AlertIcon(this.scene, "downArrow", this)
+    }
+
+    hideMonocropAlert() {
+        const prevMonocropIcon = this.alertIcons.monocrop
+        if (prevMonocropIcon) {  // Water not low but we have an icon active
+            prevMonocropIcon.destroy()
+            this.alertIcons.monocrop = null
+        }
+    }
+
     // Function to handle clicking on the tile
     onPointerDown() {
         // Get the toolbar
@@ -233,6 +271,11 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
         if (toolBar.currentEquipment === EquipmentTypes.SICKLE) {
             this.harvest();
+            return
+        }
+
+        if (toolBar.currentEquipment === EquipmentTypes.FERTILIZER) {
+            this.fertilize(1);
             return
         }
     }

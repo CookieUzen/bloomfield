@@ -1,6 +1,3 @@
-import { UITextButton, UIImageButton } from "./UIButton.js";
-import Tiles from "./tiles.js";
-
 // This is the start scene. It will be the first scene to load and will handle the loading of the other scenes.
 // This is also the Title Screen of the game.
 export default class StartScene extends Phaser.Scene {
@@ -27,11 +24,17 @@ export default class StartScene extends Phaser.Scene {
 
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
+        
+        const titleText = this.add.text(0, 0, "Bloomfield")
+        titleText.setStyle({fontSize: 100, fill: '#fff'})
+        // Position in center of the screen by offsetting center coords by half the text size
+        titleText.setPosition(width/2 - titleText.width/2, height/2 - titleText.height/2 - 50)
+
 
         const startButton = this.add.text(0, 0, "Start game!")
-        startButton.setStyle({fontSize: 100})
-        // Position in center of the screen by offsetting center coords by half the text size
-        startButton.setPosition(width/2 - startButton.width/2, height/2 - startButton.height/2)
+        startButton.setStyle({fontSize: 60})
+        // Position below the title text
+        startButton.setPosition(width/2 - startButton.width/2, height/2 - startButton.height/2 + 70)
         startButton.setInteractive()
         .on('pointerdown', () => {this.scene.start('FieldScene')})
         .on('pointerover', () => {startButton.setStyle({fill: '#ff0'})})

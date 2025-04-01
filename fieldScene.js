@@ -109,13 +109,20 @@ export default class FieldScene extends Phaser.Scene {
 
         // Engine setup ----------------------
         // Bind keys 1-9 for selecting tools
-        // Moved to: button setup in input.js
-        // const keys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'];
-        // keys.forEach((key, index) => {
-        //     this.input.keyboard.on(`keydown-${key}`, () => {
-        //         this.selectedTool = this.toolbar.selectTool(index + 1);
-        //     });
-        // });
+        const keys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN'];
+        const tools = [{type: ToolTypes.EQUIPMENT, toolName: 'watering_can'}, {type: ToolTypes.EQUIPMENT, toolName: 'sickle'}, {type: ToolTypes.EQUIPMENT, toolName: 'fertilizer'}, 
+            {type: ToolTypes.SEED, toolName: 'corn'}, {type: ToolTypes.SEED, toolName: 'soybean'}, {type: ToolTypes.SEED, toolName: 'potato'}, {type: ToolTypes.SEED, toolName: 'wheat'}
+        ]
+        keys.forEach((key, index) => {
+            this.input.keyboard.on(`keydown-${key}`, () => {
+                if (tools[index].type === ToolTypes.EQUIPMENT) {
+                    this.toolbar.setToolEquipment(tools[index].toolName)
+                } else {
+                    this.toolbar.setToolSeed(tools[index].toolName)
+                }
+            });
+        });
+        
 
         // Load UI scene
         this.scene.launch('InputScene');

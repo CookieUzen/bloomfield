@@ -15,9 +15,7 @@ export default class FieldScene extends Phaser.Scene {
         this.load.image('farmland', "./public/assets/farmland.png");
         this.load.image('background', "./public/assets/Background.png");
 
-        // Load seeds
-        this.load.image('corn_seed', "./public/assets/corn/Corn_seeds.png");
-        this.load.image('soybean_seed', "./public/assets/soybean/Soybean_seeds.png");
+       
 
         // Load tools
         this.load.image('sickle', "./public/assets/Sickle.png")
@@ -26,13 +24,30 @@ export default class FieldScene extends Phaser.Scene {
         // Load icons
         this.load.image('droplet', "./public/assets/Droplet.png")
 
-        // Load crops sprites
-        for (let i = 1; i <= 4; i++) {
-            this.load.image(`corn_${i}`, `./public/assets/corn/Corn_stage_${i}.png`);
-            this.load.image(`soybean_${i}`, `./public/assets/soybean/Soybean_stage_${i}.png`);
-        }
-
         this.load.json('cropData', "./crops.json");
+
+        this.load.on('filecomplete-json-cropData', () => {
+
+            
+
+            const cropData = this.cache.json.get('cropData')
+            // Load crops sprites
+
+            for (const cropName of Object.keys(cropData)) {
+                // ChatGPT wrote the uppercase thing
+                this.load.image(`${cropName}_seed`, `./public/assets/${cropName}/${cropName.charAt(0).toUpperCase() + cropName.slice(1)}_seeds.png`);
+
+                for (let i = 1; i <= 4; i++) {
+                    this.load.image(`${cropName}_${i}`, `./public/assets/${cropName}/${cropName.charAt(0).toUpperCase() + cropName.slice(1)}_stage_${i}.png`);
+                }
+
+            }
+
+        });
+
+        
+
+        
     }
 
     // Start the game here

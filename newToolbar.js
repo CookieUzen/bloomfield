@@ -6,7 +6,8 @@ export const ToolTypes = Object.freeze({
 
 export const EquipmentTypes = Object.freeze({
     WATERING_CAN: 'watering_can',
-    SICKLE: 'sickle'
+    SICKLE: 'sickle',
+    FERTILIZER: 'fertilizer'
 })
 
 export class NewToolbar {

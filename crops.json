@@ -2,15 +2,29 @@
   "corn": {
     "growthTime": 15,
     "value": 50,
-    "weight": 1,
+    "weight": 10,
     "waterUsage": 5,
     "fertilizerUsage" : 50
   },
   "soybean": {
     "growthTime": 20,
     "value": 100,
-    "weight": 1,
+    "weight": 8,
     "waterUsage": 3,
     "fertilizerUsage" : -40
+  },
+  "potato": {
+    "growthTime": 23,
+    "value": 100,
+    "weight": 15,
+    "waterUsage": 3,
+    "fertilizerUsage" : 10
+  },
+  "wheat": {
+    "growthTime": 17,
+    "value": 100,
+    "weight": 15,
+    "waterUsage": 8,
+    "fertilizerUsage" : 20
   }
 }

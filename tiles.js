@@ -102,6 +102,10 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
             let money = this.#crop.getMoneyValue();
             let weight = this.#crop.getWeight();
 
+            // Earn less if you monocrop
+            money *= (Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))
+            weight *= (Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))
+
             this.scene.registry.inc('money', money);
 
             // Add the crop to the harvest bin
@@ -152,7 +156,6 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         // TODO: limit time before harvesting is required?
         if (this.#crop.isGrown()) {
             this.hideWaterAlert();
-            this.hideMonocropAlert()
             return;
         }
 
@@ -173,8 +176,16 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
         // Grow the crop based on the time delta. 
         let cropGrowAmount = delta/1000
-        cropGrowAmount *= (Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))  // Increase total grow time if dupe crop
-        this.#crop.grow(cropGrowAmount);  // TODO: Grow speed based on water level
+        // Slow down growth if we're low on water
+        if (this.#waterLevel < 50) {
+            cropGrowAmount *= (this.#waterLevel * 1.5) / 100 
+        }
+        // Slow down growth if we're out of fertilizer
+        if (this.#fertilizerLevel <= 0) {
+            cropGrowAmount *= 0.5
+        }
+        
+        this.#crop.grow(cropGrowAmount);  
 
         // Kill the crop if it's too dry
         if (this.#waterLevel <= 0) {

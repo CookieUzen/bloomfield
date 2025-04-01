@@ -23,6 +23,10 @@ export class UITextButton extends UIButton {
     constructor(scene, x, y, text, callback) {
         super(scene, x, y)
 
+        if (text === '') {
+            return
+        }
+
         // Create text and position accordingly
         const textSprite = new Phaser.GameObjects.Text(scene, 0, 0, text)
         textSprite.setPosition(-textSprite.width/2, -textSprite.height/2)

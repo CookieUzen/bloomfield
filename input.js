@@ -32,7 +32,7 @@ export default class InputScene extends Phaser.Scene {
         });
 
 		// TODO remove this when we move the pause button
-		this.input.keyboard.on('keydown-R', () => {         // Triggers once when P is pressed
+		this.input.keyboard.on('keydown-T', () => {         // Triggers once when P is pressed
             this.fieldScene.togglePause();                        // Toggle pause
         });
 
@@ -46,6 +46,7 @@ export default class InputScene extends Phaser.Scene {
         topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))  // TODO keybinds
         topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))  // TODO not hardcode tool index
         topButtonRow.push(new UIImageButton(this, 0, 0, 'fertilizer', () => {this.fieldScene.toolbar.setToolEquipment('fertilizer')}))  
+		topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  
         topButtonRow.push(new UITextButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
 
 		const cropData = this.cache.json.get('cropData')

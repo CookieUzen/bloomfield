@@ -143,9 +143,6 @@ export default class FieldScene extends Phaser.Scene {
 
     // Called on every game frame
     update(time, delta) {
-        this.toolSprite.setTexture(this.toolbar.getCurrentToolName())
-        this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
-
         this.updateCrops(time, delta)
 
         this.timeRemaining -= delta/1000  // This is perhaps not ideal because it is all just relative, but thats fine its close enough

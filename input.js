@@ -1,5 +1,4 @@
 import { UITextButton, UIImageButton } from "./UIButton.js";
-import { ToolTypes, EquipmentTypes } from "./newToolbar.js";
 
 
 // This scene handles all the global keyboard input and mouse input
@@ -19,7 +18,10 @@ export default class InputScene extends Phaser.Scene {
         
         this.fieldScene = this.scene.get('FieldScene'); 
 
-        // Tools and such are loaded by the field, so we don't need to load them here
+        // Load tools for mouse cursor
+        this.load.image('sickle', "./public/assets/Sickle.png")
+        this.load.image('watering_can', "./public/assets/Watering_can.png")
+        this.load.image('fertilizer', "./public/assets/Fertilizer.png")
     }
 
     create() {
@@ -103,6 +105,11 @@ export default class InputScene extends Phaser.Scene {
         this.goalTextBox = this.add.text(75, 160, '', textStyle)
 
         this.roundFoodUnitsTextBox = this.add.text(75, 180, '', textStyle)
+
+        // Toolbar
+        // Make current tool follow the mouse around
+        this.toolSprite = this.add.sprite(0, 0, 'watering_can')
+        //------------------------------------
     }
 
     update() {
@@ -122,6 +129,11 @@ export default class InputScene extends Phaser.Scene {
         this.goalTextBox.setText(`Goal: ${goal}`)
 
         this.roundFoodUnitsTextBox.setText(`Round Food Units: ${this.registry.get('roundFoodUnits')}`)
+
+        // Toolbar
+        let inputScene = this.scene.get("FieldScene")
+        this.toolSprite.setTexture(inputScene.toolbar.getCurrentToolName())
+        this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
     }
 
 

@@ -76,18 +76,28 @@ export default class InputScene extends Phaser.Scene {
             this.add.existing(button)
         }
 
+		const textBackgroundTopLeft = [50, 75]
+		const textBackgroundDimensions = [175, 75]
+		const textBackgroundBorderThickness = 10
+		this.textBackground = this.add.graphics()
+		this.textBackground.fillStyle(0x974B22, 1);
+        this.textBackground.fillRoundedRect(textBackgroundTopLeft[0], textBackgroundTopLeft[1], textBackgroundTopLeft[0] + textBackgroundDimensions[0], textBackgroundTopLeft[1] + textBackgroundDimensions[1], 10);
+		this.textBackground.fillStyle(0xB95C2C, 1);
+        this.textBackground.fillRoundedRect(textBackgroundTopLeft[0] + textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundBorderThickness, textBackgroundTopLeft[0] + textBackgroundDimensions[0] - 2 * textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundDimensions[1] - 2 * textBackgroundBorderThickness, 10);
 
         // Info boxes on the top left corner
-        this.roundTextBox = this.add.text(100, 100, '')
+		const textStyle = { color: 'white' }
 
-        this.timeTextBox = this.add.text(100, 120, '')
+        this.roundTextBox = this.add.text(75, 100, '', textStyle)
 
-        this.moneyTextBox = this.add.text(100, 140, '')
+        this.timeTextBox = this.add.text(75, 120, '', textStyle)
+
+        this.moneyTextBox = this.add.text(75, 140, '', textStyle)
 
         // Display goal and current food units
-        this.goalTextBox = this.add.text(100, 160, '')
+        this.goalTextBox = this.add.text(75, 160, '', textStyle)
 
-        this.roundFoodUnitsTextBox = this.add.text(100, 180, '')
+        this.roundFoodUnitsTextBox = this.add.text(75, 180, '', textStyle)
     }
 
     update() {

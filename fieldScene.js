@@ -65,7 +65,7 @@ export default class FieldScene extends Phaser.Scene {
         let { width, height } = this.sys.game.canvas;
 
         // Game color
-        this.cameras.main.setBackgroundColor(0x22892D)
+        this.cameras.main.setBackgroundColor(0xF2E9DC)
 
         // Game background setup
         this.add.sprite(width/2, height/2 + 50, "backgroundCenter")

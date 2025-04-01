@@ -29,6 +29,11 @@ export default class InputScene extends Phaser.Scene {
             this.fieldScene.togglePause();                        // Toggle pause
         });
 
+		// TODO remove this when we move the pause button
+		this.input.keyboard.on('keydown-R', () => {         // Triggers once when P is pressed
+            this.fieldScene.togglePause();                        // Toggle pause
+        });
+
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 

@@ -12,7 +12,7 @@ export default class FieldScene extends Phaser.Scene {
 
     preload() {
         // Load assets (replace with actual paths)
-        this.load.image('farmland', "./public/assets/farmland.png");
+        this.load.image('farmland', "./public/assets/brighter_tile.png");
         this.load.image('background', "./public/assets/Background.png");
 
        // Load UI images
@@ -105,7 +105,8 @@ export default class FieldScene extends Phaser.Scene {
             for (let j = 0; j < yTileCount; j++) {
                 let x_coord = i * stepSizeX + offsetX + tileSizeX/2;
                 let y_coord = j * stepSizeY + offsetY + tileSizeY/2;
-                let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSizeX, tileSizeY);
+                // let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSizeX, tileSizeY);
+                let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(1.1, 1.1);
                 playField.add(newTile);
                 this.farmland.push(newTile);
             }

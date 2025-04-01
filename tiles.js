@@ -231,7 +231,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
     updateAlertAlphas(time) {
         for (const key of Object.keys(this.alertIcons)) {
-            if (!this.alertIcons[key]) return;
+            if (!this.alertIcons[key]) continue;
             this.alertIcons[key].update(time)
         }
     }

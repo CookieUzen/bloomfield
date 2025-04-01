@@ -91,7 +91,7 @@ export default class InputScene extends Phaser.Scene {
         this.textBackground.fillRoundedRect(textBackgroundTopLeft[0] + textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundBorderThickness, textBackgroundTopLeft[0] + textBackgroundDimensions[0] - 2 * textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundDimensions[1] - 2 * textBackgroundBorderThickness, 10);
 
         // Info boxes on the top left corner
-		const textStyle = { color: 'white' }
+		const textStyle = { color: 'white', font: '20px Ariel' }
 
         this.roundTextBox = this.add.text(75, 100, '', textStyle)
 

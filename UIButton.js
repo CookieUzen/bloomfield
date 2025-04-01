@@ -13,7 +13,7 @@ class UIButton extends Phaser.GameObjects.Container {
         this.textColor = '0x000000'
 
         // Padding in px
-        this.padding = 20
+        this.padding = 16
         
     }
 }
@@ -53,8 +53,9 @@ export class UITextButton extends UIButton {
 
     }
 
-    drawButtonBackground(fillColor) {
+    drawButtonBackground(fillColor, alpha = 1) {
         this.background.clear()
+        this.background.alpha = alpha
         this.background.fillStyle(fillColor, 1);
         this.background.fillRoundedRect(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight, 10);
     }
@@ -68,35 +69,46 @@ export class UIImageButton extends UIButton {
 
         // Create text and position accordingly
         const imageSprite = new Phaser.GameObjects.Image(scene, 0, 0, image)
+        imageSprite.scale = 2
         this.add(imageSprite)
 
-        this.buttonWidth = imageSprite.width + this.padding
-        this.buttonHeight = imageSprite.height + this.padding
+        this.buttonWidth = imageSprite.width * 2 + this.padding
+        this.buttonHeight = imageSprite.height * 2 + this.padding
 
         // The button background
         this.background = new Phaser.GameObjects.Graphics(scene)
+        this.background.setAbove(this.imageSprite)
         // Draw the box
-        this.drawButtonBackground(this.backgroundDefault)
+        this.drawButtonBackground(this.backgroundDefault, 0)
         // Add to container and reorder
         this.add(this.background)
         this.background.setBelow(imageSprite)
 
         this.setInteractive(new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight), Phaser.Geom.Rectangle.Contains)
-        .on('pointerdown', () => {if (callback) callback() })  // Handle mouse down
+        .on('pointerdown', () => {
+            if (callback) { 
+                callback()
+            } 
+            this.drawButtonBackground(this.backgroundHover, 0.5) 
+        })  // Handle mouse down
+        .on('pointerup', () => {
+            this.drawButtonBackground(this.backgroundDefault, 0.5)
+        })  // Handle mouse up
         .on('pointerover', () => {
-            this.drawButtonBackground(this.backgroundHover)
+            this.drawButtonBackground(this.backgroundDefault, 0.5)
         })  // Handle hovering and drag
         .on('pointerout', () => {
-            this.drawButtonBackground(this.backgroundDefault)
+            this.drawButtonBackground(this.backgroundDefault, 0)
         })  // Clear tint when mouse leaves
 
 
     }
 
-    drawButtonBackground(fillColor) {
+    drawButtonBackground(fillColor, alpha = 1) {
         this.background.clear()
+        this.background.alpha = alpha
         this.background.fillStyle(fillColor, 1);
-        this.background.fillRoundedRect(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight, 10);
+        this.background.fillRect(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight);
     }
 
 }

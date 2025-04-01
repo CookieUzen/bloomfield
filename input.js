@@ -47,7 +47,7 @@ export default class InputScene extends Phaser.Scene {
 		}
     
         // Define position and length for row. Basically a horizontal line above the playfield
-        const topRowStartPos = [425, 75]
+        const topRowStartPos = [425 - 1, 75]
         const topRowSpacing = 88
 
         for (const buttonIndex in topButtonRow) {
@@ -61,7 +61,7 @@ export default class InputScene extends Phaser.Scene {
             this.add.existing(button)
         }
 
-        const rightColStartPos = [975, 275]
+        const rightColStartPos = [975, 275 - 1]
         const rightColSpacing = 88
 
         for (const buttonIndex in rightButtonColumn) {

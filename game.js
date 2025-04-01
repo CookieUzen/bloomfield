@@ -10,6 +10,8 @@ const config = {
     width: 1200,
     height: 800,
     physics: { default: 'arcade', arcade: { debug: false } },
+    pixelArt: true,
+
     // Store all the available scenes here
     scene: [StartScene, InputScene, FieldScene, RoundEndScene, GameOverScene]  // Load StartScene first!!!
 };

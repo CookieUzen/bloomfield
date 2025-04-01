@@ -116,13 +116,13 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     update(time, delta) {
 
         // Set these up (doing in the constructor had issues because of the parenting, so we do it here)
-        if (!this.omLevelText) {
-            this.omLevelText = new Phaser.GameObjects.Text(this.scene, this.x - 25, this.y - 25, "")
-            this.scene.add.existing(this.omLevelText)
-            this.parentContainer.add(this.omLevelText)
-        } else {
-            this.omLevelText.text = Math.floor(this.#organicMatLevel)
-        }
+        // if (!this.omLevelText) {
+        //     this.omLevelText = new Phaser.GameObjects.Text(this.scene, this.x - 25, this.y - 25, "")
+        //     this.scene.add.existing(this.omLevelText)
+        //     this.parentContainer.add(this.omLevelText)
+        // } else {
+        //     this.omLevelText.text = Math.floor(this.#organicMatLevel)
+        // }
         if (!this.fertLevelText) {
             this.fertLevelText = new Phaser.GameObjects.Text(this.scene, this.x + 10, this.y - 25, "")
             this.scene.add.existing(this.fertLevelText)

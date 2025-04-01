@@ -286,7 +286,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         }
 
         if (toolBar.currentEquipment === EquipmentTypes.FERTILIZER) {
-            this.fertilize(1);
+            this.fertilize(3);
             return
         }
     }

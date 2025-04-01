@@ -51,8 +51,9 @@ export default class RoundEndScene extends Phaser.Scene {
         this.registry.set("roundFoodUnits", 0);
         this.registry.set("harvest_bin", {});
 
-        // Increment the goal for the next round
-        this.registry.inc("goal", 1000);
+        // Multiply the goal by 1.3 for the next round
+        goal = Math.floor(goal * 1.3);
+        this.registry.set("goal", goal);
 
         this.scene.get('FieldScene').startRound();
         this.scene.stop();

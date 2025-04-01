@@ -25,7 +25,7 @@ export default class InputScene extends Phaser.Scene {
     create() {
 
         // Keybinder
-        this.input.keyboard.on('keydown-P', () => {         // Triggers once when P is pressed
+        this.input.keyboard.on('keydown-ESC', () => {         // Triggers once when P is pressed
             this.fieldScene.togglePause();                        // Toggle pause
         });
 

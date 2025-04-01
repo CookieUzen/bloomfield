@@ -52,7 +52,7 @@ export default class RoundEndScene extends Phaser.Scene {
         this.registry.set("harvest_bin", {});
 
         // Increment the goal for the next round
-        this.registry.inc("goal", 10);
+        this.registry.inc("goal", 1000);
 
         this.scene.get('FieldScene').startRound();
         this.scene.stop();

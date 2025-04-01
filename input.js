@@ -42,11 +42,11 @@ export default class InputScene extends Phaser.Scene {
         const topButtonRow = []
         const rightButtonColumn = []
 
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
+        // topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
         topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))  // TODO keybinds
         topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))  // TODO not hardcode tool index
         topButtonRow.push(new UIImageButton(this, 0, 0, 'fertilizer', () => {this.fieldScene.toolbar.setToolEquipment('fertilizer')}))  
-        topButtonRow.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
+        // topButtonRow.push(new UITextButton(this, 0, 0, 'soil tester', () => { })) 
 
 		const cropData = this.cache.json.get('cropData')
         for (const crop of Object.keys(cropData)) {

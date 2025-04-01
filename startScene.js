@@ -20,8 +20,8 @@ export default class StartScene extends Phaser.Scene {
         this.registry.set('money', 0);          // how much money the player has
         this.registry.set('harvest_bin', {});   // what crops and food units the player had harvested
         this.registry.set('round', 1);
-        this.registry.set('roundTime', 240);     // how long each round lasts in seconds
-        this.registry.set('goal', 10);         // how much money the player needs to win
+        this.registry.set('roundTime', 120);    // how long each round lasts in seconds
+        this.registry.set('goal', 1000);        // how much money the player needs to win
         this.registry.set('totalFoodUnits', 0); // how much food the player has harvested in total
         this.registry.set('roundFoodUnits', 0); // food harvested in the current round
 

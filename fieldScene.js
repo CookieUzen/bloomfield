@@ -15,12 +15,15 @@ export default class FieldScene extends Phaser.Scene {
         this.load.image('farmland', "./public/assets/farmland.png");
         this.load.image('background', "./public/assets/Background.png");
 
-       
+       // Load UI images
+       this.load.image('backgroundCenter', "./public/assets/Center.png")
+       this.load.image('backgroundTopBar', "./public/assets/Top.png")
+       this.load.image('backgroundRightBar', "./public/assets/Right.png")
 
         // Load tools
         this.load.image('sickle', "./public/assets/Sickle.png")
         this.load.image('watering_can', "./public/assets/Watering_can.png")
-        this.load.image('fertilizer', "./public/assets/Nutrients.png")
+        this.load.image('fertilizer', "./public/assets/Fertilizer.png")
 
         // Load icons
         this.load.image('droplet', "./public/assets/Droplet.png")
@@ -64,7 +67,12 @@ export default class FieldScene extends Phaser.Scene {
         // Game color
         this.cameras.main.setBackgroundColor(0x22892D)
 
-        const playField = this.add.container(width/2, height/2)
+        // Game background setup
+        this.add.sprite(width/2, height/2 + 50, "backgroundCenter")
+        this.add.sprite(width/2, 75, "backgroundTopBar")
+        this.add.sprite(975, height/2 + 50, "backgroundRightBar")
+
+        const playField = this.add.container(width/2, height/2 + 50)
         // Add background
         playField.add(new Phaser.GameObjects.Image(this, 0, 0, 'background'))
 

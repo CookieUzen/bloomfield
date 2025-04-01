@@ -7,7 +7,6 @@ export default class FieldScene extends Phaser.Scene {
 
     constructor() {
         super({ key: 'FieldScene' });
-        this.toolbar = new NewToolbar();   // Create a new toolbar
     }
 
     preload() {

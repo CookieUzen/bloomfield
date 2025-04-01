@@ -7,6 +7,7 @@ export default class FieldScene extends Phaser.Scene {
 
     constructor() {
         super({ key: 'FieldScene' });
+        this.toolbar = new NewToolbar();   // Create a new toolbar
     }
 
     preload() {
@@ -111,8 +112,6 @@ export default class FieldScene extends Phaser.Scene {
             }
         }
 
-        // Make current tool follow the mouse around
-        this.toolSprite = this.add.sprite(0, 0, 'watering_can')
         //------------------------------------
 
         // Engine setup ----------------------

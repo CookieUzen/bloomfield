@@ -29,7 +29,7 @@
 
     <script>
       // Load the placeholder TOML content from an external file
-      fetch('config.toml')
+      fetch('config.toml', {cache: 'no-store'})
         .then((response) => {
           if (!response.ok) {
             throw new Error('Cannot get config.toml');

@@ -268,6 +268,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     onPointerDown() {
         // Get the toolbar
         const toolBar = this.scene.toolbar;
+        const config = this.scene.registry.get('config').toolbar;
 
         // check to see what tool is selected
         if (toolBar.currentToolType === ToolTypes.SEED) {
@@ -276,7 +277,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         }
         // By now we know that the current tool is an equipment       
         if (toolBar.currentEquipment === EquipmentTypes.WATERING_CAN) {
-            this.water(30);
+            this.water(config.wateringCanAmount);
             return
         }
 
@@ -286,7 +287,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         }
 
         if (toolBar.currentEquipment === EquipmentTypes.FERTILIZER) {
-            this.fertilize(3);
+            this.fertilize(config.fertilizerAmount);
             return
         }
     }

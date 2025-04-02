@@ -173,13 +173,22 @@ export default class FieldScene extends Phaser.Scene {
             this.input.enabled = true;
         })
 
+        // Set all the variables according to the configs
+
+        const config = this.registry.get('config').round
+        const roundNum = this.registry.get('round')     // Get the config for the current round
+        const roundConfig = (roundNum > config.roundInfinite) ? config.infinite : config[roundNum.toString()]
+
+        this.registry.set('roundTime', roundConfig.time);    // how long each round lasts in seconds
+        this.registry.set('goal', roundConfig.goal);         // how much money the player needs to win
+        
         this.timeRemaining = this.registry.get('roundTime');  // Time remaining in seconds
 
-        // Clear out all the crops
+        // Don't Clear out all the crops
         // TODO: Decay mechanic?
-        for (let tile of this.farmland) {
-            tile.harvest(true);   // Throw away the crop instead of earning money/food units
-        }
+        // for (let tile of this.farmland) {
+        //     tile.harvest(true);   // Throw away the crop instead of earning money/food units
+        // }
 
         // Start the scene again!
         this.scene.wake();

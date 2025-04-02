@@ -1,3 +1,12 @@
+# debug cheats
+[cheats]
+unlockAllCrops = false
+
+# Config for toolbar here:
+[toolbar]
+wateringCanAmount = 30
+fertilizerAmount = 3
+
 # Config for crops here
 [crops]
 [crops.corn]
@@ -27,3 +36,53 @@ value = 100
 weight = 15
 waterUsage = 8
 fertilizerUsage = 20
+
+# Configuration for the rounds
+[round.1]
+goal = 500
+gridSize = 2    # 2x2 grid
+cropsUnlocked = ["corn"]
+time = 120
+
+[round.2]
+goal = 600
+gridSize = 3
+cropsUnlocked = ["corn", "soybean"]
+time = 120
+
+[round.3]
+goal = 700
+gridSize = 4
+cropsUnlocked = ["corn", "soybean"]
+time = 120
+
+[round.4]
+goal = 800
+gridSize = 5
+cropsUnlocked = ["corn", "soybean", "potato"]
+time = 120
+
+[round.5]
+goal = 900
+gridSize = 5
+cropsUnlocked = ["corn", "soybean", "potato"]
+time = 120
+
+[round.6]
+goal = 1000
+gridSize = 5
+cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
+time = 120
+
+[round.7]
+goal = 1100
+gridSize = 5
+cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
+time = 120
+
+[round.infinite]
+goal = 1400
+gridSize = 6
+time = 120
+cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
+goalMultiplier = 1.5	# Increase the goal by 50% each round

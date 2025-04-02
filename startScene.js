@@ -66,6 +66,9 @@ export default class StartScene extends Phaser.Scene {
         this.registry.set('totalFoodUnits', 0); // how much food the player has harvested in total
         this.registry.set('roundFoodUnits', 0); // food harvested in the current round
 
+        this.registry.set('currentTileX', 0);   // current #x tiles
+        this.registry.set('currentTileY', 0);   // current #y tiles
+
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
         

@@ -70,9 +70,10 @@ export default class FieldScene extends Phaser.Scene {
         // math to calculate the positions myself. I also modified what it came up with to clean up the math
         // and make the x and y values both work
         // Define the total grid size
+        const round1Config = this.registry.get('config').round['1']
         const gridSize = 450;   // Total width and height of the grid in pixels
-        const xTileCount = 7;        // Number of tiles in the x direction
-        const yTileCount = 8;        // Number of tiles in the y direction
+        const xTileCount = round1Config.gridSizeX;        // Number of tiles in the x direction
+        const yTileCount = round1Config.gridSizeY;        // Number of tiles in the y direction
         const tileSpacing = 5; // Space between tiles, in pixels
 
         // Calculate the actual tile size so that they fit within gridSize, accounting for spacing
@@ -94,8 +95,7 @@ export default class FieldScene extends Phaser.Scene {
             for (let j = 0; j < yTileCount; j++) {
                 let x_coord = i * stepSizeX + offsetX + tileSizeX/2;
                 let y_coord = j * stepSizeY + offsetY + tileSizeY/2;
-                // let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSizeX, tileSizeY);
-                let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(1.1, 1.1);
+                let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSizeX/50, tileSizeY/50);  // 50 is a magic number
                 playField.add(newTile);
                 this.farmland.push(newTile);
             }
@@ -173,15 +173,26 @@ export default class FieldScene extends Phaser.Scene {
             this.input.enabled = true;
         })
 
+        // Skip to round if cheats are enabled
+        const cheats = this.registry.get('config').cheats;
+        if (cheats.enable) {
+            this.registry.set('round', Math.floor(cheats.skipToRound, 1));
+        }
+
         // Set all the variables according to the configs
 
         const config = this.registry.get('config').round
         const roundNum = this.registry.get('round')     // Get the config for the current round
-        const roundConfig = (roundNum > config.roundInfinite) ? config.infinite : config[roundNum.toString()]
+        const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
 
         this.registry.set('roundTime', roundConfig.time);    // how long each round lasts in seconds
         this.registry.set('goal', roundConfig.goal);         // how much money the player needs to win
         
+        // For infinite rounds, multiply the goal
+        if (roundNum > config.roundInfinite) {
+            this.registry.set('goal', roundConfig.goal * roundConfig.goalMultiplier ** (roundNum - config.roundInfinite))
+        }
+
         this.timeRemaining = this.registry.get('roundTime');  // Time remaining in seconds
 
         // Don't Clear out all the crops

@@ -1,3 +1,5 @@
+import toml from 'toml'; // Import toml parser
+
 // This is the start scene. It will be the first scene to load and will handle the loading of the other scenes.
 // This is also the Title Screen of the game.
 export default class StartScene extends Phaser.Scene {
@@ -10,6 +12,45 @@ export default class StartScene extends Phaser.Scene {
     }
 
     create() {
+        // Check if we are in debug mode:
+        let config;
+
+        // Scary code to load config.toml
+        const tomlField = document.getElementById('tomlInput'); // From debug.html
+        if (tomlField) {
+            this.registry.set('debug', true);
+            try {
+                config = toml.parse(tomlField.value);
+            } catch (err) {
+                console.error('Error parsing config.toml:', err);
+            }       
+        } else {
+            this.registry.set('debug', false);
+			
+            // Yoink it from ./config.toml
+			fetch('./config.toml')
+                .then(response => { // Fetch the config.toml file
+                    if (!response.ok) {
+                        throw new Error('Could not get config.toml');
+                    }
+                    return response.text();
+                })
+                .then(text => { // Parse the config.toml file
+                    try {
+                        config = toml.parse(text);
+                    } catch (err) {
+                        console.error('Error parsing config.toml:', err);
+                    }
+                })
+                .catch(err => { // Log any errors
+                    console.error(err);
+                });
+        }
+
+        // Stick config into the registry
+        this.registry.set('config', config);
+        console.log(config);
+
         // TODO: Load background and add start button
         console.log("Start Scene triggered");
 

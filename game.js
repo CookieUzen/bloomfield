@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 import StartScene from './startScene.js';   // Title screen
 import InputScene from './input.js';        // Input handler
 import FieldScene from './fieldScene.js';     // Main game scene

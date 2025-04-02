@@ -3,6 +3,7 @@
 Source code for the Bloomfield game:
 
 You can find the game online here [here](https://cookieuzen.github.io/bloomfield/).
+You can find the debug mode here [here](https://cookieuzen.github.io/bloomfield/debug.html).
 
 ## Dev Guide
 

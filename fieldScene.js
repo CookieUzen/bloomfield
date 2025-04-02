@@ -15,10 +15,10 @@ export default class FieldScene extends Phaser.Scene {
         this.load.image('farmland', "./public/assets/brighter_tile.png");
         this.load.image('background', "./public/assets/Background.png");
 
-       // Load UI images
-       this.load.image('backgroundCenter', "./public/assets/Center.png")
-       this.load.image('backgroundTopBar', "./public/assets/Top.png")
-       this.load.image('backgroundRightBar', "./public/assets/Right.png")
+        // Load UI images
+        this.load.image('backgroundCenter', "./public/assets/Center.png")
+        this.load.image('backgroundTopBar', "./public/assets/Top.png")
+        this.load.image('backgroundRightBar', "./public/assets/Right.png")
 
         // Load tools
         this.load.image('sickle', "./public/assets/Sickle.png")
@@ -29,29 +29,18 @@ export default class FieldScene extends Phaser.Scene {
         this.load.image('droplet', "./public/assets/Droplet.png")
         this.load.image('downArrow', "./public/assets/Down_arrow.png")
 
-        this.load.json('cropData', "./crops.json");
+        const cropData = this.registry.get('config').crops;
+        // Load crops sprites
 
-        this.load.on('filecomplete-json-cropData', () => {
+        for (const cropName of Object.keys(cropData)) {
+            // ChatGPT wrote the uppercase thing
+            this.load.image(`${cropName}_seed`, `./public/assets/${cropName}/${cropName.charAt(0).toUpperCase() + cropName.slice(1)}_seeds.png`);
 
-            
-
-            const cropData = this.cache.json.get('cropData')
-            // Load crops sprites
-
-            for (const cropName of Object.keys(cropData)) {
-                // ChatGPT wrote the uppercase thing
-                this.load.image(`${cropName}_seed`, `./public/assets/${cropName}/${cropName.charAt(0).toUpperCase() + cropName.slice(1)}_seeds.png`);
-
-                for (let i = 1; i <= 4; i++) {
-                    this.load.image(`${cropName}_${i}`, `./public/assets/${cropName}/${cropName.charAt(0).toUpperCase() + cropName.slice(1)}_stage_${i}.png`);
-                }
-
+            for (let i = 1; i <= 4; i++) {
+                this.load.image(`${cropName}_${i}`, `./public/assets/${cropName}/${cropName.charAt(0).toUpperCase() + cropName.slice(1)}_stage_${i}.png`);
             }
 
-        });
-
-        
-
+        }
         
     }
 

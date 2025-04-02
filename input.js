@@ -49,7 +49,7 @@ export default class InputScene extends Phaser.Scene {
 		topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  
         topButtonRow.push(new UITextButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
 
-		const cropData = this.cache.json.get('cropData')
+		const cropData = this.registry.get('config').crops;
         for (const crop of Object.keys(cropData)) {
 			rightButtonColumn.push(new UIImageButton(this, 0, 0, crop + '_seed', () => { this.fieldScene.toolbar.setToolSeed(crop)}))  
 		}

@@ -20,7 +20,7 @@ export default class Crop extends Phaser.GameObjects.Sprite {
         let texture = `${type}_1`
 
         // Yoink data from crops.json
-        const cropData = scene.cache.json.get('cropData');
+        const cropData = scene.registry.get('config').crops
 
         // Call the sprite constructor with scene, position, and texture key.
         super(scene, parentTile.x, parentTile.y, texture);

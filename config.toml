@@ -1,33 +1,29 @@
-# This is a TOML document.
+# Config for crops here
+[crops]
+[crops.corn]
+growthTime = 20
+value = 50
+weight = 10
+waterUsage = 5
+fertilizerUsage = 50
 
-title = "TOML Example"
+[crops.soybean]
+growthTime = 40
+value = 100
+weight = 4
+waterUsage = 3
+fertilizerUsage = -40
 
-[owner]
-name = "Tom Preston-Werner"
-dob = 1979-05-27T07:32:00-08:00 # First class dates
+[crops.potato]
+growthTime = 46
+value = 100
+weight = 20
+waterUsage = 3
+fertilizerUsage = 10
 
-[database]
-server = "192.168.1.1"
-ports = [ 8000, 8001, 8002 ]
-connection_max = 5000
-enabled = true
-
-[servers]
-
-  # Indentation (tabs and/or spaces) is allowed but not required
-  [servers.alpha]
-  ip = "10.0.0.1"
-  dc = "eqdc10"
-
-  [servers.beta]
-  ip = "10.0.0.2"
-  dc = "eqdc10"
-
-[clients]
-data = [ ["gamma", "delta"], [1, 2] ]
-
-# Line breaks are OK when inside arrays
-hosts = [
-  "alpha",
-  "omega"
-]
+[crops.wheat]
+growthTime = 34
+value = 100
+weight = 15
+waterUsage = 8
+fertilizerUsage = 20

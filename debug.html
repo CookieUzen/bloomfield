@@ -1,60 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Bloomfield Debug Config</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-      }
-      textarea {
-        width: 100%;
-        font-family: monospace;
-        font-size: 14px;
-      }
-      pre {
-        background: #f4f4f4;
-        padding: 10px;
-        white-space: pre-wrap;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Bloomfield Debug Config</h1>
-    <!-- The textarea will get its default content from an external file -->
-    <textarea id="tomlInput" rows="10"></textarea>
-    <br/>
-    <button id="parseBtn">Run Game</button>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Bloomfield Debug Config</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            textarea {
+                width: 100%;
+                font-family: monospace;
+                font-size: 14px;
+            }
+            pre {
+                background: #f4f4f4;
+                padding: 10px;
+                white-space: pre-wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Bloomfield Debug Config</h1>
+        <!-- The textarea will get its default content from an external file -->
+        <textarea id="tomlInput" rows="10"></textarea>
+        <br/>
+        <button id="parseBtn">Copy Config and Run Game</button>
 
-    <script>
-      // Load the placeholder TOML content from an external file
-      fetch('config.toml', {cache: 'no-store'})
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Cannot get config.toml');
-          }
-          return response.text();
-        })
-        .then((text) => {
-          // Instead of setting the placeholder attribute (which may not support multiline text well),
-          // we set the textarea's value to the fetched content.
-          document.getElementById('tomlInput').value = text;
-        })
-        .catch((error) => {
-          console.error('Error loading placeholder:', error);
-        });
+        <script>
+            // Load the placeholder TOML content from an external file
+            fetch('config.toml', { cache: 'no-store' })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Cannot get config.toml');
+                    }
+                    return response.text();
+                })
+                .then((text) => {
+                    // Instead of setting the placeholder attribute (which may not support multiline text well),
+                    // we set the textarea's value to the fetched content.
+                    document.getElementById('tomlInput').value = text;
+                })
+                .catch((error) => {
+                    console.error('Error loading placeholder:', error);
+                });
 
-      // Add event listener to parse the TOML content when the button is clicked
-      document.getElementById('parseBtn').addEventListener('click', function () {
-          var script = document.createElement('script');
-          script.src = 'dist/bundle.js'  // Source code for game
-          // script.type = 'module'; // allow for ES Imports
-          document.body.appendChild(script);  // Load the game!
-          
-          this.disabled = true; // Disable the button afterwards
-      });
-    </script>
-  </body>
+            // Add event listener to parse the TOML content when the button is clicked
+            document.getElementById('parseBtn').addEventListener('click', function () {
+                // Copy the contents of the textarea to the clipboard using the Clipboard API
+                navigator.clipboard.writeText(document.getElementById('tomlInput').value)
+                    .then(() => {
+                        console.log('Copied to clipboard!');
+                    })
+                    .catch((err) => {
+                        console.error('Error copying text: ', err);
+                    });
+
+                var script = document.createElement('script');
+                script.src = 'dist/bundle.js';  // Source code for game
+                // script.type = 'module'; // allow for ES Imports
+                document.body.appendChild(script);  // Load the game!
+
+                this.disabled = true; // Disable the button afterwards
+            });
+        </script>
+    </body>
 </html>
 

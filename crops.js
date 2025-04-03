@@ -14,7 +14,7 @@ export default class Crop extends Phaser.GameObjects.Sprite {
     #toNextStage;   // time until next stage
 
     // Constructor (for making a new crop)
-    constructor(scene, parentTile, type) {
+    constructor(scene, type) {
 
         // Add sprites
         let texture = `${type}_1`
@@ -23,7 +23,7 @@ export default class Crop extends Phaser.GameObjects.Sprite {
         const cropData = scene.registry.get('config').crops
 
         // Call the sprite constructor with scene, position, and texture key.
-        super(scene, parentTile.x, parentTile.y, texture);
+        super(scene, 0, 0, texture);
 
         this.#type = type;
         this.#growthStage = 1;
@@ -37,8 +37,6 @@ export default class Crop extends Phaser.GameObjects.Sprite {
         this.#moneyValue = cropData[type].value;
         this.#weight = cropData[type].weight;
         this.#toNextStage = this.#growthTime / 4;
-
-        parentTile.parentContainer.add(this)
     }
 
     // Function to grow the crop by how many times

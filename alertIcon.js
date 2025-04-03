@@ -1,11 +1,10 @@
 
 export default class AlertIcon extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, imageKey, parentTile) {
-        super(scene, parentTile.x, parentTile.y, imageKey)
+    constructor(scene, imageKey ) {
+        super(scene, 0, 0, imageKey)
         // Add this object to the scene
-        scene.add.existing(this)
-        parentTile.parentContainer.add(this)
+        scene.add.sprite(this)
     }
 
     update(time) {

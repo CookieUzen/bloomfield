@@ -2,10 +2,9 @@ import AlertIcon from './alertIcon.js';
 import Crop from './crops.js';
 import { ToolTypes, EquipmentTypes } from './newToolbar.js';   // {  } for importing a const
 
-
-
-export default class Tiles extends Phaser.GameObjects.Sprite {
+export default class Tiles extends Phaser.GameObjects.Container {
     // Private variables, use getters and setters!
+    tileSprite;
     #crop;
     #prevCropName;
     #prevCropCount;
@@ -18,19 +17,30 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     // Create a new tile
     constructor(scene, x, y, waterLevel) {
         let texture = 'farmland';
+
         // make a sprite at x, y, using the 'farmland' image
-        super(scene, x, y, texture)
+        super(scene, x, y);
+
+        // Make the tile sprite
+        this.tileSprite = this.scene.add.sprite(0, 0, texture)
             .setInteractive()                               // Make it interactive to mouse
             .on('pointerdown', () => this.onPointerDown())  // Handle mouse down
             .on('pointerover', () => this.onPointerOver())  // Handle hovering and drag
             .on('pointerout', () => this.onPointerOut())       // Clear tint when mouse leaves
         ;
 
-        this.scene = scene; // Scene that this tile is in
+        console.log("Tile created at " + x + ", " + y);
+
+        // Scale the tile sprite
+        this.tileSprite.setScale(1/50); // 1/50 is a magic number
+
+        // Add the tile sprite to the container
+        this.add(this.tileSprite);
+        
         this.#crop = null;
         this.#waterLevel = waterLevel;
         this.#defaultTintColor = this.getBlueTint();
-        this.tint = this.#defaultTintColor; // actually tint the tile
+        this.tileSprite.tint = this.#defaultTintColor; // actually tint the tile
         this.#isHovered = false;
 
         this.alertIcons = {};  // An object of the active alert icons
@@ -61,7 +71,11 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
         // Add a new crop object to the tile
         // Copy our own x and y coordinates to the crop
-        this.#crop = new Crop(this.scene, this, cropType);
+        this.#crop = new Crop(this.scene, cropType);
+        this.#crop.setScale(1/60);          // 1/60 is a magic number
+        this.addAt(this.#crop, 0);          // Add the crop to the tile, at the botto1m
+        this.sendToBack(this.tileSprite)    // Send the tile sprite to the button
+
         console.log(cropType + " planted");
     }
 
@@ -140,9 +154,10 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         //     this.omLevelText.text = Math.floor(this.#organicMatLevel)
         // }
         if (!this.fertLevelText) {
-            this.fertLevelText = new Phaser.GameObjects.Text(this.scene, this.x + 10, this.y - 25, "")
-            this.scene.add.existing(this.fertLevelText)
-            this.parentContainer.add(this.fertLevelText)
+            this.fertLevelText = new Phaser.GameObjects.Text(this.scene, 0, 0, "")
+            this.scene.add.text(this.fertLevelText)
+            this.fertLevelText.setScale(1/60)
+            this.add(this.fertLevelText)
         }
 
         // Don't do anything if there is no crop
@@ -197,7 +212,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
 
         // Make the tile shade based on water level
         this.#defaultTintColor = this.getBlueTint();
-        if (!this.#isHovered) this.tint = this.#defaultTintColor
+        if (!this.#isHovered) this.tileSprite.tint = this.#defaultTintColor
 
         // TODO: Warning if the water level too low
     }
@@ -237,9 +252,16 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     }
 
     showWaterAlert() {
-        // Ensure we have one active. AlertIcon adds itself to the scene, so we don't need to that here
+        // Ensure we have one active.
         const prevWaterIcon = this.alertIcons.waterLow
-        this.alertIcons.waterLow = prevWaterIcon ? prevWaterIcon : new AlertIcon(this.scene, "droplet", this)
+
+        if (!prevWaterIcon) {
+            let waterLow = new AlertIcon(this.scene, "droplet")
+            this.alertIcons.waterLow = waterLow
+            waterLow.setScale(1/60)
+            this.add(waterLow) // Add the icon to the tile
+            this.bringToTop(waterLow) // Bring the icon to the top of the tile
+        }
     }
 
     hideWaterAlert() {
@@ -251,9 +273,15 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
     }
 
     showMonocropAlert() {
-        // Ensure we have one active. AlertIcon adds itself to the scene, so we don't need to that here
+        // Ensure we have one active.
         const prevMonocropIcon = this.alertIcons.monocrop
-        this.alertIcons.monocrop = prevMonocropIcon ? prevMonocropIcon : new AlertIcon(this.scene, "downArrow", this)
+        if (!prevMonocropIcon) {
+            let monocrop = new AlertIcon(this.scene, "downArrow")
+            this.alertIcons.monocrop = monocrop
+            monocrop.setScale(1/60)
+            this.add(monocrop) // Add the icon to the tile
+            this.bringToTop(monocrop) // Bring the icon to the top of the tile
+        }
     }
 
     hideMonocropAlert() {
@@ -271,7 +299,7 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         const config = this.scene.registry.get('config').toolbar;
 
         // check to see what tool is selected
-        if (toolBar.currentToolType === ToolTypes.SEED) {
+        if (toolBar.currentToolType === ToolTypes.SEED) {   // 1/50 is a magic number
             this.plant(toolBar.currentSeed);
             return
         }
@@ -302,12 +330,12 @@ export default class Tiles extends Phaser.GameObjects.Sprite {
         this.#isHovered = true;
 
         // Highlight the tile if we are hovering over it
-        this.tint = 0x00ff00;
+        this.tileSprite.tint = 0x00ff00;
     }
 
     // Function to handle when the mouse leaves the tile
     onPointerOut() {
         this.#isHovered = false;
-        this.tint = this.#defaultTintColor;
+        this.tileSprite.tint = this.#defaultTintColor;
     }
 }

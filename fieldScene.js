@@ -8,6 +8,10 @@ export default class FieldScene extends Phaser.Scene {
     constructor() {
         super({ key: 'FieldScene' });
         this.toolbar = new NewToolbar();   // Create a new toolbar
+        this.farmland = []; // Store all tiles in a 2D array
+        this.sizeX = 0; // current number of tiles in the x direction
+        this.sizeY = 0; // current number of tiles in the y direction
+        this.playField; // The container for the playfield
     }
 
     preload() {
@@ -61,45 +65,11 @@ export default class FieldScene extends Phaser.Scene {
         this.add.sprite(width/2, 75, "backgroundTopBar")
         this.add.sprite(975, height/2 + 50, "backgroundRightBar")
 
-        const playField = this.add.container(width/2, height/2 + 50)
+        // Container to store the stuff in the main game screen
+        this.playField = this.add.container(width/2, height/2 + 50)
+
         // Add background
-        playField.add(new Phaser.GameObjects.Image(this, 0, 0, 'background'))
-
-        // Create a grid to store the farmland
-        // AI DISCLAIMER: I used ChatGPT to help me rewrite this loop because I was too lazy to figure out the
-        // math to calculate the positions myself. I also modified what it came up with to clean up the math
-        // and make the x and y values both work
-        // Define the total grid size
-        const round1Config = this.registry.get('config').round['1']
-        const gridSize = 450;   // Total width and height of the grid in pixels
-        const xTileCount = round1Config.gridSizeX;        // Number of tiles in the x direction
-        const yTileCount = round1Config.gridSizeY;        // Number of tiles in the y direction
-        const tileSpacing = 5; // Space between tiles, in pixels
-
-        // Calculate the actual tile size so that they fit within gridSize, accounting for spacing
-        const tileSizeX = (gridSize - (xTileCount - 1) * tileSpacing) / xTileCount;
-        const tileSizeY = (gridSize - (yTileCount - 1) * tileSpacing) / yTileCount;
-
-        // Calculate the step size (total space each tile occupies, including spacing)
-        const stepSizeX = gridSize / xTileCount;
-        const stepSizeY = gridSize / yTileCount;
-
-        // Calculate the offset to center the grid at (0,0)
-        const offsetX = -gridSize / 2;
-        const offsetY = -gridSize / 2;
-
-        // Loop through the grid and create a new tile at each location
-        this.farmland = []; // Store all tiles
-
-        for (let i = 0; i < xTileCount; i++) {
-            for (let j = 0; j < yTileCount; j++) {
-                let x_coord = i * stepSizeX + offsetX + tileSizeX/2;
-                let y_coord = j * stepSizeY + offsetY + tileSizeY/2;
-                let newTile = new Tiles(this, x_coord, y_coord, 100).setScale(tileSizeX/50, tileSizeY/50);  // 50 is a magic number
-                playField.add(newTile);
-                this.farmland.push(newTile);
-            }
-        }
+        this.playField.add(new Phaser.GameObjects.Image(this, 0, 0, 'background'))
 
         //------------------------------------
 
@@ -142,8 +112,10 @@ export default class FieldScene extends Phaser.Scene {
     // This function handles updating the tiles every second
     // For things such as growing the crops, drying the soil, etc.
     updateCrops(time, delta) {
-        for (let tile of this.farmland) {
-            tile.update(time, delta);
+        for (let row of this.farmland) {
+            for (let tile of row) {
+                tile.update(time, delta);
+            }
         }
     }
 
@@ -187,7 +159,7 @@ export default class FieldScene extends Phaser.Scene {
 
         this.registry.set('roundTime', roundConfig.time);    // how long each round lasts in seconds
         this.registry.set('goal', roundConfig.goal);         // how much money the player needs to win
-        
+
         // For infinite rounds, multiply the goal
         if (roundNum > config.roundInfinite) {
             this.registry.set('goal', roundConfig.goal * roundConfig.goalMultiplier ** (roundNum - config.roundInfinite))
@@ -195,11 +167,85 @@ export default class FieldScene extends Phaser.Scene {
 
         this.timeRemaining = this.registry.get('roundTime');  // Time remaining in seconds
 
-        // Don't Clear out all the crops
-        // TODO: Decay mechanic?
-        // for (let tile of this.farmland) {
-        //     tile.harvest(true);   // Throw away the crop instead of earning money/food units
-        // }
+        // Create a grid to store the farmland
+        // AI DISCLAIMER: I used ChatGPT to help me rewrite this loop because I was too lazy to figure out the
+        // math to calculate the positions myself. I also modified what it came up with to clean up the math
+        // and make the x and y values both work
+        // Define the total grid size
+        const gridSize = 450;   // Total width and height of the grid in pixels
+        const xTileCount = roundConfig.gridSizeX;        // Number of tiles in the x direction
+        const yTileCount = roundConfig.gridSizeY;        // Number of tiles in the y direction
+        const tileSpacing = 5; // Space between tiles, in pixels
+
+        // Calculate the actual tile size so that they fit within gridSize, accounting for spacing
+        const tileSizeX = (gridSize - (xTileCount - 1) * tileSpacing) / xTileCount;
+        const tileSizeY = (gridSize - (yTileCount - 1) * tileSpacing) / yTileCount;
+
+        // Calculate the step size (total space each tile occupies, including spacing)
+        const stepSizeX = gridSize / xTileCount;
+        const stepSizeY = gridSize / yTileCount;
+
+        // Calculate the offset to center the grid at (0,0)
+        const offsetX = -gridSize / 2;
+        const offsetY = -gridSize / 2;
+
+        // Set up the field
+        let new_farmland = []   // Make a new array first
+        const new_sizeX = roundConfig.gridSizeX;  // Number of tiles in the x direction
+        const new_sizeY = roundConfig.gridSizeY;  // Number of tiles in the y direction
+
+        // Loop over old array and copy the tiles over
+        for (let i = 0; i < Math.min(this.sizeX, new_sizeX); i++) { // Copy, but don't go out of bounds
+            // Create a new row array for each i
+            new_farmland[i] = [];
+            for (let j = 0; j < this.sizeY; j++) {
+                // Calculate coords
+                let x_coord = i * stepSizeX + offsetX + tileSizeX / 2;
+                let y_coord = j * stepSizeY + offsetY + tileSizeY / 2;
+
+                // Update the tile's position
+                this.farmland[i][j].setPosition(x_coord, y_coord);
+
+                // Update the tile's size
+                this.farmland[i][j].setScale(tileSizeX, tileSizeY);
+
+                // Place the new tile in the 2D array
+                new_farmland[i][j] = this.farmland[i][j];
+            }
+        }
+
+        // Create the rest of the tiles
+        for (let i = 0; i < new_sizeX; i++) {
+            // Create a new row array for each i
+            if (!new_farmland[i]) {
+                // If the row doesn't exist, create it
+                new_farmland[i] = [];
+            }
+
+            for (let j = 0; j < new_sizeY; j++) {
+                // If the tile already exists, skip it
+                if (new_farmland[i][j]) {
+                    continue;
+                }
+
+                // Calculate coords
+                let x_coord = i * stepSizeX + offsetX + tileSizeX / 2;
+                let y_coord = j * stepSizeY + offsetY + tileSizeY / 2;
+
+                // Create a new tile and add it to the scene
+                const tile = new Tiles(this, x_coord, y_coord, 100)
+                    .setScale(tileSizeX, tileSizeY);
+
+                // Add the tile to the array
+                new_farmland[i][j] = tile;
+                this.playField.add(tile);
+            }
+        }
+
+        // Update the farmland array
+        this.farmland = new_farmland;
+        this.sizeX = new_sizeX;
+        this.sizeY = new_sizeY;
 
         // Start the scene again!
         this.scene.wake();

@@ -19,10 +19,7 @@ export default class InputScene extends Phaser.Scene {
         
         this.fieldScene = this.scene.get('FieldScene'); 
 
-        // Load tools for mouse cursor
-        this.load.image('sickle', "./public/assets/Sickle.png")
-        this.load.image('watering_can', "./public/assets/Watering_can.png")
-        this.load.image('fertilizer', "./public/assets/Fertilizer.png")
+        this.load.image('pause', "./public/assets/pause.png")
     }
 
     create() {
@@ -37,10 +34,8 @@ export default class InputScene extends Phaser.Scene {
         topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))
         topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))
         topButtonRow.push(new UIImageButton(this, 0, 0, 'fertilizer', () => {this.fieldScene.toolbar.setToolEquipment('fertilizer')}))  
-		topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  
-        topButtonRow.push(new UITextButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
-
-		const cropData = this.registry.get('config').crops;
+		topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  // Empty button to leave empty spot in toolbar (TODO: move the pause button to a real spot lol)
+        topButtonRow.push(new UIImageButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
 		
 		// load round config
 
@@ -107,10 +102,18 @@ export default class InputScene extends Phaser.Scene {
 
         this.roundFoodUnitsTextBox = this.add.text(75, 180, '', textStyle)
 
-        // Toolbar
-        // Make current tool follow the mouse around
-        this.toolSprite = this.add.sprite(0, 0, 'watering_can')
         //------------------------------------
+
+        // Pause overlay
+        this.pauseOverlay = this.add.rectangle(width/2, height/2, width, height, '0x000000', 0.5)
+        this.pauseOverlay.setInteractive()  // Eat the input before it gets to the rest of the game
+        this.pauseOverlay.setVisible(false)
+
+        this.unpauseButton = new UIImageButton(this, width/2, height/2, 'pause', () => {this.fieldScene.togglePause()})
+        this.add.existing(this.unpauseButton)
+        this.unpauseButton.setAbove(this.pauseOverlay)
+        this.unpauseButton.setVisible(false)
+    
 
 		// Keybinder
         this.input.keyboard.on('keydown-ESC', () => {         // Triggers once when P is pressed
@@ -155,7 +158,7 @@ export default class InputScene extends Phaser.Scene {
         this.dialogueBackground.fillRoundedRect(dialogueBackgroundTopLeft[0], dialogueBackgroundTopLeft[1], dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0], dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1], 10);
 		this.dialogueBackground.fillStyle(0xB95C2C, 1);
         this.dialogueBackground.fillRoundedRect(dialogueBackgroundTopLeft[0] + dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[1] + dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0] - 2 * dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1] - 2 * dialogueBackgroundBorderThickness, 10);
-		this.dialogueBackground.setInteractive(new Phaser.Geom.Rectangle(dialogueBackgroundTopLeft[0], dialogueBackgroundTopLeft[1], dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0], dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1]), Phaser.Geom.Rectangle.Contains)
+		this.dialogueBackground.setInteractive(new Phaser.Geom.Rectangle(0, 0, width, height), Phaser.Geom.Rectangle.Contains)  // Make the whole screen interactive for this
 		this.dialogueBackground.on('pointerdown', () => {
 			this.dialogueIndex += 1  // Increment dialogue
 			console.log(this.dialogueIndex)
@@ -171,9 +174,21 @@ export default class InputScene extends Phaser.Scene {
         this.dialogueText = this.add.text(75, 575, '', textStyle)
         this.dialogueText.setAbove(this.dialogueBackground)
         this.dialogueText.setVisible(false)
+
+        // Toolbar
+        // Make current tool follow the mouse around
+        this.toolSprite = this.add.sprite(0, 0, 'watering_can')
     }
 
     update() {
+
+        if (!this.fieldScene.scene.isActive()) {
+            this.pauseOverlay.setVisible(true)
+            this.unpauseButton.setVisible(true)
+        } else {
+            this.pauseOverlay.setVisible(false)
+            this.unpauseButton.setVisible(false)
+        }
 
         if (this.roundDialogue.start && this.dialogueIndex < this.roundDialogue.start.speech.length) {
             // Keep game paused while we are in the dialogue
@@ -183,6 +198,7 @@ export default class InputScene extends Phaser.Scene {
 
             this.dialogueBackground.setVisible(true)
             this.dialogueText.setVisible(true)
+            this.unpauseButton.setVisible(false)  // Hide the button if the game is paused due to dialogue
 
             this.dialogueText.setText(this.roundDialogue.start.speech[this.dialogueIndex])
 
@@ -209,8 +225,7 @@ export default class InputScene extends Phaser.Scene {
         this.roundFoodUnitsTextBox.setText(`Round Food Units: ${this.registry.get('roundFoodUnits')}`)
 
         // Toolbar
-        let inputScene = this.scene.get("FieldScene")
-        this.toolSprite.setTexture(inputScene.toolbar.getCurrentToolName())
+        this.toolSprite.setTexture(this.fieldScene.toolbar.getCurrentToolName())
         this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
     }
 

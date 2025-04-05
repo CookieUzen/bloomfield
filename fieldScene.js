@@ -74,20 +74,6 @@ export default class FieldScene extends Phaser.Scene {
         //------------------------------------
 
         // Engine setup ----------------------
-        // Bind keys 1-9 for selecting tools
-        const keys = ['Q', 'W', 'E', 'ONE', 'TWO', 'THREE', 'FOUR'];
-        const tools = [{type: ToolTypes.EQUIPMENT, toolName: 'watering_can'}, {type: ToolTypes.EQUIPMENT, toolName: 'sickle'}, {type: ToolTypes.EQUIPMENT, toolName: 'fertilizer'}, 
-            {type: ToolTypes.SEED, toolName: 'corn'}, {type: ToolTypes.SEED, toolName: 'soybean'}, {type: ToolTypes.SEED, toolName: 'potato'}, {type: ToolTypes.SEED, toolName: 'wheat'}
-        ]
-        keys.forEach((key, index) => {
-            this.input.keyboard.on(`keydown-${key}`, () => {
-                if (tools[index].type === ToolTypes.EQUIPMENT) {
-                    this.toolbar.setToolEquipment(tools[index].toolName)
-                } else {
-                    this.toolbar.setToolSeed(tools[index].toolName)
-                }
-            });
-        });
         
 
         // Load UI scene
@@ -249,12 +235,12 @@ export default class FieldScene extends Phaser.Scene {
 
         // Start the scene again!
         this.scene.wake();
-        this.scene.get('InputScene').scene.wake()
+        this.scene.launch('InputScene');  // Restart this scene so it rebuilds the buttons (easiest way to go about it tbh)
         this.scene.bringToTop('InputScene')
     }
 
     endRound() {
-        this.scene.get('InputScene').scene.sleep()
+        this.scene.get('InputScene').scene.stop()  // Stop this one because we want to restart it later
         this.scene.sleep(); // We don't destroy the scene because we want to keep tiles data intact
         this.scene.launch('RoundEndScene');
     }

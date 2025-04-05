@@ -44,11 +44,11 @@ roundInfinite = 7	# infinite after 7 rounds
 
 # Configuration for the rounds
 [round.1]
-goal = 500
+goal = 50
 gridSizeX = 2
 gridSizeY = 2
 cropsUnlocked = ["corn"]
-time = 120
+time = 60
 
 [round.2]
 goal = 600

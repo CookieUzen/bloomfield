@@ -1,4 +1,5 @@
 import { UITextButton, UIImageButton } from "./UIButton.js";
+import { ToolTypes } from "./newToolbar.js";
 
 
 // This scene handles all the global keyboard input and mouse input
@@ -26,16 +27,6 @@ export default class InputScene extends Phaser.Scene {
 
     create() {
 
-        // Keybinder
-        this.input.keyboard.on('keydown-ESC', () => {         // Triggers once when P is pressed
-            this.fieldScene.togglePause();                        // Toggle pause
-        });
-
-		// TODO remove this when we move the pause button
-		this.input.keyboard.on('keydown-T', () => {         // Triggers once when P is pressed
-            this.fieldScene.togglePause();                        // Toggle pause
-        });
-
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 
@@ -50,7 +41,16 @@ export default class InputScene extends Phaser.Scene {
         topButtonRow.push(new UITextButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
 
 		const cropData = this.registry.get('config').crops;
-        for (const crop of Object.keys(cropData)) {
+		
+		// load round config
+
+        const config = this.registry.get('config').round
+        const roundNum = this.registry.get('round')     // Get the config for the current round
+        const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
+
+		console.log(roundConfig)
+
+        for (const crop of roundConfig.cropsUnlocked) {
 			rightButtonColumn.push(new UIImageButton(this, 0, 0, crop + '_seed', () => { this.fieldScene.toolbar.setToolSeed(crop)}))  
 		}
     
@@ -111,6 +111,35 @@ export default class InputScene extends Phaser.Scene {
         // Make current tool follow the mouse around
         this.toolSprite = this.add.sprite(0, 0, 'watering_can')
         //------------------------------------
+
+		// Keybinder
+        this.input.keyboard.on('keydown-ESC', () => {         // Triggers once when P is pressed
+            this.fieldScene.togglePause();                        // Toggle pause
+        });
+
+		// TODO remove this when we move the pause button
+		this.input.keyboard.on('keydown-T', () => {         // Triggers once when P is pressed
+            this.fieldScene.togglePause();                        // Toggle pause
+        });
+
+		 // Bind keys 1-9 for selecting tools
+		 const keys = ['Q', 'W', 'E', 'ONE', 'TWO', 'THREE', 'FOUR'];
+		 const tools = [{type: ToolTypes.EQUIPMENT, toolName: 'watering_can'}, {type: ToolTypes.EQUIPMENT, toolName: 'sickle'}, {type: ToolTypes.EQUIPMENT, toolName: 'fertilizer'}, 
+			 {type: ToolTypes.SEED, toolName: 'corn'}, {type: ToolTypes.SEED, toolName: 'soybean'}, {type: ToolTypes.SEED, toolName: 'potato'}, {type: ToolTypes.SEED, toolName: 'wheat'}
+		 ]
+		 keys.forEach((key, index) => {
+
+			if (tools[index].type === ToolTypes.SEED && !roundConfig.cropsUnlocked.includes(tools[index].toolName)) return  // Skip keybinds for seeds not in the config
+
+			 this.input.keyboard.on(`keydown-${key}`, () => {
+				 
+				 if (tools[index].type === ToolTypes.EQUIPMENT) {
+					 this.fieldScene.toolbar.setToolEquipment(tools[index].toolName)
+				 } else {
+					 this.fieldScene.toolbar.setToolSeed(tools[index].toolName)
+				 }
+			 });
+		 });
     }
 
     update() {

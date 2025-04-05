@@ -137,3 +137,6 @@ dist
 
 # ide config
 .vscode
+
+# macOS why 
+.DS_Store

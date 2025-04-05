@@ -1,0 +1,18 @@
+[round]
+
+[round.1]
+
+[round.1.start]
+character = "TODO"
+speech = [
+    "*thump*\nHello there!",
+    "General Kenobi!"
+]
+
+
+[round.1.end]
+character = "TODO"
+speech = [
+    "Yippee"
+]
+

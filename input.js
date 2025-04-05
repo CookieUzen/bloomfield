@@ -34,8 +34,8 @@ export default class InputScene extends Phaser.Scene {
         const rightButtonColumn = []
 
         // topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))  // TODO keybinds
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))  // TODO not hardcode tool index
+        topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))
+        topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))
         topButtonRow.push(new UIImageButton(this, 0, 0, 'fertilizer', () => {this.fieldScene.toolbar.setToolEquipment('fertilizer')}))  
 		topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  
         topButtonRow.push(new UITextButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
@@ -122,27 +122,75 @@ export default class InputScene extends Phaser.Scene {
             this.fieldScene.togglePause();                        // Toggle pause
         });
 
-		 // Bind keys 1-9 for selecting tools
-		 const keys = ['Q', 'W', 'E', 'ONE', 'TWO', 'THREE', 'FOUR'];
-		 const tools = [{type: ToolTypes.EQUIPMENT, toolName: 'watering_can'}, {type: ToolTypes.EQUIPMENT, toolName: 'sickle'}, {type: ToolTypes.EQUIPMENT, toolName: 'fertilizer'}, 
-			 {type: ToolTypes.SEED, toolName: 'corn'}, {type: ToolTypes.SEED, toolName: 'soybean'}, {type: ToolTypes.SEED, toolName: 'potato'}, {type: ToolTypes.SEED, toolName: 'wheat'}
-		 ]
-		 keys.forEach((key, index) => {
+		// Bind keys 1-9 for selecting tools
+		const keys = ['Q', 'W', 'E', 'ONE', 'TWO', 'THREE', 'FOUR'];
+		const tools = [{type: ToolTypes.EQUIPMENT, toolName: 'watering_can'}, {type: ToolTypes.EQUIPMENT, toolName: 'sickle'}, {type: ToolTypes.EQUIPMENT, toolName: 'fertilizer'}, 
+			{type: ToolTypes.SEED, toolName: 'corn'}, {type: ToolTypes.SEED, toolName: 'soybean'}, {type: ToolTypes.SEED, toolName: 'potato'}, {type: ToolTypes.SEED, toolName: 'wheat'}
+		]
+		keys.forEach((key, index) => {
 
-			if (tools[index].type === ToolTypes.SEED && !roundConfig.cropsUnlocked.includes(tools[index].toolName)) return  // Skip keybinds for seeds not in the config
+		if (tools[index].type === ToolTypes.SEED && !roundConfig.cropsUnlocked.includes(tools[index].toolName)) return  // Skip keybinds for seeds not in the config
 
-			 this.input.keyboard.on(`keydown-${key}`, () => {
-				 
-				 if (tools[index].type === ToolTypes.EQUIPMENT) {
-					 this.fieldScene.toolbar.setToolEquipment(tools[index].toolName)
-				 } else {
-					 this.fieldScene.toolbar.setToolSeed(tools[index].toolName)
-				 }
-			 });
-		 });
+			this.input.keyboard.on(`keydown-${key}`, () => {
+				
+				if (tools[index].type === ToolTypes.EQUIPMENT) {
+					this.fieldScene.toolbar.setToolEquipment(tools[index].toolName)
+				} else {
+					this.fieldScene.toolbar.setToolSeed(tools[index].toolName)
+				}
+			});
+		});
+
+		// Dialogue setup
+		const dialogueData = this.registry.get('dialogue').round
+        this.roundDialogue = (roundNum > config.roundInfinite) ? dialogueData['infinite'] : dialogueData[roundNum.toString()]
+
+		this.dialogueIndex = 0
+
+		const dialogueBackgroundTopLeft = [50, 550]
+		const dialogueBackgroundDimensions = [1050, 75]
+		const dialogueBackgroundBorderThickness = 10
+		this.dialogueBackground = this.add.graphics()
+		this.dialogueBackground.fillStyle(0x974B22, 1);
+        this.dialogueBackground.fillRoundedRect(dialogueBackgroundTopLeft[0], dialogueBackgroundTopLeft[1], dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0], dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1], 10);
+		this.dialogueBackground.fillStyle(0xB95C2C, 1);
+        this.dialogueBackground.fillRoundedRect(dialogueBackgroundTopLeft[0] + dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[1] + dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0] - 2 * dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1] - 2 * dialogueBackgroundBorderThickness, 10);
+		this.dialogueBackground.setInteractive(new Phaser.Geom.Rectangle(dialogueBackgroundTopLeft[0], dialogueBackgroundTopLeft[1], dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0], dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1]), Phaser.Geom.Rectangle.Contains)
+		this.dialogueBackground.on('pointerdown', () => {
+			this.dialogueIndex += 1  // Increment dialogue
+			console.log(this.dialogueIndex)
+
+            // Unpause if we are paused
+            if (this.dialogueIndex >= this.roundDialogue.start.speech.length && !this.fieldScene.scene.isActive()) {
+                this.fieldScene.togglePause()
+            }
+
+		})  // Handle mouse down
+        this.dialogueBackground.setVisible(false)
+
+        this.dialogueText = this.add.text(75, 575, '', textStyle)
+        this.dialogueText.setAbove(this.dialogueBackground)
+        this.dialogueText.setVisible(false)
     }
 
     update() {
+
+        if (this.roundDialogue.start && this.dialogueIndex < this.roundDialogue.start.speech.length) {
+            // Keep game paused while we are in the dialogue
+            if (this.fieldScene.scene.isActive()) {
+                this.fieldScene.togglePause()
+            }
+
+            this.dialogueBackground.setVisible(true)
+            this.dialogueText.setVisible(true)
+
+            this.dialogueText.setText(this.roundDialogue.start.speech[this.dialogueIndex])
+
+        } else {
+            this.dialogueBackground.setVisible(false)
+            this.dialogueText.setVisible(false)
+        }
+		
 
         // Update our info boxes
         let round = this.registry.get('round')

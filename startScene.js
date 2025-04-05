@@ -54,6 +54,27 @@ export default class StartScene extends Phaser.Scene {
         this.registry.set('config', config);
         console.log(config);
 
+        // Also load dialogue similarly
+        fetch('./dialogue.toml')
+            .then(response => { // Fetch the config.toml file
+                if (!response.ok) {
+                    throw new Error('Could not get dialogue.toml');
+                }
+                return response.text();
+            })
+            .then(text => { // Parse the config.toml file
+                try {
+                    const dialogue = toml.parse(text);
+                    this.registry.set('dialogue', dialogue);
+                } catch (err) {
+                    console.error('Error parsing dialogue.toml:', err);
+                }
+            })
+            .catch(err => { // Log any errors
+                console.error(err);
+            });
+
+
         // TODO: Load background and add start button
         console.log("Start Scene triggered");
 

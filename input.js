@@ -190,7 +190,7 @@ export default class InputScene extends Phaser.Scene {
             this.unpauseButton.setVisible(false)
         }
 
-        if (this.roundDialogue.start && this.dialogueIndex < this.roundDialogue.start.speech.length) {
+        if (this.roundDialogue && this.roundDialogue.start && this.dialogueIndex < this.roundDialogue.start.speech.length) {
             // Keep game paused while we are in the dialogue
             if (this.fieldScene.scene.isActive()) {
                 this.fieldScene.togglePause()

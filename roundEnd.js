@@ -67,7 +67,7 @@ export default class RoundEndScene extends Phaser.Scene {
 
     update() {
 
-        if (this.roundDialogue.end && this.dialogueIndex < this.roundDialogue.end.speech.length) {
+        if (this.roundDialogue?.end && this.dialogueIndex < this.roundDialogue.end.speech.length) {
 
             this.dialogueBackground.setVisible(true)
             this.dialogueText.setVisible(true)

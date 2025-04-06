@@ -160,18 +160,38 @@ export default class Tiles extends Phaser.GameObjects.Container {
             this.add(this.fertLevelText)
         }
 
-        // Don't do anything if there is no crop
+        // Manage water alert
+        this.updateAlertAlphas(time)
+
+        if (this.#waterLevel < 10) {  // If the water is critical, show the critical alert
+            this.hideWaterAlert()
+            this.showWaterCritAlert()
+        }
+        else if (this.#waterLevel < 50 && this.#crop) {  // If the water is low and we have a crop, show the low alert
+            this.showWaterAlert()
+            this.hideWaterCritAlert()
+        } else {
+            this.hideWaterAlert()
+            this.hideWaterCritAlert()
+        }
+
+        // Don't do anything else if there is no crop
         if (!this.#crop) {
-            this.hideWaterAlert();
+            this.hideWaterAlert()
             this.hideMonocropAlert()
+            this.hideHarvestAlert()
             return;
         }
 
         // Don't do anything if the crop is done 
         // TODO: limit time before harvesting is required?
         if (this.#crop.isGrown()) {
-            this.hideWaterAlert();
+            this.hideWaterAlert()
+            this.hideMonocropAlert()
+            this.showHarvestAlert()
             return;
+        } else {
+            this.hideHarvestAlert()
         }
 
         // Drain the water 
@@ -179,15 +199,6 @@ export default class Tiles extends Phaser.GameObjects.Container {
 
         // Use the fertilizer
         this.fertilize((delta/1000) * (-this.#crop.getFertilizerUsage() / this.#crop.getGrowthTime()));
-
-        // Manage water alert
-        this.updateAlertAlphas(time)
-        
-        if (this.#waterLevel < 50) {
-            this.showWaterAlert()
-        } else {
-            this.hideWaterAlert()
-        }
 
         // Grow the crop based on the time delta. 
         let cropGrowAmount = delta/1000
@@ -272,6 +283,27 @@ export default class Tiles extends Phaser.GameObjects.Container {
         }
     }
 
+    showWaterCritAlert() {
+        // Ensure we have one active.
+        const prevWaterCritIcon = this.alertIcons.waterCritLow
+
+        if (!prevWaterCritIcon) {
+            let waterCritLow = new AlertIcon(this.scene, "xDroplet")
+            this.alertIcons.waterCritLow = waterCritLow
+            waterCritLow.setScale(1/60)
+            this.add(waterCritLow) // Add the icon to the tile
+            this.bringToTop(waterCritLow) // Bring the icon to the top of the tile
+        }
+    }
+
+    hideWaterCritAlert() {
+        const prevWaterCritIcon = this.alertIcons.waterCritLow
+        if (prevWaterCritIcon) {  // Water not critical but we have an icon active
+            prevWaterCritIcon.destroy()
+            this.alertIcons.waterCritLow = null
+        }
+    }
+
     showMonocropAlert() {
         // Ensure we have one active.
         const prevMonocropIcon = this.alertIcons.monocrop
@@ -286,9 +318,29 @@ export default class Tiles extends Phaser.GameObjects.Container {
 
     hideMonocropAlert() {
         const prevMonocropIcon = this.alertIcons.monocrop
-        if (prevMonocropIcon) {  // Water not low but we have an icon active
+        if (prevMonocropIcon) { 
             prevMonocropIcon.destroy()
             this.alertIcons.monocrop = null
+        }
+    }
+
+    showHarvestAlert() {
+        // Ensure we have one active.
+        const prevHarvestIcon = this.alertIcons.harvest
+        if (!prevHarvestIcon) {
+            let harvest = new AlertIcon(this.scene, "sickle")
+            this.alertIcons.harvest = harvest
+            harvest.setScale(1/60)
+            this.add(harvest) // Add the icon to the tile
+            this.bringToTop(harvest) // Bring the icon to the top of the tile
+        }
+    }
+
+    hideHarvestAlert() {
+        const prevHarvestIcon = this.alertIcons.harvest
+        if (prevHarvestIcon) {  // Water not low but we have an icon active
+            prevHarvestIcon.destroy()
+            this.alertIcons.harvest = null
         }
     }
 

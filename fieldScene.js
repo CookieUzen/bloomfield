@@ -31,6 +31,7 @@ export default class FieldScene extends Phaser.Scene {
 
         // Load icons
         this.load.image('droplet', "./public/assets/Droplet.png")
+        this.load.image('xDroplet', "./public/assets/XDroplet.png")
         this.load.image('downArrow', "./public/assets/Down_arrow.png")
 
         const cropData = this.registry.get('config').crops;

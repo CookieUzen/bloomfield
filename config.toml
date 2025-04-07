@@ -44,53 +44,53 @@ roundInfinite = 7 # infinite after 7 rounds
 
 # Configuration for the rounds
 [round.1]
-goal = 60
+goal = 30
 gridSizeX = 2
 gridSizeY = 2
 cropsUnlocked = ["corn"]
-time = 120
+time = 100
 
 [round.2]
-goal = 150
+goal = 80
 gridSizeX = 3
 gridSizeY = 3
 cropsUnlocked = ["corn", "soybean"]
-time = 120
+time = 60
 
 [round.3]
-goal = 300
+goal = 160
 gridSizeX = 4
 gridSizeY = 4
 cropsUnlocked = ["corn", "soybean"]
-time = 180
+time = 90
 
 [round.4]
-goal = 800
+goal = 400
 gridSizeX = 4
 gridSizeY = 4
 cropsUnlocked = ["corn", "soybean", "potato"]
-time = 180
+time = 90
 
 [round.5]
-goal = 1200
+goal = 600
 gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato"]
-time = 180
+time = 90
 
 [round.6]
-goal = 1600
+goal = 800
 gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
-time = 300
+time = 160
 
 [round.7]
-goal = 2000
+goal = 1000
 gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
-time = 360
+time = 180
 
 [round.infinite]
 goal = 600  # Goal for round 7

@@ -2,100 +2,100 @@
 [cheats]
 enable = false
 unlockAllCrops = false
-skipToRound = 1	# skip to nth round
+skipToRound = 1 # skip to nth round
 
 # Config for toolbar here:
 [toolbar]
-wateringCanAmount = 30
-fertilizerAmount = 3
+wateringCanAmount = 70
+fertilizerAmount = 20
 
 # Config for crops here
 [crops]
 [crops.corn]
-growthTime = 20
-value = 50
+growthTime = 25
+value = 10
 weight = 10
-waterUsage = 5
-fertilizerUsage = 50
+waterUsage = 7
+fertilizerUsage = 40
 
 [crops.soybean]
-growthTime = 40
-value = 100
-weight = 4
+growthTime = 30
+value = 8
+weight = 8
 waterUsage = 3
-fertilizerUsage = -40
+fertilizerUsage = -30
 
 [crops.potato]
-growthTime = 46
-value = 100
-weight = 20
-waterUsage = 3
-fertilizerUsage = 10
+growthTime = 35
+value = 15
+weight = 15
+waterUsage = 5
+fertilizerUsage = 30
 
 [crops.wheat]
-growthTime = 34
-value = 100
-weight = 15
-waterUsage = 8
-fertilizerUsage = 20
+growthTime = 50
+value = 25
+weight = 25
+waterUsage = 6
+fertilizerUsage = 35
 
 [round]
-roundInfinite = 7	# infinite after 7 rounds
+roundInfinite = 7 # infinite after 7 rounds
 
 # Configuration for the rounds
 [round.1]
-goal = 50
+goal = 60
 gridSizeX = 2
 gridSizeY = 2
 cropsUnlocked = ["corn"]
-time = 60
+time = 120
 
 [round.2]
-goal = 600
+goal = 150
 gridSizeX = 3
 gridSizeY = 3
 cropsUnlocked = ["corn", "soybean"]
 time = 120
 
 [round.3]
-goal = 700
+goal = 300
 gridSizeX = 4
 gridSizeY = 4
 cropsUnlocked = ["corn", "soybean"]
-time = 120
+time = 180
 
 [round.4]
 goal = 800
-gridSizeX = 5
-gridSizeY = 5
+gridSizeX = 4
+gridSizeY = 4
 cropsUnlocked = ["corn", "soybean", "potato"]
-time = 120
+time = 180
 
 [round.5]
-goal = 900
+goal = 1200
 gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato"]
-time = 120
+time = 180
 
 [round.6]
-goal = 1000
+goal = 1600
 gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
-time = 120
+time = 300
 
 [round.7]
-goal = 1100
+goal = 2000
 gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
-time = 120
+time = 360
 
 [round.infinite]
-goal = 1400		# Goal for round 7
-goalMultiplier = 1.5	# Increase the goal by 50% each round
-gridSizeX = 6
-gridSizeY = 6
+goal = 600  # Goal for round 7
+goalMultiplier = 1.5 # Increase the goal by 50% each round
+gridSizeX = 5
+gridSizeY = 5
 time = 120
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]

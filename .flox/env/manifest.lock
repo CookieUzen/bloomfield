@@ -9,8 +9,8 @@
       "gh": {
         "pkg-path": "gh"
       },
-      "neovim": {
-        "pkg-path": "neovim"
+      "nixvim": {
+        "flake": "github:cookieuzen/nixvim"
       },
       "nodejs": {
         "pkg-path": "nodejs"
@@ -270,122 +270,6 @@
       "priority": 5
     },
     {
-      "attr_path": "neovim",
-      "broken": false,
-      "derivation": "/nix/store/lyz453k544lzlwb7mdr7sqayrzkdgv7c-neovim-0.11.0.drv",
-      "description": "Vim text editor fork focused on extensibility and agility",
-      "install_id": "neovim",
-      "license": "[ Apache-2.0, Vim ]",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
-      "name": "neovim-0.11.0",
-      "pname": "neovim",
-      "rev": "42a1c966be226125b48c384171c44c651c236c22",
-      "rev_count": 779115,
-      "rev_date": "2025-04-05T04:29:29Z",
-      "scrape_date": "2025-04-07T01:12:08.379055Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "0.11.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/4ch16nz6lwmzlxhwr2lwc3wqy7khxbks-neovim-0.11.0"
-      },
-      "system": "aarch64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "neovim",
-      "broken": false,
-      "derivation": "/nix/store/b9xlyc72xpjy0l1hchcm4pizf0jjz8y2-neovim-0.11.0.drv",
-      "description": "Vim text editor fork focused on extensibility and agility",
-      "install_id": "neovim",
-      "license": "[ Apache-2.0, Vim ]",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
-      "name": "neovim-0.11.0",
-      "pname": "neovim",
-      "rev": "42a1c966be226125b48c384171c44c651c236c22",
-      "rev_count": 779115,
-      "rev_date": "2025-04-05T04:29:29Z",
-      "scrape_date": "2025-04-07T01:30:53.266713Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "0.11.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/8av5ivxr1x3cymnbdfvf1izbx7998iiq-neovim-0.11.0"
-      },
-      "system": "aarch64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "neovim",
-      "broken": false,
-      "derivation": "/nix/store/k032p7d689k8wz8s7d08n61l8di88a66-neovim-0.11.0.drv",
-      "description": "Vim text editor fork focused on extensibility and agility",
-      "install_id": "neovim",
-      "license": "[ Apache-2.0, Vim ]",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
-      "name": "neovim-0.11.0",
-      "pname": "neovim",
-      "rev": "42a1c966be226125b48c384171c44c651c236c22",
-      "rev_count": 779115,
-      "rev_date": "2025-04-05T04:29:29Z",
-      "scrape_date": "2025-04-07T01:47:17.293488Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "0.11.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/5bd60mhl94s6gl1cqi2xjra0ad8v2cdp-neovim-0.11.0"
-      },
-      "system": "x86_64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "neovim",
-      "broken": false,
-      "derivation": "/nix/store/jjvy4s3apchxbazjlyc76yq2p56dwbpd-neovim-0.11.0.drv",
-      "description": "Vim text editor fork focused on extensibility and agility",
-      "install_id": "neovim",
-      "license": "[ Apache-2.0, Vim ]",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
-      "name": "neovim-0.11.0",
-      "pname": "neovim",
-      "rev": "42a1c966be226125b48c384171c44c651c236c22",
-      "rev_count": 779115,
-      "rev_date": "2025-04-05T04:29:29Z",
-      "scrape_date": "2025-04-07T02:07:06.503093Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "0.11.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/97cka40y26y30mza1v4gfbvlbp5a2a42-neovim-0.11.0"
-      },
-      "system": "x86_64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
       "attr_path": "nodejs",
       "broken": false,
       "derivation": "/nix/store/4bl62dvqxj7m1c9jf0h6i7dj8kvmfph3-nodejs-22.14.0.drv",
@@ -619,6 +503,98 @@
       },
       "system": "x86_64-linux",
       "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "install_id": "nixvim",
+      "locked-url": "github:cookieuzen/nixvim/c3b979cc730c3e3db6bac49ac82d7e3d4247966b?narHash=sha256-7MAtsaA83z0jutVaX3RVk3GQzcVHWq0w%2BtUDUq04Qkw%3D",
+      "flake-description": "A nixvim configuration",
+      "locked-flake-attr-path": "packages.aarch64-darwin.default",
+      "derivation": "/nix/store/4yfs24zdmvpmy82dnb33kp8ynx9s288b-nixvim.drv",
+      "outputs": {
+        "out": "/nix/store/yya7yb30f9v9czd6591443gfcjqhm078-nixvim"
+      },
+      "output-names": [
+        "out"
+      ],
+      "outputs-to-install": [
+        "out"
+      ],
+      "requested-outputs-to-install": [],
+      "package-system": "aarch64-darwin",
+      "system": "aarch64-darwin",
+      "name": "nixvim",
+      "broken": false,
+      "unfree": false,
+      "priority": 5
+    },
+    {
+      "install_id": "nixvim",
+      "locked-url": "github:cookieuzen/nixvim/c3b979cc730c3e3db6bac49ac82d7e3d4247966b?narHash=sha256-7MAtsaA83z0jutVaX3RVk3GQzcVHWq0w%2BtUDUq04Qkw%3D",
+      "flake-description": "A nixvim configuration",
+      "locked-flake-attr-path": "packages.aarch64-linux.default",
+      "derivation": "/nix/store/yrsh02v7cgvdavd9ihb5b5h9vj6syi6j-nixvim.drv",
+      "outputs": {
+        "out": "/nix/store/h3ylkrw41zkmnrrkwi8lgqx5x4zq0d20-nixvim"
+      },
+      "output-names": [
+        "out"
+      ],
+      "outputs-to-install": [
+        "out"
+      ],
+      "requested-outputs-to-install": [],
+      "package-system": "aarch64-linux",
+      "system": "aarch64-linux",
+      "name": "nixvim",
+      "broken": false,
+      "unfree": false,
+      "priority": 5
+    },
+    {
+      "install_id": "nixvim",
+      "locked-url": "github:cookieuzen/nixvim/c3b979cc730c3e3db6bac49ac82d7e3d4247966b?narHash=sha256-7MAtsaA83z0jutVaX3RVk3GQzcVHWq0w%2BtUDUq04Qkw%3D",
+      "flake-description": "A nixvim configuration",
+      "locked-flake-attr-path": "packages.x86_64-darwin.default",
+      "derivation": "/nix/store/9pck21q6vxl6dwifzj7gs885lz2fb7cj-nixvim.drv",
+      "outputs": {
+        "out": "/nix/store/b204cp1zcvjm04khwvpvnpww2xcg8zkv-nixvim"
+      },
+      "output-names": [
+        "out"
+      ],
+      "outputs-to-install": [
+        "out"
+      ],
+      "requested-outputs-to-install": [],
+      "package-system": "x86_64-darwin",
+      "system": "x86_64-darwin",
+      "name": "nixvim",
+      "broken": false,
+      "unfree": false,
+      "priority": 5
+    },
+    {
+      "install_id": "nixvim",
+      "locked-url": "github:cookieuzen/nixvim/c3b979cc730c3e3db6bac49ac82d7e3d4247966b?narHash=sha256-7MAtsaA83z0jutVaX3RVk3GQzcVHWq0w%2BtUDUq04Qkw%3D",
+      "flake-description": "A nixvim configuration",
+      "locked-flake-attr-path": "packages.x86_64-linux.default",
+      "derivation": "/nix/store/xc56lpxshn4mkbffp45sadryn2i7hcxy-nixvim.drv",
+      "outputs": {
+        "out": "/nix/store/6p4zl2g6pqxw2n94r3yfaxlp8ccaywrw-nixvim"
+      },
+      "output-names": [
+        "out"
+      ],
+      "outputs-to-install": [
+        "out"
+      ],
+      "requested-outputs-to-install": [],
+      "package-system": "x86_64-linux",
+      "system": "x86_64-linux",
+      "name": "nixvim",
+      "broken": false,
+      "unfree": false,
       "priority": 5
     }
   ]

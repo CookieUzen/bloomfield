@@ -17,9 +17,9 @@ version = 1
 [install]
 gh.pkg-path = "gh"
 nodejs.pkg-path = "nodejs"
-neovim.pkg-path = "neovim"
 fish.pkg-path = "fish"
 starship.pkg-path = "starship"
+nixvim.flake = "github:cookieuzen/nixvim"
 # gum.pkg-path = "gum"
 # gum.version = "^0.14.5"
 

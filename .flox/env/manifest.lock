@@ -1,0 +1,625 @@
+{
+  "lockfile-version": 1,
+  "manifest": {
+    "version": 1,
+    "install": {
+      "fish": {
+        "pkg-path": "fish"
+      },
+      "gh": {
+        "pkg-path": "gh"
+      },
+      "neovim": {
+        "pkg-path": "neovim"
+      },
+      "nodejs": {
+        "pkg-path": "nodejs"
+      },
+      "starship": {
+        "pkg-path": "starship"
+      }
+    },
+    "hook": {
+      "on-activate": "  # -> Set variables, create files and directories\n  # -> Perform initialization steps, e.g. create a python venv\n  # -> Useful environment variables:\n  #      - FLOX_ENV_PROJECT=/home/user/example\n  #      - FLOX_ENV=/home/user/example/.flox/run\n  #      - FLOX_ENV_CACHE=/home/user/example/.flox/cache\n  fish\n"
+    },
+    "profile": {},
+    "options": {
+      "systems": [
+        "aarch64-darwin",
+        "aarch64-linux",
+        "x86_64-darwin",
+        "x86_64-linux"
+      ]
+    }
+  },
+  "packages": [
+    {
+      "attr_path": "fish",
+      "broken": false,
+      "derivation": "/nix/store/w6km104mkfdf237hqln4spqyxl5k3nih-fish-4.0.1.drv",
+      "description": "Smart and user-friendly command line shell",
+      "install_id": "fish",
+      "license": "GPL-2.0-only",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "fish-4.0.1",
+      "pname": "fish",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:12:05.974847Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "4.0.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "doc": "/nix/store/jl9vr5si42w43jqqi5s6yr0cclgcfwv3-fish-4.0.1-doc",
+        "out": "/nix/store/kc3wsjq8081nkcvl2a5nrrnngjvxkg8l-fish-4.0.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "fish",
+      "broken": false,
+      "derivation": "/nix/store/qw2i66074q7rrm95fm9z2q30f216f52l-fish-4.0.1.drv",
+      "description": "Smart and user-friendly command line shell",
+      "install_id": "fish",
+      "license": "GPL-2.0-only",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "fish-4.0.1",
+      "pname": "fish",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:30:44.009250Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "4.0.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "doc": "/nix/store/263ig4x2whcdajq8q8fwzbrr8af9xyvw-fish-4.0.1-doc",
+        "out": "/nix/store/4nhi1jyl1dji0r1hlkq0wkxmf3yjgb1h-fish-4.0.1"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "fish",
+      "broken": false,
+      "derivation": "/nix/store/i326i6wijy0rn4242lq69jh7kdmc5iy5-fish-4.0.1.drv",
+      "description": "Smart and user-friendly command line shell",
+      "install_id": "fish",
+      "license": "GPL-2.0-only",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "fish-4.0.1",
+      "pname": "fish",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:47:14.844003Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "4.0.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "doc": "/nix/store/78xaq179037z4d6lhhxk4v5lfqf9wpp4-fish-4.0.1-doc",
+        "out": "/nix/store/fja84x1y379sllq4rwmsv1bpyz89ga8n-fish-4.0.1"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "fish",
+      "broken": false,
+      "derivation": "/nix/store/68a0ix67g7lzb246pb9x1sip7nv62y16-fish-4.0.1.drv",
+      "description": "Smart and user-friendly command line shell",
+      "install_id": "fish",
+      "license": "GPL-2.0-only",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "fish-4.0.1",
+      "pname": "fish",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T02:06:55.397708Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "4.0.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "doc": "/nix/store/71vcscnq0h9a8hbmf1mxqj1lizpdv8fc-fish-4.0.1-doc",
+        "out": "/nix/store/j2qz2d900y518k2hq6myl60g2vyh7l19-fish-4.0.1"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "gh",
+      "broken": false,
+      "derivation": "/nix/store/8yq6y3832m56qbag5qlcyzxmgp2y9c8h-gh-2.69.0.drv",
+      "description": "GitHub CLI tool",
+      "install_id": "gh",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "gh-2.69.0",
+      "pname": "gh",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:12:06.101427Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "2.69.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/68qkvw2pfpnajdm8s9gbnwwx1n26b2jv-gh-2.69.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "gh",
+      "broken": false,
+      "derivation": "/nix/store/fp09r32jyszxdhj36lr578a9nwh1zsgi-gh-2.69.0.drv",
+      "description": "GitHub CLI tool",
+      "install_id": "gh",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "gh-2.69.0",
+      "pname": "gh",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:30:44.232405Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "2.69.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/af5xmfq74g857jzxg78m5ssg20i591zp-gh-2.69.0"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "gh",
+      "broken": false,
+      "derivation": "/nix/store/1hxbd2br8c9g1dw0r8yq9sczgcvzvn49-gh-2.69.0.drv",
+      "description": "GitHub CLI tool",
+      "install_id": "gh",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "gh-2.69.0",
+      "pname": "gh",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:47:14.974489Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "2.69.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/p5maq36gvhlb9lhgkwr45w1hk46lkayx-gh-2.69.0"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "gh",
+      "broken": false,
+      "derivation": "/nix/store/m00v8wva2q4crgk43h0zqlhynx80i188-gh-2.69.0.drv",
+      "description": "GitHub CLI tool",
+      "install_id": "gh",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "gh-2.69.0",
+      "pname": "gh",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T02:06:55.652451Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "2.69.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/a42dil5xrgf74ir5nnryhyg4v0ymkpi0-gh-2.69.0"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "neovim",
+      "broken": false,
+      "derivation": "/nix/store/lyz453k544lzlwb7mdr7sqayrzkdgv7c-neovim-0.11.0.drv",
+      "description": "Vim text editor fork focused on extensibility and agility",
+      "install_id": "neovim",
+      "license": "[ Apache-2.0, Vim ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "neovim-0.11.0",
+      "pname": "neovim",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:12:08.379055Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.11.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/4ch16nz6lwmzlxhwr2lwc3wqy7khxbks-neovim-0.11.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "neovim",
+      "broken": false,
+      "derivation": "/nix/store/b9xlyc72xpjy0l1hchcm4pizf0jjz8y2-neovim-0.11.0.drv",
+      "description": "Vim text editor fork focused on extensibility and agility",
+      "install_id": "neovim",
+      "license": "[ Apache-2.0, Vim ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "neovim-0.11.0",
+      "pname": "neovim",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:30:53.266713Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.11.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/8av5ivxr1x3cymnbdfvf1izbx7998iiq-neovim-0.11.0"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "neovim",
+      "broken": false,
+      "derivation": "/nix/store/k032p7d689k8wz8s7d08n61l8di88a66-neovim-0.11.0.drv",
+      "description": "Vim text editor fork focused on extensibility and agility",
+      "install_id": "neovim",
+      "license": "[ Apache-2.0, Vim ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "neovim-0.11.0",
+      "pname": "neovim",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:47:17.293488Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.11.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/5bd60mhl94s6gl1cqi2xjra0ad8v2cdp-neovim-0.11.0"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "neovim",
+      "broken": false,
+      "derivation": "/nix/store/jjvy4s3apchxbazjlyc76yq2p56dwbpd-neovim-0.11.0.drv",
+      "description": "Vim text editor fork focused on extensibility and agility",
+      "install_id": "neovim",
+      "license": "[ Apache-2.0, Vim ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "neovim-0.11.0",
+      "pname": "neovim",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T02:07:06.503093Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.11.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/97cka40y26y30mza1v4gfbvlbp5a2a42-neovim-0.11.0"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "nodejs",
+      "broken": false,
+      "derivation": "/nix/store/4bl62dvqxj7m1c9jf0h6i7dj8kvmfph3-nodejs-22.14.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "nodejs-22.14.0",
+      "pname": "nodejs",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:12:08.564925Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "22.14.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "libv8": "/nix/store/4m6xhygkx74fsd5k99nihgr7vg85f553-nodejs-22.14.0-libv8",
+        "out": "/nix/store/i1v519j66jmvpqr5h382i9nanxwa5l6n-nodejs-22.14.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "nodejs",
+      "broken": false,
+      "derivation": "/nix/store/m8khc780w6kw2yrzfg4f6d53d8midsr2-nodejs-22.14.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "nodejs-22.14.0",
+      "pname": "nodejs",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:30:53.659605Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "22.14.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "libv8": "/nix/store/s8407q9aa2mi2b60zk2mkjjdnv4qw87x-nodejs-22.14.0-libv8",
+        "out": "/nix/store/p6183qmkyfkz5sqlv4wbw6a2nnh1r8jf-nodejs-22.14.0"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "nodejs",
+      "broken": false,
+      "derivation": "/nix/store/196ab1kxhfzgd8vv2vspas0r7h4hxks8-nodejs-22.14.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "nodejs-22.14.0",
+      "pname": "nodejs",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:47:17.471903Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "22.14.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "libv8": "/nix/store/sx5pbfq09qkl6bfxcljmhf5s1z049693-nodejs-22.14.0-libv8",
+        "out": "/nix/store/mxpq0x25ayiliy6938pflhqvfc1nznkl-nodejs-22.14.0"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "nodejs",
+      "broken": false,
+      "derivation": "/nix/store/krrkhhd5vs17c7mx5zrqivf0rrl8w8kq-nodejs-22.14.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "nodejs-22.14.0",
+      "pname": "nodejs",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T02:07:06.942823Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "22.14.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "libv8": "/nix/store/j4w6685rkqwwl03cc8phm8xiyb2xmbnq-nodejs-22.14.0-libv8",
+        "out": "/nix/store/bmakyv5ip1wc9jk155glzdw4vnnrym04-nodejs-22.14.0"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "starship",
+      "broken": false,
+      "derivation": "/nix/store/2w8p6affv3gk8zh1yxz1kqc09d93mm9a-starship-1.22.1.drv",
+      "description": "Minimal, blazing fast, and extremely customizable prompt for any shell",
+      "install_id": "starship",
+      "license": "ISC",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "starship-1.22.1",
+      "pname": "starship",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:12:45.736605Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.22.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/s6r849fdi4l9q00kq7qcqfcm64s7d075-starship-1.22.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "starship",
+      "broken": false,
+      "derivation": "/nix/store/ry4rr3fm2m57f5lrfvpp914awsjkinkc-starship-1.22.1.drv",
+      "description": "Minimal, blazing fast, and extremely customizable prompt for any shell",
+      "install_id": "starship",
+      "license": "ISC",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "starship-1.22.1",
+      "pname": "starship",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:31:50.014433Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.22.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/hhhgq6lfdrqzinaxyfackqvv34f9s2z8-starship-1.22.1"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "starship",
+      "broken": false,
+      "derivation": "/nix/store/3ilj5bmrbaipkgsqrqdnc01qlg2dbwm9-starship-1.22.1.drv",
+      "description": "Minimal, blazing fast, and extremely customizable prompt for any shell",
+      "install_id": "starship",
+      "license": "ISC",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "starship-1.22.1",
+      "pname": "starship",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T01:47:54.633268Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.22.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/07yi3ll67cxxbxm8ly0aa6crjzj1w3z3-starship-1.22.1"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "starship",
+      "broken": false,
+      "derivation": "/nix/store/q1rzk9889m21lk8pnsndjg8r0jmlhznl-starship-1.22.1.drv",
+      "description": "Minimal, blazing fast, and extremely customizable prompt for any shell",
+      "install_id": "starship",
+      "license": "ISC",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=42a1c966be226125b48c384171c44c651c236c22",
+      "name": "starship-1.22.1",
+      "pname": "starship",
+      "rev": "42a1c966be226125b48c384171c44c651c236c22",
+      "rev_count": 779115,
+      "rev_date": "2025-04-05T04:29:29Z",
+      "scrape_date": "2025-04-07T02:08:07.459915Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.22.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/8z0s76z97izq0idblkyx42n8466qh05q-starship-1.22.1"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    }
+  ]
+}

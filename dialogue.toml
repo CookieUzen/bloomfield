@@ -3,7 +3,7 @@
 [round.1]
 
 [round.1.start]
-character = "TODO"
+character = "mayor"
 speech = [
     "*thump*\nHello there!",
     "General Kenobi!"
@@ -11,7 +11,7 @@ speech = [
 
 
 [round.1.end]
-character = "TODO"
+character = "villager"
 speech = [
     "Yippee"
 ]

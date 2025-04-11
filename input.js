@@ -20,6 +20,10 @@ export default class InputScene extends Phaser.Scene {
         this.fieldScene = this.scene.get('FieldScene'); 
 
         this.load.image('pause', "./public/assets/pause.png")
+
+        this.load.image('mayor_text', "./public/assets/Mayor_text.png")
+        this.load.image('biologist_text', "./public/assets/Biologist_text.png")
+        this.load.image('villager_text', "./public/assets/Villager_text.png")
     }
 
     create() {
@@ -105,6 +109,8 @@ export default class InputScene extends Phaser.Scene {
         //------------------------------------
 
         // Pause overlay
+        this.pause
+
         this.pauseOverlay = this.add.rectangle(width/2, height/2, width, height, '0x000000', 0.5)
         this.pauseOverlay.setInteractive()  // Eat the input before it gets to the rest of the game
         this.pauseOverlay.setVisible(false)
@@ -149,29 +155,30 @@ export default class InputScene extends Phaser.Scene {
         this.roundDialogue = (roundNum > config.roundInfinite) ? dialogueData['infinite'] : dialogueData[roundNum.toString()]
 
 		this.dialogueIndex = 0
+        this.currentDialogueSet
+        this.currentDialogueCharacter = 'mayor'
 
-		const dialogueBackgroundTopLeft = [50, 550]
-		const dialogueBackgroundDimensions = [1050, 75]
-		const dialogueBackgroundBorderThickness = 10
-		this.dialogueBackground = this.add.graphics()
-		this.dialogueBackground.fillStyle(0x974B22, 1);
-        this.dialogueBackground.fillRoundedRect(dialogueBackgroundTopLeft[0], dialogueBackgroundTopLeft[1], dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0], dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1], 10);
-		this.dialogueBackground.fillStyle(0xB95C2C, 1);
-        this.dialogueBackground.fillRoundedRect(dialogueBackgroundTopLeft[0] + dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[1] + dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[0] + dialogueBackgroundDimensions[0] - 2 * dialogueBackgroundBorderThickness, dialogueBackgroundTopLeft[1] + dialogueBackgroundDimensions[1] - 2 * dialogueBackgroundBorderThickness, 10);
+        // Initially add the beginning dialogue
+        this.currentDialogueSet = this.roundDialogue.start.speech
+        this.currentDialogueCharacter = this.roundDialogue.start.character
+
+		this.dialogueBackground = this.add.image(width/2, 600, `${this.currentDialogueCharacter}_text`)
+        this.dialogueBackground.setScale(6.25)
 		this.dialogueBackground.setInteractive(new Phaser.Geom.Rectangle(0, 0, width, height), Phaser.Geom.Rectangle.Contains)  // Make the whole screen interactive for this
-		this.dialogueBackground.on('pointerdown', () => {
+		.on('pointerdown', () => {
 			this.dialogueIndex += 1  // Increment dialogue
 			console.log(this.dialogueIndex)
 
             // Unpause if we are paused
-            if (this.dialogueIndex >= this.roundDialogue.start.speech.length && !this.fieldScene.scene.isActive()) {
+            if (this.dialogueIndex >= this.currentDialogueSet.length && !this.fieldScene.scene.isActive()) {
                 this.fieldScene.togglePause()
             }
 
 		})  // Handle mouse down
         this.dialogueBackground.setVisible(false)
 
-        this.dialogueText = this.add.text(75, 575, '', textStyle)
+        this.dialogueText = this.add.text(350, 575, '', textStyle)
+        this.dialogueText.setScale(2)
         this.dialogueText.setAbove(this.dialogueBackground)
         this.dialogueText.setVisible(false)
 
@@ -190,7 +197,8 @@ export default class InputScene extends Phaser.Scene {
             this.unpauseButton.setVisible(false)
         }
 
-        if (this.roundDialogue?.start && this.dialogueIndex < this.roundDialogue.start.speech.length) {
+        // if we are reading dialogue, show the box and force pause the game
+        if (this.currentDialogueSet && this.dialogueIndex < this.currentDialogueSet.length) {
             // Keep game paused while we are in the dialogue
             if (this.fieldScene.scene.isActive()) {
                 this.fieldScene.togglePause()
@@ -200,7 +208,8 @@ export default class InputScene extends Phaser.Scene {
             this.dialogueText.setVisible(true)
             this.unpauseButton.setVisible(false)  // Hide the button if the game is paused due to dialogue
 
-            this.dialogueText.setText(this.roundDialogue.start.speech[this.dialogueIndex])
+            this.dialogueText.setText(this.currentDialogueSet[this.dialogueIndex])
+            this.dialogueBackground.setTexture(`${this.currentDialogueCharacter}_text`) 
 
         } else {
             this.dialogueBackground.setVisible(false)

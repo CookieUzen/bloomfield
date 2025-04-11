@@ -4,6 +4,7 @@ import {NewToolbar, ToolTypes, EquipmentTypes} from './newToolbar.js';
 export default class FieldScene extends Phaser.Scene {
 
     timeRemaining;  // Time remaining in seconds
+    roundInProgress
 
     constructor() {
         super({ key: 'FieldScene' });
@@ -87,11 +88,17 @@ export default class FieldScene extends Phaser.Scene {
 
     // Called on every game frame
     update(time, delta) {
+
+        if (!this.roundInProgress) {
+            return
+        }
+
         this.updateCrops(time, delta)
 
         this.timeRemaining -= delta/1000  // This is perhaps not ideal because it is all just relative, but thats fine its close enough
         
         if (this.timeRemaining <= 0) {
+            this.timeRemaining = -1
             this.endRound()
         }
     }
@@ -125,6 +132,7 @@ export default class FieldScene extends Phaser.Scene {
 
     // This function is called when the starts
     startRound() {
+        this.roundInProgress = true
         // Temporarily disable input for a bit
         this.input.enabled = false;
 
@@ -241,6 +249,19 @@ export default class FieldScene extends Phaser.Scene {
     }
 
     endRound() {
+
+        const inputScene = this.scene.get('InputScene')
+
+        inputScene.currentDialogueSet = inputScene.roundDialogue.end?.speech
+        inputScene.currentDialogueCharacter = inputScene.roundDialogue.end?.character
+        inputScene.dialogueIndex = 0
+
+        this.roundInProgress = false
+    }
+
+    // This gets called by InputScene. It's a little scuffed, but that scene handles the dialogue so
+    // it needs to decide when we're done
+    closeRound() {
         this.scene.get('InputScene').scene.stop()  // Stop this one because we want to restart it later
         this.scene.sleep(); // We don't destroy the scene because we want to keep tiles data intact
         this.scene.launch('RoundEndScene');

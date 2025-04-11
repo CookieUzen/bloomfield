@@ -113,7 +113,6 @@ export default class InputScene extends Phaser.Scene {
         //------------------------------------
 
         // Pause overlay
-        this.pause
 
         this.pauseOverlay = this.add.rectangle(width/2, height/2, width, height, '0x000000', 0.5)
         this.pauseOverlay.setInteractive()  // Eat the input before it gets to the rest of the game
@@ -193,6 +192,7 @@ export default class InputScene extends Phaser.Scene {
         // Toolbar
         // Make current tool follow the mouse around
         this.toolSprite = this.add.sprite(0, 0, 'watering_can')
+        this.toolSprite.setScale(3)
     }
 
     update() {
@@ -204,6 +204,8 @@ export default class InputScene extends Phaser.Scene {
             this.pauseOverlay.setVisible(false)
             this.unpauseButton.setVisible(false)
         }
+
+
 
         // if we are reading dialogue, show the box and force pause the game
         if (this.currentDialogueSet && this.dialogueIndex < this.currentDialogueSet.length) {
@@ -229,6 +231,10 @@ export default class InputScene extends Phaser.Scene {
         } else {
             this.dialogueBackground.setVisible(false)
             this.dialogueText.setVisible(false)
+
+            if (!this.fieldScene.roundInProgress) {
+                this.fieldScene.closeRound()
+            }
         }
 		
 

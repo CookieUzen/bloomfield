@@ -24,6 +24,10 @@ export default class InputScene extends Phaser.Scene {
         this.load.image('mayor_text', "./public/assets/Mayor_text.png")
         this.load.image('biologist_text', "./public/assets/Biologist_text.png")
         this.load.image('villager_text', "./public/assets/Villager_text.png")
+
+        this.load.image('mayor_more_text', "./public/assets/More_text_orange.png")
+        this.load.image('biologist_more_text', "./public/assets/More_text_blue.png")
+        this.load.image('villager_more_text', "./public/assets/More_text_green.png")
     }
 
     create() {
@@ -182,6 +186,10 @@ export default class InputScene extends Phaser.Scene {
         this.dialogueText.setAbove(this.dialogueBackground)
         this.dialogueText.setVisible(false)
 
+        this.moreDialogueIndicator = this.add.image(1000, 700, `${this.currentDialogueCharacter}_more_text`)
+        this.moreDialogueIndicator.setScale(4)
+        this.moreDialogueIndicator.setVisible(false)
+
         // Toolbar
         // Make current tool follow the mouse around
         this.toolSprite = this.add.sprite(0, 0, 'watering_can')
@@ -208,8 +216,15 @@ export default class InputScene extends Phaser.Scene {
             this.dialogueText.setVisible(true)
             this.unpauseButton.setVisible(false)  // Hide the button if the game is paused due to dialogue
 
+            if (this.dialogueIndex + 1 < this.currentDialogueSet.length) {
+                this.moreDialogueIndicator.setVisible(true)
+            } else {
+                this.moreDialogueIndicator.setVisible(false)
+            }
+
             this.dialogueText.setText(this.currentDialogueSet[this.dialogueIndex])
-            this.dialogueBackground.setTexture(`${this.currentDialogueCharacter}_text`) 
+            this.dialogueBackground.setTexture(`${this.currentDialogueCharacter}_text`)
+            this.moreDialogueIndicator.setTexture(`${this.currentDialogueCharacter}_more_text`)
 
         } else {
             this.dialogueBackground.setVisible(false)

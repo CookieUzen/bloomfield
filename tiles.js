@@ -47,10 +47,10 @@ export default class Tiles extends Phaser.GameObjects.Container {
 
         this.#organicMatLevel = 100
         this.#fertilizerLevel = 100
-        
-        // TODO use icons n stuff for these values
-        this.omLevelText;
-        this.fertLevelText;
+
+        this.fertilizerLevelBar = this.scene.add.graphics()
+        this.add(this.fertilizerLevelBar)
+        this.fertilizerLevelBar.setScale(1/60)
         
     }
 
@@ -105,8 +105,6 @@ export default class Tiles extends Phaser.GameObjects.Container {
         // Cap the level between 0 and 100
         if (this.#fertilizerLevel > 100) this.#fertilizerLevel = 100;
         if (this.#fertilizerLevel < 0) this.#fertilizerLevel = 0;
-
-        this.fertLevelText.text = Math.floor(this.#fertilizerLevel)
     }
 
     // Method to harvest the cro
@@ -151,20 +149,7 @@ export default class Tiles extends Phaser.GameObjects.Container {
     // delta is in ms
     update(time, delta) {
 
-        // Set these up (doing in the constructor had issues because of the parenting, so we do it here)
-        // if (!this.omLevelText) {
-        //     this.omLevelText = new Phaser.GameObjects.Text(this.scene, this.x - 25, this.y - 25, "")
-        //     this.scene.add.existing(this.omLevelText)
-        //     this.parentContainer.add(this.omLevelText)
-        // } else {
-        //     this.omLevelText.text = Math.floor(this.#organicMatLevel)
-        // }
-        if (!this.fertLevelText) {
-            this.fertLevelText = new Phaser.GameObjects.Text(this.scene, 0, 0, "")
-            this.scene.add.text(this.fertLevelText)
-            this.fertLevelText.setScale(1/60)
-            this.add(this.fertLevelText)
-        }
+        this.updateFertLevelBar(this.#fertilizerLevel / 100)
 
         // Manage water alert
         this.updateAlertAlphas(time)
@@ -266,6 +251,18 @@ export default class Tiles extends Phaser.GameObjects.Container {
             if (!this.alertIcons[key]) continue;
             this.alertIcons[key].update(time)
         }
+    }
+
+    updateFertLevelBar(value) {
+        this.fertilizerLevelBar.clear()
+        this.fertilizerLevelBar.fillStyle(0x353535, 1)
+        const barPos = [-25, 20]
+        const barSize = [50, 10]
+        this.fertilizerLevelBar.fillRect(barPos[0], barPos[1], barSize[0], barSize[1])
+        const padding = 2
+        this.fertilizerLevelBar.fillStyle(lerpColorHex(0xF52F2F, 0x3AF52F, value), 1)
+        this.fertilizerLevelBar.fillRect(barPos[0] + padding, barPos[1] + padding, (barSize[0] - 2 * padding) * value, barSize[1] - 2 * padding)
+
     }
 
     showWaterAlert() {
@@ -396,4 +393,28 @@ export default class Tiles extends Phaser.GameObjects.Container {
         this.#isHovered = false;
         this.tileSprite.tint = this.#defaultTintColor;
     }
+    
 }
+
+// ChatGPT wrote these, I asked it for a hex lerp function
+function lerp(a, b, t) {
+    return a + (b - a) * t;
+}
+
+function lerpColorHex(a, b, t) {
+    const ar = (a >> 16) & 0xff,
+          ag = (a >> 8) & 0xff,
+          ab = a & 0xff;
+  
+    const br = (b >> 16) & 0xff,
+          bg = (b >> 8) & 0xff,
+          bb = b & 0xff;
+  
+    const rr = Math.round(lerp(ar, br, t)),
+          rg = Math.round(lerp(ag, bg, t)),
+          rb = Math.round(lerp(ab, bb, t));
+  
+    return (rr << 16) | (rg << 8) | rb;
+  }
+  
+  

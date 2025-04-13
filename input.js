@@ -243,8 +243,9 @@ export default class InputScene extends Phaser.Scene {
         this.roundTextBox.setText(`Round: ${round}`)
 
         // Add a little clock to the left?
-        let timeRemaining = this.formatTime(this.fieldScene.timeRemaining + 1);  // Add one so that the timer feels more natural and ends when it hits 0 and not a second later
-        this.timeTextBox.setText(`Time: ${timeRemaining}`);
+        let chosenTimer = this.fieldScene.useTimeRemaining ? fieldScene.timeRemaining : fieldScene.timer    // choose the right timer
+        let timeText = this.formatTime(chosenTimer + 1);  // Add one so that the timer feels more natural and ends when it hits 0 and not a second later
+        this.timeTextBox.setText(`Time: ${timeText}`);
 
         let money = this.registry.get('money')
         this.moneyTextBox.setText(`Money: $${money}`)

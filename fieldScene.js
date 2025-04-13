@@ -3,8 +3,10 @@ import {NewToolbar, ToolTypes, EquipmentTypes} from './newToolbar.js';
 
 export default class FieldScene extends Phaser.Scene {
 
-    timeRemaining;  // Time remaining in seconds
-    roundInProgress
+    timer;              // timer in seconds
+    timeRemaining;      // time remaining in seconds
+    useTimeRemaining;   // If we are counting down or up, true for counting down
+    roundInProgress;    // Stores if a round is over or not, checked by input scene
 
     constructor() {
         super({ key: 'FieldScene' });
@@ -95,12 +97,24 @@ export default class FieldScene extends Phaser.Scene {
 
         this.updateCrops(time, delta)
 
-        this.timeRemaining -= delta/1000  // This is perhaps not ideal because it is all just relative, but thats fine its close enough
-        
-        if (this.timeRemaining <= 0) {
+        // Infinite round
+        if (this.useTimeRemaining && this.timeRemaining <= 0) {
             this.timeRemaining = -1
             this.endRound()
         }
+
+        // Timer ticks up, check requirement is met
+        if (!this.useTimeRemaining) {
+            let foodUnits = this.registry.get('roundFoodUnits');
+            let goal = this.registry.get('goal');
+
+            if (foodUnits >= goal) {
+                this.endRound()
+            }
+        }
+
+        this.timer += delta/1000  // Increment timer
+        this.timeRemaining -= delta/1000  // Decrement time remaining
     }
 
     // This function handles updating the tiles every second
@@ -161,7 +175,11 @@ export default class FieldScene extends Phaser.Scene {
             this.registry.set('goal', roundConfig.goal * roundConfig.goalMultiplier ** (roundNum - config.roundInfinite))
         }
 
-        this.timeRemaining = this.registry.get('roundTime');  // Time remaining in seconds
+        this.timer = 0; // timer in seconds
+        this.timeRemaining = roundConfig.time; // time remaining in seconds
+        if (roundConfig.time < 0) {
+            this.useTimeRemaining = false; // If the time is negative, we don't use it
+        }
 
         // Start the scene again!
         this.scene.wake();
@@ -267,8 +285,8 @@ export default class FieldScene extends Phaser.Scene {
 
         const inputScene = this.scene.get('InputScene')
 
-        inputScene.currentDialogueSet = inputScene.roundDialogue.end?.speech
-        inputScene.currentDialogueCharacter = inputScene.roundDialogue.end?.character
+        inputScene.currentDialogueSet = inputScene.roundDialogue?.end?.speech
+        inputScene.currentDialogueCharacter = inputScene.roundDialogue?.end?.character
         inputScene.dialogueIndex = 0
 
         this.roundInProgress = false

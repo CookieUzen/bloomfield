@@ -9,10 +9,128 @@ speech = [
     "General Kenobi!"
 ]
 
-
 [round.1.end]
 character = "villager"
 speech = [
     "Yippee"
+]
+
+
+[round.2]
+
+[round.2.start]
+character = "biologist"
+speech = [
+    "Welcome to round 2.",
+    "Let’s explore some new ideas."
+]
+
+[round.2.end]
+character = "villager"
+speech = [
+    "Round 2 is over.",
+    "On to the next challenge!"
+]
+
+
+[round.3]
+
+[round.3.start]
+character = "villager"
+speech = [
+    "Round 3 has begun!",
+    "I feel lucky today."
+]
+
+[round.3.end]
+character = "mayor"
+speech = [
+    "Well done!",
+    "Keep up the good work."
+]
+
+
+[round.4]
+
+[round.4.start]
+character = "mayor"
+speech = [
+    "Let’s make round 4 great.",
+    "Ready for action?"
+]
+
+[round.4.end]
+character = "biologist"
+speech = [
+    "That was impressive.",
+    "Time to analyze the results."
+]
+
+
+[round.5]
+
+[round.5.start]
+character = "biologist"
+speech = [
+    "Halfway there, round 5 starts now.",
+    "Science is in the air."
+]
+
+[round.5.end]
+character = "villager"
+speech = [
+    "Round 5 comes to an end.",
+    "Celebrations are in order!"
+]
+
+
+[round.6]
+
+[round.6.start]
+character = "villager"
+speech = [
+    "Round 6, here we go!",
+    "The excitement builds."
+]
+
+[round.6.end]
+character = "mayor"
+speech = [
+    "Amazing effort!",
+    "Let’s prepare for the final rounds."
+]
+
+
+[round.7]
+
+[round.7.start]
+character = "mayor"
+speech = [
+    "Round 7 is upon us.",
+    "The stakes are higher now."
+]
+
+[round.7.end]
+character = "biologist"
+speech = [
+    "Round 7 is a breakthrough.",
+    "Things are getting interesting!"
+]
+
+
+[round.infinite]
+
+[round.infinite.start]
+character = "biologist"
+speech = [
+    "Infinite round starts now.",
+    "Time to give it your all."
+]
+
+[round.infinite.end]
+character = "villager"
+speech = [
+    "Round 8 is complete.",
+    "Next round"
 ]
 

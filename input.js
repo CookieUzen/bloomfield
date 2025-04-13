@@ -35,6 +35,7 @@ export default class InputScene extends Phaser.Scene {
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 
+        // Top buttons
         const topButtonRow = []
         const rightButtonColumn = []
 
@@ -46,7 +47,6 @@ export default class InputScene extends Phaser.Scene {
         topButtonRow.push(new UIImageButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
 		
 		// load round config
-
         const config = this.registry.get('config').round
         const roundNum = this.registry.get('round')     // Get the config for the current round
         const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
@@ -87,6 +87,7 @@ export default class InputScene extends Phaser.Scene {
             this.add.existing(button)
         }
 
+        // Info boxes on the top left corner
 		const textBackgroundTopLeft = [50, 75]
 		const textBackgroundDimensions = [175, 75]
 		const textBackgroundBorderThickness = 10
@@ -96,18 +97,13 @@ export default class InputScene extends Phaser.Scene {
 		this.textBackground.fillStyle(0xB95C2C, 1);
         this.textBackground.fillRoundedRect(textBackgroundTopLeft[0] + textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundBorderThickness, textBackgroundTopLeft[0] + textBackgroundDimensions[0] - 2 * textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundDimensions[1] - 2 * textBackgroundBorderThickness, 10);
 
-        // Info boxes on the top left corner
 		const textStyle = { color: 'white', font: '20px Ariel' }
-
         this.roundTextBox = this.add.text(75, 100, '', textStyle)
-
         this.timeTextBox = this.add.text(75, 120, '', textStyle)
-
         this.moneyTextBox = this.add.text(75, 140, '', textStyle)
 
         // Display goal and current food units
         this.goalTextBox = this.add.text(75, 160, '', textStyle)
-
         this.roundFoodUnitsTextBox = this.add.text(75, 180, '', textStyle)
 
         //------------------------------------
@@ -243,7 +239,7 @@ export default class InputScene extends Phaser.Scene {
         this.roundTextBox.setText(`Round: ${round}`)
 
         // Add a little clock to the left?
-        let chosenTimer = this.fieldScene.useTimeRemaining ? fieldScene.timeRemaining : fieldScene.timer    // choose the right timer
+        let chosenTimer = this.fieldScene.useTimeRemaining ? this.fieldScene.timeRemaining : this.fieldScene.timer    // choose the right timer
         let timeText = this.formatTime(chosenTimer + 1);  // Add one so that the timer feels more natural and ends when it hits 0 and not a second later
         this.timeTextBox.setText(`Time: ${timeText}`);
 

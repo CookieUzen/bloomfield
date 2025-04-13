@@ -23,9 +23,12 @@
     <body>
         <h1>Bloomfield Debug Config</h1>
         <!-- The textarea will get its default content from an external file -->
+        <h2>Config</h2>
         <textarea id="tomlInput" rows="10"></textarea>
+        <h2>Dialogue</h2>
+        <textarea id="dialogueInput" rows="10"></textarea>
         <br/>
-        <button id="parseBtn">Copy Config and Run Game</button>
+        <button id="parseBtn">Run Game, NO LONG COPY TO CLIPBOARD!!!</button>
 
         <script>
             // Load the placeholder TOML content from an external file
@@ -45,16 +48,33 @@
                     console.error('Error loading placeholder:', error);
                 });
 
+            // Load the placeholder dialogue content from an external file
+            fetch('./dialogue.toml', { cache: 'no-store' })
+                .then((response) => {
+                    if (!response.ok) {
+                throw new Error('Cannot get dialogue.toml');
+                    }
+                    return response.text();
+                })
+                .then((text) => {
+                    // Instead of setting the placeholder attribute (which may not support multiline text well),
+                    // we set the textarea's value to the fetched content.
+                    document.getElementById('dialogueInput').value = text;
+                })
+                .catch((error) => {
+                    console.error('Error loading placeholder:', error);
+                });
+
             // Add event listener to parse the TOML content when the button is clicked
             document.getElementById('parseBtn').addEventListener('click', function () {
                 // Copy the contents of the textarea to the clipboard using the Clipboard API
-                navigator.clipboard.writeText(document.getElementById('tomlInput').value)
-                    .then(() => {
-                        console.log('Copied to clipboard!');
-                    })
-                    .catch((err) => {
-                        console.error('Error copying text: ', err);
-                    });
+                // navigator.clipboard.writeText(document.getElementById('tomlInput').value)
+                //     .then(() => {
+                //         console.log('Copied to clipboard!');
+                //     })
+                //     .catch((err) => {
+                //         console.error('Error copying text: ', err);
+                //     });
 
                 var script = document.createElement('script');
                 script.src = 'dist/bundle.js';  // Source code for game

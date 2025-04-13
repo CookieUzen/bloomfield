@@ -12,15 +12,13 @@ export default class StartScene extends Phaser.Scene {
     }
 
     create() {
-        // Check if we are in debug mode:
-        let config;
-
         // Scary code to load config.toml
         const tomlField = document.getElementById('tomlInput'); // From debug.html
         if (tomlField) {
             this.registry.set('debug', true);
             try {
-                config = toml.parse(tomlField.value);
+                const config = toml.parse(tomlField.value);
+                this.registry.set('config', config);
             } catch (err) {
                 console.error('Error parsing config.toml:', err);
             }       
@@ -39,7 +37,7 @@ export default class StartScene extends Phaser.Scene {
                 })
                 .then(text => { // Parse the config.toml file
                     try {
-                        config = toml.parse(text);
+                        const config = toml.parse(text);
                         this.registry.set('config', config);
                     } catch (err) {
                         console.error('Error parsing config.toml:', err);
@@ -50,29 +48,36 @@ export default class StartScene extends Phaser.Scene {
                 });
         }
 
-        // Stick config into the registry
-        this.registry.set('config', config);
-        console.log(config);
-
         // Also load dialogue similarly
-        fetch('./dialogue.toml')
-            .then(response => { // Fetch the config.toml file
-                if (!response.ok) {
-                    throw new Error('Could not get dialogue.toml');
-                }
-                return response.text();
-            })
-            .then(text => { // Parse the config.toml file
-                try {
-                    const dialogue = toml.parse(text);
-                    this.registry.set('dialogue', dialogue);
-                } catch (err) {
-                    console.error('Error parsing dialogue.toml:', err);
-                }
-            })
-            .catch(err => { // Log any errors
-                console.error(err);
-            });
+        const dialogueField = document.getElementById('dialogueInput'); // From debug.html
+        if (dialogueField) {
+            this.registry.set('debug', true);
+            try {
+                const dialogue = toml.parse(dialogueField.value);
+                this.registry.set('dialogue', dialogue);
+            } catch (err) {
+                console.error('Error parsing dialogue.toml:', err);
+            }
+        } else {
+            fetch('./dialogue.toml')
+                .then(response => { // Fetch the config.toml file
+                    if (!response.ok) {
+                        throw new Error('Could not get dialogue.toml');
+                    }
+                    return response.text();
+                })
+                .then(text => { // Parse the config.toml file
+                    try {
+                        const dialogue = toml.parse(text);
+                        this.registry.set('dialogue', dialogue);
+                    } catch (err) {
+                        console.error('Error parsing dialogue.toml:', err);
+                    }
+                })
+                .catch(err => { // Log any errors
+                    console.error(err);
+                });
+        }
 
 
         // TODO: Load background and add start button

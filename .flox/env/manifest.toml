@@ -20,6 +20,7 @@ nodejs.pkg-path = "nodejs"
 fish.pkg-path = "fish"
 starship.pkg-path = "starship"
 nixvim.flake = "github:cookieuzen/nixvim"
+ripgrep.pkg-path = "ripgrep"
 # gum.pkg-path = "gum"
 # gum.version = "^0.14.5"
 

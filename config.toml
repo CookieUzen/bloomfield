@@ -40,7 +40,8 @@ waterUsage = 6
 fertilizerUsage = 35
 
 [round]
-roundInfinite = 7 # infinite after 7 rounds
+roundInfinite = 7 # infinite mode after 7 rounds
+cleanCropsAfterRound = true # remove all crops after each round
 
 # Configuration for the rounds
 [round.1]

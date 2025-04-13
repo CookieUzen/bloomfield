@@ -151,7 +151,7 @@ export default class FieldScene extends Phaser.Scene {
         const roundNum = this.registry.get('round')     // Get the config for the current round
         const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
 
-        updateFarmlandGrid(roundConfig);  // Update the farmland grid
+        this.updateFarmlandGrid(roundConfig);  // Update the farmland grid
 
         this.registry.set('roundTime', roundConfig.time);    // how long each round lasts in seconds
         this.registry.set('goal', roundConfig.goal);         // how much money the player needs to win

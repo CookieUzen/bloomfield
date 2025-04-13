@@ -49,6 +49,7 @@ gridSizeX = 2
 gridSizeY = 2
 cropsUnlocked = ["corn"]
 time = 100
+monocroppingDisabled = true
 
 [round.2]
 goal = 80

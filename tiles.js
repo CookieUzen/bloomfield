@@ -58,7 +58,13 @@ export default class Tiles extends Phaser.GameObjects.Container {
     plant(cropType) {
         if (this.#crop) return;  // Do nothing if there is already a crop
 
-        if (this.#prevCropName === cropType ) {
+
+        // Get the current round config
+        const config = this.scene.registry.get('config').round
+        const roundNum = this.scene.registry.get('round')     // Get the config for the current round
+        const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
+
+        if (this.#prevCropName === cropType && !roundConfig.monocroppingDisabled) {
             this.#prevCropCount += 1
         } else {
             this.#prevCropName = cropType

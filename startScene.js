@@ -22,8 +22,6 @@ export default class StartScene extends Phaser.Scene {
             } catch (err) {
                 console.error('Error parsing config.toml:', err);
             }       
-
-            this.registry.set('config', config);
         } else {
             this.registry.set('debug', false);
 			

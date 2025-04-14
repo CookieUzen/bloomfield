@@ -374,6 +374,11 @@ export default class Tiles extends Phaser.GameObjects.Container {
         }
 
         if (toolBar.currentEquipment === EquipmentTypes.FERTILIZER) {
+            // Check if we have enough fertilizer left
+            if (!toolBar.useFertilizer()) {
+                return  // Don't do anything if we don't have enough fertilizer
+            }
+
             this.fertilize(config.fertilizerAmount);
             return
         }

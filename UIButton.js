@@ -117,3 +117,20 @@ export class UIImageButton extends UIButton {
 
 }
 
+export class UIImageButtonWithText extends UIImageButton {
+    text;
+
+    constructor (scene, x, y, image, text, callback) {
+        super(scene, x, y, image, callback)
+
+        // Create text and position accordingly
+        this.text = new Phaser.GameObjects.Text(scene, 0, 0, text)
+        this.text.setOrigin(0, 0)
+        // Place the text on the bottom right
+        this.text.setPosition(15, 20)   // magic numbers
+        this.text.setColor(this.textColor)
+        this.add(this.text)
+        this.buttonWidth = Math.max(this.buttonWidth, this.text.width + this.padding)
+        this.buttonHeight = Math.max(this.buttonHeight, this.text.height + this.padding)
+    }
+}

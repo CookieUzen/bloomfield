@@ -224,6 +224,9 @@ export default class FieldScene extends Phaser.Scene {
             this.useTimeRemaining = false; // If the time is negative, we don't use it
         }
 
+        // Add fertilizer to the toolbar
+        this.toolbar.addFertilizer(roundConfig.fertilizerNum); // Add fertilizer to the toolbar
+
         // Start the scene again!
         this.scene.wake();
         this.scene.launch('InputScene');  // Restart this scene so it rebuilds the buttons (easiest way to go about it tbh)

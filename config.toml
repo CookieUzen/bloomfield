@@ -50,17 +50,19 @@ gridSizeY = 2
 cropsUnlocked = ["corn"]
 time = -1
 monocroppingDisabled = true
+fertilizerNum = 4
 
 [round.1.cropGoals]
-total = 30           # replaces the old "goal" variable
+total = 30
 minFertilizerLvl = -1
-corn = 5             # crop-specific requirement (for example)
+corn = 5
 
 [round.2]
 gridSizeX = 3
 gridSizeY = 3
 cropsUnlocked = ["corn", "soybean"]
 time = -1
+fertilizerNum = 9
 
 [round.2.cropGoals]
 total = 80
@@ -73,6 +75,7 @@ gridSizeX = 4
 gridSizeY = 4
 cropsUnlocked = ["corn", "soybean"]
 time = -1
+fertilizerNum = 16
 
 [round.3.cropGoals]
 total = 160
@@ -85,6 +88,7 @@ gridSizeX = 4
 gridSizeY = 4
 cropsUnlocked = ["corn", "soybean", "potato"]
 time = -1
+fertilizerNum = 16
 
 [round.4.cropGoals]
 total = 400
@@ -98,6 +102,7 @@ gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato"]
 time = -1
+fertilizerNum = 16
 
 [round.5.cropGoals]
 total = 600
@@ -111,6 +116,7 @@ gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
 time = -1
+fertilizerNum = 25
 
 [round.6.cropGoals]
 total = 800
@@ -125,6 +131,7 @@ gridSizeX = 5
 gridSizeY = 5
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
 time = -1
+fertilizerNum = 25
 
 [round.7.cropGoals]
 total = 1000
@@ -139,7 +146,8 @@ gridSizeX = 5
 gridSizeY = 5
 time = 120
 cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
-goalMultiplier = 1.5 # multiplier for infinite rounds
+goalMultiplier = 1.5
+fertilizerNum = 25
 
 [round.infinite.cropGoals]
 total = 600

@@ -15,15 +15,34 @@ export class NewToolbar {
     currentToolType;
     currentEquipment;
     currentSeed;
+    fertilizerLeft; // How many fertilizers usages left
 
     constructor() {
         this.currentToolType = ToolTypes.EQUIPMENT
         this.currentEquipment = EquipmentTypes.WATERING_CAN
         this.currentSeed = ''
+        this.fertilizerLeft = 0
     }
 
     getCurrentToolName() {
         return this.currentToolType === ToolTypes.EQUIPMENT ? this.currentEquipment : this.currentSeed + '_seed'
+    }
+
+    getFertilizerLeft() {
+        return this.fertilizerLeft
+    }
+
+    useFertilizer() {
+        if (this.fertilizerLeft > 0) {
+            this.fertilizerLeft -= 1
+            return true
+        }
+
+        return false
+    }
+
+    addFertilizer(amount) {
+        this.fertilizerLeft += amount
     }
 
     setToolEquipment(equipment) {

@@ -1,4 +1,4 @@
-import { UITextButton, UIImageButton } from "./UIButton.js";
+import { UITextButton, UIImageButton, UIImageButtonWithText } from "./UIButton.js";
 import { ToolTypes } from "./newToolbar.js";
 
 
@@ -7,6 +7,7 @@ import { ToolTypes } from "./newToolbar.js";
 export default class InputScene extends Phaser.Scene {
 
     fieldScene;
+    topButtonRow;
 
     constructor() {
         super({
@@ -36,16 +37,16 @@ export default class InputScene extends Phaser.Scene {
         let { width, height } = this.sys.game.canvas;
 
         // Top buttons
-        const topButtonRow = []
+        this.topButtonRow = []
         const rightButtonColumn = []
 
         // topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.triggerNotebook()}))
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'fertilizer', () => {this.fieldScene.toolbar.setToolEquipment('fertilizer')}))  
-		topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  // Empty button to leave empty spot in toolbar (TODO: move the pause button to a real spot lol)
-        topButtonRow.push(new UIImageButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
-		
+        this.topButtonRow.push(new UIImageButton(this, 0, 0, 'watering_can', () => {this.fieldScene.toolbar.setToolEquipment('watering_can')}))
+        this.topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))
+        this.topButtonRow.push(new UIImageButtonWithText(this, 0, 0, 'fertilizer', 0, () => {this.fieldScene.toolbar.setToolEquipment('fertilizer')}))  
+		this.topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  // Empty button to leave empty spot in toolbar (TODO: move the pause button to a real spot lol)
+        this.topButtonRow.push(new UIImageButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
+
 		// load round config
         const config = this.registry.get('config').round
         const roundNum = this.registry.get('round')     // Get the config for the current round
@@ -61,8 +62,8 @@ export default class InputScene extends Phaser.Scene {
         const topRowStartPos = [425 - 1, 75]
         const topRowSpacing = 88
 
-        for (const buttonIndex in topButtonRow) {
-            const button = topButtonRow[buttonIndex]
+        for (const buttonIndex in this.topButtonRow) {
+            const button = this.topButtonRow[buttonIndex]
 
             const buttonX = topRowStartPos[0] + (topRowSpacing * buttonIndex)
             const buttonY = topRowStartPos[1]
@@ -201,8 +202,6 @@ export default class InputScene extends Phaser.Scene {
             this.unpauseButton.setVisible(false)
         }
 
-
-
         // if we are reading dialogue, show the box and force pause the game
         if (this.currentDialogueSet && this.dialogueIndex < this.currentDialogueSet.length) {
             // Keep game paused while we are in the dialogue
@@ -254,6 +253,10 @@ export default class InputScene extends Phaser.Scene {
         // Toolbar
         this.toolSprite.setTexture(this.fieldScene.toolbar.getCurrentToolName())
         this.toolSprite.setPosition(this.game.input.mousePointer.x, this.game.input.mousePointer.y)
+
+        // Update fertilizer left
+        const toolbar = this.fieldScene.toolbar;
+        this.topButtonRow[2].text.setText(toolbar.getFertilizerLeft());  // Update the fertilizer left text
     }
 
 

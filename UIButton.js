@@ -28,13 +28,13 @@ export class UITextButton extends UIButton {
         }
 
         // Create text and position accordingly
-        const textSprite = new Phaser.GameObjects.Text(scene, 0, 0, text)
-        textSprite.setPosition(-textSprite.width/2, -textSprite.height/2)
-        textSprite.setColor(this.textColor)
-        this.add(textSprite)
+        this.textSprite = new Phaser.GameObjects.Text(scene, 0, 0, text)
+        this.textSprite.setOrigin(0.5, 0.5)
+        this.textSprite.setColor(this.textColor)
+        this.add(this.textSprite)
 
-        this.buttonWidth = textSprite.width + this.padding
-        this.buttonHeight = textSprite.height + this.padding
+        this.buttonWidth = this.textSprite.width + this.padding
+        this.buttonHeight = this.textSprite.height + this.padding
 
         // The button background
         this.background = new Phaser.GameObjects.Graphics(scene)
@@ -42,7 +42,7 @@ export class UITextButton extends UIButton {
         this.drawButtonBackground(this.backgroundDefault)
         // Add to container and reorder
         this.add(this.background)
-        this.background.setBelow(textSprite)
+        this.background.setBelow(this.textSprite)
 
         // Create the hitbox manually, because containers and graphics don't have any
         this.setInteractive(new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight), Phaser.Geom.Rectangle.Contains)
@@ -58,6 +58,10 @@ export class UITextButton extends UIButton {
     }
 
     drawButtonBackground(fillColor, alpha = 1) {
+
+        this.buttonWidth = this.textSprite.width + this.padding
+        this.buttonHeight = this.textSprite.height + this.padding
+
         this.background.clear()
         this.background.alpha = alpha
         this.background.fillStyle(fillColor, 1);
@@ -132,5 +136,25 @@ export class UIImageButtonWithText extends UIImageButton {
         this.add(this.text)
         this.buttonWidth = Math.max(this.buttonWidth, this.text.width + this.padding)
         this.buttonHeight = Math.max(this.buttonHeight, this.text.height + this.padding)
+    }
+}
+
+export class FancyUITextButton extends UITextButton {
+    constructor(scene, x, y, text, callback) {
+        super(scene, x, y, text, callback)
+
+        this.backgroundDefault = '0x974B22'
+        this.backgroundHover = '0xB95C2C'
+
+        this.textColor = '#ffffff'
+
+        // Padding in px
+        this.padding = 20
+
+        // This is silly but changing the color values above after running the super constructor means that the first draw is done in white
+        this.textSprite.setColor(this.textColor)
+        this.textSprite.setFontSize(40)
+        this.drawButtonBackground(this.backgroundDefault)
+
     }
 }

@@ -19,7 +19,7 @@ export default class InputScene extends Phaser.Scene {
         
         this.fieldScene = this.scene.get('FieldScene'); 
 
-        this.load.image('pause', "./public/assets/pause.png")
+        this.load.image('pause', "./public/assets/Pause.png")
 
         this.load.image('mayor_text', "./public/assets/Mayor_text.png")
         this.load.image('biologist_text', "./public/assets/Biologist_text.png")

@@ -10,6 +10,9 @@ class UIButton extends Phaser.GameObjects.Container {
         this.backgroundDefault = '0xffffff'
         this.backgroundHover = '0x888888'
 
+        this.borderDefault = '0xaaaaaa'
+        this.borderWidth = 5
+
         this.textColor = '0x000000'
 
         // Padding in px
@@ -26,6 +29,8 @@ export class UITextButton extends UIButton {
         if (text === '') {
             return
         }
+
+        this.callback = callback
 
         // Create text and position accordingly
         this.textSprite = new Phaser.GameObjects.Text(scene, 0, 0, text)
@@ -45,16 +50,20 @@ export class UITextButton extends UIButton {
         this.background.setBelow(this.textSprite)
 
         // Create the hitbox manually, because containers and graphics don't have any
+        this.setUpHitbox()
+
+    }
+
+    setUpHitbox() {
+        this.removeInteractive()
         this.setInteractive(new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight), Phaser.Geom.Rectangle.Contains)
-        .on('pointerdown', () => {if (callback) callback() })  // Handle mouse down
+        .on('pointerdown', () => {if (this.callback) this.callback() })  // Handle mouse down
         .on('pointerover', () => {
             this.drawButtonBackground(this.backgroundHover)
         })  // Handle hovering and drag
         .on('pointerout', () => {
             this.drawButtonBackground(this.backgroundDefault)
         })  // Clear tint when mouse leaves
-
-
     }
 
     drawButtonBackground(fillColor, alpha = 1) {
@@ -64,6 +73,10 @@ export class UITextButton extends UIButton {
 
         this.background.clear()
         this.background.alpha = alpha
+
+        this.background.fillStyle(this.borderDefault, 1);
+        this.background.fillRoundedRect(-this.buttonWidth / 2 - this.borderWidth, -this.buttonHeight / 2 - this.borderWidth, this.buttonWidth + 2 * this.borderWidth, this.buttonHeight + 2 * this.borderWidth, 10);
+
         this.background.fillStyle(fillColor, 1);
         this.background.fillRoundedRect(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight, 10);
     }
@@ -143,8 +156,9 @@ export class FancyUITextButton extends UITextButton {
     constructor(scene, x, y, text, callback) {
         super(scene, x, y, text, callback)
 
-        this.backgroundDefault = '0x974B22'
-        this.backgroundHover = '0xB95C2C'
+        this.borderDefault = '0x974B22'
+        this.backgroundDefault= '0xB95C2C'
+        this.backgroundHover= '0x974B22'
 
         this.textColor = '#ffffff'
 
@@ -155,6 +169,7 @@ export class FancyUITextButton extends UITextButton {
         this.textSprite.setColor(this.textColor)
         this.textSprite.setFontSize(40)
         this.drawButtonBackground(this.backgroundDefault)
+        this.setUpHitbox()
 
     }
 }

@@ -154,7 +154,7 @@ export default class Tiles extends Phaser.GameObjects.Container {
         // Manage water alert
         this.updateAlertAlphas(time)
 
-        if (this.#waterLevel < 10) {  // If the water is critical, show the critical alert
+        if (this.#waterLevel < 20) {  // If the water is critical, show the critical alert
             this.hideWaterAlert()
             this.showWaterCritAlert()
         }

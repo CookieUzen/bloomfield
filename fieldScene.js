@@ -106,9 +106,49 @@ export default class FieldScene extends Phaser.Scene {
         // Timer ticks up, check requirement is met
         if (!this.useTimeRemaining) {
             let foodUnits = this.registry.get('roundFoodUnits');
-            let goal = this.registry.get('goal');
+            const config = this.registry.get('config');
+            const roundNum = this.registry.get('round')
+            const roundGoal = config.round[roundNum.toString()]   // Assume non infinite since useTimeRemaining is false
 
-            if (foodUnits >= goal) {
+            let cropGoals = roundGoal.cropGoals;
+            let harvest_bin = this.registry.get('harvest_bin');
+
+            let allCropsMet = true; // Flag to check if all crops are met
+            for (let cropName in cropGoals) {
+                if (cropName === 'total' || cropName === 'minFertilizerLvl') {
+                    continue; // Skip the total key
+                }
+
+                // Loop over the crop goals and check if they are met
+                let cropGoal = cropGoals[cropName];
+                if (!harvest_bin[cropName] || harvest_bin[cropName] < cropGoal) {
+                    allCropsMet = false; // If any crop goal is not met, set the flag to false
+                    break;
+                }
+            }
+
+            // Check total food units
+            if (harvest_bin['total'] < roundGoal.total) {
+                allCropsMet = false; // If total food units are not met, set the flag to false
+            }
+
+            // Check if fertilizer level is met
+            if (cropGoals.minFertilizerLvl && cropGoals.minFertilizerLvl > 0) {
+                for (let row of this.farmland) {   // Loop through all tiles
+                    for (let tile of row) {
+                        const fertilizerLevel = tile.getFertilizerLevel();
+                        if (fertilizerLevel < cropGoals.minFertilizerLvl) {
+                            allCropsMet = false; // If fertilizer level is not met, set the flag to false
+                            break;
+
+                            // TODO: If everything except the fertilizer level have been met, 
+                            //       put a dialog box telling the user to fertilize?
+                        }
+                    }
+                }
+            }
+
+            if (allCropsMet) {
                 this.endRound()
             }
         }
@@ -165,14 +205,17 @@ export default class FieldScene extends Phaser.Scene {
         const roundNum = this.registry.get('round')     // Get the config for the current round
         const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
 
+        const goals = roundConfig.cropGoals;
+
         this.updateFarmlandGrid(roundConfig);  // Update the farmland grid
 
-        this.registry.set('roundTime', roundConfig.time);    // how long each round lasts in seconds
-        this.registry.set('goal', roundConfig.goal);         // how much money the player needs to win
+        this.registry.set('roundTime', roundConfig.time);   // how long each round lasts in seconds
+        this.registry.set('goal', goals.total);             // how much money the player needs to win
+        this.registry.set('cropGoals', goals.cropGoals);    // how much of each crop the player needs to win
 
         // For infinite rounds, multiply the goal
         if (roundNum > config.roundInfinite) {
-            this.registry.set('goal', roundConfig.goal * roundConfig.goalMultiplier ** (roundNum - config.roundInfinite))
+            this.registry.set('goal', goals.total * roundConfig.goalMultiplier ** (roundNum - config.roundInfinite))
         }
 
         this.timer = 0; // timer in seconds

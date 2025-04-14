@@ -234,6 +234,10 @@ export default class Tiles extends Phaser.GameObjects.Container {
         return this.#crop;
     }
 
+    getFertilizerLevel() {
+        return this.#fertilizerLevel;
+    }
+
     getPrevCrop() {
         return this.#prevCropName;
     }

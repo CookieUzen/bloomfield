@@ -1,3 +1,5 @@
+import { FancyUITextButton } from './UIButton';
+
 export default class RoundEndScene extends Phaser.Scene {
 
     constructor() {
@@ -7,7 +9,7 @@ export default class RoundEndScene extends Phaser.Scene {
     }
 
     preload() {
-
+        this.load.image('roundEndImage', "./public/assets/Round_end.png")
     }
 
     create() {
@@ -20,14 +22,19 @@ export default class RoundEndScene extends Phaser.Scene {
 
         let round = this.registry.get("round");
 
-        const startButton = this.add.text(0, 0, `End of round ${round}!`)
-        startButton.setStyle({fontSize: 100})
-        // Position in center of the screen by offsetting center coords by half the text size
-        startButton.setPosition(width/2 - startButton.width/2, height/2 - startButton.height/2)
-        startButton.setInteractive()
-        .on('pointerdown', () => {this.nextRound()})
-        .on('pointerover', () => {startButton.setStyle({fill: '#ff0'})})
-        .on('pointerout', () => {startButton.setStyle({fill: '#fff'})})
+        const backgroundImage = this.add.image(width/2, height/2, 'roundEndImage')
+
+        // Will be joined by \n and displayed
+        // TODO put more in here
+        const statsValuesText = [
+            `You harvested ${this.registry.get("roundFoodUnits")} food units this round!`,
+            `You needed ${this.registry.get("goal")} food units to win.`
+        ]
+        const statsText = this.add.text(500, 300, statsValuesText.join('\n'))
+
+        const startButton = new FancyUITextButton(this, width/2, 500, "Next round!", () => {this.nextRound()})
+        this.add.existing(startButton)
+
 
     }
 

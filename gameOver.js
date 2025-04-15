@@ -1,4 +1,4 @@
-import Crop from './crops.js'
+import { FancyUITextButton } from './UIButton';
 
 export default class GameOverScene extends Phaser.Scene {
 
@@ -9,7 +9,7 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     preload() {
-
+        this.load.image('gameOverImage', "./public/assets/Fail.png")
     }
 
     create() {
@@ -21,15 +21,12 @@ export default class GameOverScene extends Phaser.Scene {
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 
-        const startButton = this.add.text(0, 0, `Game Over!`)
-        startButton.setStyle({fontSize: 100})
-        // Position in center of the screen by offsetting center coords by half the text size
-        startButton.setPosition(width/2 - startButton.width/2, height/2 - startButton.height/2 - 100)
-		startButton.setInteractive()
-		.on('pointerdown', () => {this.scene.start('StartScene')})
-		.on('pointerover', () => {startButton.setStyle({fill: '#ff0'})})
-		.on('pointerout', () => {startButton.setStyle({fill: '#fff'})})
+        const backgroundImage = this.add.image(width/2, height/2, 'gameOverImage')
 
+        const startButton = new FancyUITextButton(this, width/2, 500, "Restart!", () => {this.scene.start('StartScene')})
+        this.add.existing(startButton)
+
+        // todo fix this
 		// last round score
 		this.add.text(50, 50, `You harvested ${this.registry.get("roundFoodUnits")} food units this round!`, {fontSize: 30, color: '#fff'})
 		this.add.text(50, 100, `You needed ${this.registry.get("goal")} food units to win.`, {fontSize: 30, color: '#fff'})

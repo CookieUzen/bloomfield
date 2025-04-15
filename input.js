@@ -141,9 +141,9 @@ export default class InputScene extends Phaser.Scene {
         });
 
 		// Bind keys 1-9 for selecting tools
-		const keys = ['Q', 'W', 'E', 'ONE', 'TWO', 'THREE', 'FOUR'];
+		const keys = ['Q', 'W', 'E', 'R', 'ONE', 'TWO', 'THREE', 'FOUR'];
 		const tools = [{type: ToolTypes.EQUIPMENT, toolName: 'watering_can'}, {type: ToolTypes.EQUIPMENT, toolName: 'sickle'}, {type: ToolTypes.EQUIPMENT, toolName: 'fertilizer'}, 
-			{type: ToolTypes.SEED, toolName: 'corn'}, {type: ToolTypes.SEED, toolName: 'soybean'}, {type: ToolTypes.SEED, toolName: 'potato'}, {type: ToolTypes.SEED, toolName: 'wheat'}
+			{type: ToolTypes.SEED, toolName: 'corn'}, {type: ToolTypes.SEED, toolName: 'soybean'}, {type: ToolTypes.SEED, toolName: 'potato'}, {type: ToolTypes.SEED, toolName: 'tomato'}, {type: ToolTypes.SEED, toolName: 'wheat'}
 		]
 		keys.forEach((key, index) => {
 

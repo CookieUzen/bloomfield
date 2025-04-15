@@ -39,6 +39,13 @@ weight = 25
 waterUsage = 6
 fertilizerUsage = 35
 
+[crops.tomato]
+growthTime = 10
+value = 5
+weight = 3
+waterUsage = 7
+fertilizerUsage = 50
+
 [round]
 roundInfinite = 7 # infinite mode after 7 rounds
 cleanCropsAfterRound = true # remove all crops after each round
@@ -100,7 +107,7 @@ potato = 120
 [round.5]
 gridSizeX = 5
 gridSizeY = 5
-cropsUnlocked = ["corn", "soybean", "potato"]
+cropsUnlocked = ["corn", "soybean", "potato", "tomato"]
 time = -1
 fertilizerNum = 16
 
@@ -114,7 +121,7 @@ potato = 200
 [round.6]
 gridSizeX = 5
 gridSizeY = 5
-cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
+cropsUnlocked = ["corn", "soybean", "potato", "tomato", "wheat"]
 time = -1
 fertilizerNum = 25
 
@@ -129,7 +136,7 @@ wheat = 200
 [round.7]
 gridSizeX = 5
 gridSizeY = 5
-cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
+cropsUnlocked = ["corn", "soybean", "potato", "wheat", "tomato"]
 time = -1
 fertilizerNum = 25
 
@@ -145,7 +152,7 @@ wheat = 250
 gridSizeX = 5
 gridSizeY = 5
 time = 120
-cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
+cropsUnlocked = ["corn", "soybean", "potato", "wheat", "tomato"]
 goalMultiplier = 1.5
 fertilizerNum = 25
 

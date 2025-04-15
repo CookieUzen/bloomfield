@@ -51,9 +51,10 @@ export default class InputScene extends Phaser.Scene {
         this.topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.notebookShowing = true})) 
 
 		// load round config
-        const config = this.registry.get('config').round
+        const config = this.registry.get('config')
+        const allRoundsConfig = config.round
         const roundNum = this.registry.get('round')     // Get the config for the current round
-        const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
+        const roundConfig = (roundNum > allRoundsConfig.roundInfinite) ? allRoundsConfig['infinite'] : allRoundsConfig[roundNum.toString()]
 
 		console.log(roundConfig)
 
@@ -150,12 +151,32 @@ export default class InputScene extends Phaser.Scene {
 
         // Generate text
         let pageOneText = ''
-        for (const crop of roundConfig.cropsUnlocked) {
+        for (const crop of roundConfig.cropsUnlocked.slice(0, 3)) {
             pageOneText += `${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
+            pageOneText += `\tGrowth time: ${config.crops[crop].growthTime}\n`
+            pageOneText += `\tWater usage: ${config.crops[crop].waterUsage}\n`
+            pageOneText += `\tFertilizer usage: ${config.crops[crop].fertilizerUsage}\n`
+            pageOneText += `\tFood value: ${config.crops[crop].weight}\n`
+            pageOneText += '\n\n\n'
         }
-        const pageOneTextBox = this.add.text(10, 10, pageOneText)
+        const pageOneTextBox = this.add.text(-450, -273, pageOneText)
         pageOneTextBox.setColor('0x000000')
+        pageOneTextBox.setFontSize(19.5)
         this.notebook.add(pageOneTextBox)
+
+        let pageTwoText = ''
+        for (const crop of roundConfig.cropsUnlocked.slice(3, 6)) {
+            pageTwoText += `${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
+            pageTwoText += `\tGrowth time: ${config.crops[crop].growthTime}\n`
+            pageTwoText += `\tWater usage: ${config.crops[crop].waterUsage}\n`
+            pageTwoText += `\tFertilizer usage: ${config.crops[crop].fertilizerUsage}\n`
+            pageTwoText += `\tFood value: ${config.crops[crop].weight}\n`
+            pageTwoText += '\n\n\n'
+        }
+        const pageTwoTextBox = this.add.text(50, -273, pageTwoText)
+        pageTwoTextBox.setColor('0x000000')
+        pageTwoTextBox.setFontSize(19.5)
+        this.notebook.add(pageTwoTextBox)
 
         this.input.keyboard.on('keydown-T', () => {         // Triggers once when T is pressed
             this.fieldScene.notebookShowing = !this.fieldScene.notebookShowing; 
@@ -190,7 +211,7 @@ export default class InputScene extends Phaser.Scene {
 
 		// Dialogue setup
 		const dialogueData = this.registry.get('dialogue').round
-        this.roundDialogue = (roundNum > config.roundInfinite) ? dialogueData['infinite'] : dialogueData[roundNum.toString()]
+        this.roundDialogue = (roundNum > allRoundsConfig.roundInfinite) ? dialogueData['infinite'] : dialogueData[roundNum.toString()]
 
 		this.dialogueIndex = 0
         this.currentDialogueSet

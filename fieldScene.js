@@ -222,6 +222,8 @@ export default class FieldScene extends Phaser.Scene {
         this.timeRemaining = roundConfig.time; // time remaining in seconds
         if (roundConfig.time < 0) {
             this.useTimeRemaining = false; // If the time is negative, we don't use it
+        } else {
+            this.useTimeRemaining = true; // If the time is positive, we use it
         }
 
         // Add fertilizer to the toolbar

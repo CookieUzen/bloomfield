@@ -15,8 +15,8 @@ export default class GameOverScene extends Phaser.Scene {
     create() {
 
 		// Kill the other scenes so we can have a clean slate
-		this.scene.stop('FieldScene');
-		this.scene.stop('InputScene');
+		this.scene.remove('FieldScene');
+		this.scene.remove('InputScene');
 
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;

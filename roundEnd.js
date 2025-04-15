@@ -43,13 +43,17 @@ export default class RoundEndScene extends Phaser.Scene {
     }
 
     nextRound() {
-        // Check if the player has enough food units to win
-        let goal = this.registry.get("goal");
-        let roundFoodUnits = this.registry.get("roundFoodUnits");
-    
-        if (roundFoodUnits < goal) {
-            this.scene.start("GameOverScene");
-            return;
+        let fieldScene = this.scene.get('FieldScene');
+
+        // If in infinite mode, check if the player has enough food units to win
+        if (fieldScene.useTimeRemaining) {
+            let goal = this.registry.get("goal");
+            let roundFoodUnits = this.registry.get("roundFoodUnits");
+        
+            if (roundFoodUnits < goal) {
+                this.scene.start("GameOverScene");
+                return;
+            }
         }
 
         this.registry.inc("round");

@@ -152,7 +152,7 @@ export default class InputScene extends Phaser.Scene {
         // Generate text
         let pageOneText = ''
         for (const crop of roundConfig.cropsUnlocked.slice(0, 3)) {
-            pageOneText += `${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
+            pageOneText += `${config.crops[crop].emoji} ${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
             pageOneText += `\tGrowth time: ${config.crops[crop].growthTime}\n`
             pageOneText += `\tWater usage: ${config.crops[crop].waterUsage}\n`
             pageOneText += `\tFertilizer usage: ${config.crops[crop].fertilizerUsage}\n`
@@ -166,7 +166,7 @@ export default class InputScene extends Phaser.Scene {
 
         let pageTwoText = ''
         for (const crop of roundConfig.cropsUnlocked.slice(3, 6)) {
-            pageTwoText += `${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
+            pageTwoText += `${config.crops[crop].emoji} ${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
             pageTwoText += `\tGrowth time: ${config.crops[crop].growthTime}\n`
             pageTwoText += `\tWater usage: ${config.crops[crop].waterUsage}\n`
             pageTwoText += `\tFertilizer usage: ${config.crops[crop].fertilizerUsage}\n`

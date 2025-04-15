@@ -17,6 +17,7 @@ value = 10
 weight = 10
 waterUsage = 7
 fertilizerUsage = 40
+emoji = '🌽'
 
 [crops.soybean]
 growthTime = 30
@@ -24,6 +25,7 @@ value = 8
 weight = 8
 waterUsage = 3
 fertilizerUsage = -30
+emoji = '🫛'
 
 [crops.potato]
 growthTime = 35
@@ -31,6 +33,7 @@ value = 15
 weight = 15
 waterUsage = 5
 fertilizerUsage = 30
+emoji = '🥔'
 
 [crops.wheat]
 growthTime = 50
@@ -38,6 +41,7 @@ value = 25
 weight = 25
 waterUsage = 6
 fertilizerUsage = 35
+emoji = '🌾'
 
 [crops.tomato]
 growthTime = 10
@@ -45,6 +49,7 @@ value = 5
 weight = 3
 waterUsage = 7
 fertilizerUsage = 50
+emoji = '🍅'
 
 [round]
 roundInfinite = 7 # infinite mode after 7 rounds

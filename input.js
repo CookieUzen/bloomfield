@@ -153,7 +153,7 @@ export default class InputScene extends Phaser.Scene {
         let pageOneText = ''
         for (const crop of roundConfig.cropsUnlocked.slice(0, 3)) {
             pageOneText += `${config.crops[crop].emoji} ${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
-            pageOneText += `\tGrowth time: ${config.crops[crop].growthTime}\n`
+            pageOneText += `\tGrowth time: ${config.crops[crop].growthTime}\n seconds`
             pageOneText += `\tWater usage: ${config.crops[crop].waterUsage}\n`
             pageOneText += `\tFertilizer usage: ${config.crops[crop].fertilizerUsage}\n`
             pageOneText += `\tFood value: ${config.crops[crop].weight}\n`

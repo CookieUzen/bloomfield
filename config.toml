@@ -98,7 +98,7 @@ potato = 10
 [round.4]
 gridSizeX = 4
 gridSizeY = 4
-cropsUnlocked = ["corn", "soybean", "potato", "tomato"]
+cropsUnlocked = ["corn", "soybean", "potato"]
 time = -1
 fertilizerNum = 16
 
@@ -107,12 +107,11 @@ total = 100
 minFertilizerLvl = 50
 corn = 5
 soybean = 10
-tomato = 20
 
 [round.5]
 gridSizeX = 4
 gridSizeY = 4
-cropsUnlocked = ["corn", "soybean", "potato", "tomato", "wheat"]
+cropsUnlocked = ["corn", "soybean", "potato", "wheat"]
 time = -1
 fertilizerNum = 16
 
@@ -120,7 +119,6 @@ fertilizerNum = 16
 total = 500
 minFertilizerLvl = 50
 soybean = 9
-tomato = 15
 wheat = 9
 
 [round.6]

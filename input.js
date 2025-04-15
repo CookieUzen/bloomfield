@@ -89,8 +89,9 @@ export default class InputScene extends Phaser.Scene {
         }
 
         // Info boxes on the top left corner
-		const textBackgroundTopLeft = [50, 75]
-		const textBackgroundDimensions = [175, 75]
+        const UITextStyle = { color: 'white', font: '25px Ariel' }
+		const textBackgroundTopLeft = [50, 20]
+		const textBackgroundDimensions = [175, 85]
 		const textBackgroundBorderThickness = 10
 		this.textBackground = this.add.graphics()
 		this.textBackground.fillStyle(0x974B22, 1);
@@ -98,14 +99,22 @@ export default class InputScene extends Phaser.Scene {
 		this.textBackground.fillStyle(0xB95C2C, 1);
         this.textBackground.fillRoundedRect(textBackgroundTopLeft[0] + textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundBorderThickness, textBackgroundTopLeft[0] + textBackgroundDimensions[0] - 2 * textBackgroundBorderThickness, textBackgroundTopLeft[1] + textBackgroundDimensions[1] - 2 * textBackgroundBorderThickness, 10);
 
-		const textStyle = { color: 'white', font: '20px Ariel' }
-        this.roundTextBox = this.add.text(75, 100, '', textStyle)
-        this.timeTextBox = this.add.text(75, 120, '', textStyle)
-        this.moneyTextBox = this.add.text(75, 140, '', textStyle)
+		const textStyle = { color: 'white', font: '16px Ariel' }
+        this.roundTextBox = this.add.text(75, 40, '', UITextStyle)
+        this.timeTextBox = this.add.text(75, 75, '', UITextStyle)
+
+        // Second box for Crop Goals
+        const goalsBoxTopLeft2 = [50, 135]
+        const goalsBoxDimensions2 = [175, 100]
+        const goalsBoxBorderThickness2 = 10
+        this.goalsBoxBackground2 = this.add.graphics()
+        this.goalsBoxBackground2.fillStyle(0x502829, 1);
+        this.goalsBoxBackground2.fillRoundedRect(goalsBoxTopLeft2[0], goalsBoxTopLeft2[1], goalsBoxTopLeft2[0] + goalsBoxDimensions2[0], goalsBoxTopLeft2[1] + goalsBoxDimensions2[1], 10);
+        this.goalsBoxBackground2.fillStyle(0x673436, 1);
+        this.goalsBoxBackground2.fillRoundedRect(goalsBoxTopLeft2[0] + goalsBoxBorderThickness2, goalsBoxTopLeft2[1] + goalsBoxBorderThickness2, goalsBoxTopLeft2[0] + goalsBoxDimensions2[0] - 2 * goalsBoxBorderThickness2, goalsBoxTopLeft2[1] + goalsBoxDimensions2[1] - 2 * goalsBoxBorderThickness2, 10);
 
         // Display goal and current food units
-        this.goalTextBox = this.add.text(75, 160, '', textStyle)
-        this.roundFoodUnitsTextBox = this.add.text(75, 180, '', textStyle)
+        this.goalTextBox = this.add.text(75, 160, '', UITextStyle)
 
         //------------------------------------
 
@@ -242,13 +251,47 @@ export default class InputScene extends Phaser.Scene {
         let timeText = this.formatTime(chosenTimer + 1);  // Add one so that the timer feels more natural and ends when it hits 0 and not a second later
         this.timeTextBox.setText(`Time: ${timeText}`);
 
-        let money = this.registry.get('money')
-        this.moneyTextBox.setText(`Money: $${money}`)
+        // get round config
+        const config = this.registry.get('config').round
+        const roundNum = this.registry.get('round')     // Get the config for the current round
+        const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
+        const cropGoals = roundConfig.cropGoals
 
-        let goal = this.registry.get('goal')
-        this.goalTextBox.setText(`Goal: ${goal}`)
+        const harvest_bin = this.registry.get('harvest_bin')
+        let cropsSet = new Set();
 
-        this.roundFoodUnitsTextBox.setText(`Round Food Units: ${this.registry.get('roundFoodUnits')}`)
+        // Join the harvest bin and goal together
+        for (const crop in harvest_bin) {
+            cropsSet.add(crop);
+        }
+        for (const crop in cropGoals) {
+            if (crop === 'minFertilizerLvl') {
+                continue
+            }
+
+            if (crop === 'total') {
+                continue
+            }
+
+            cropsSet.add(crop);
+        }
+
+        // Generate our goal text here
+        let goalText = '';
+        goalText += 'Goal: \n\n';
+        const roundFoodUnits = this.registry.get('roundFoodUnits');
+        const goal = this.registry.get('goal');
+        goalText += `Total: ${roundFoodUnits}/${goal}\n`;
+
+        for (const crop of cropsSet) {
+            const harvest_bin_text = harvest_bin[crop] ? harvest_bin[crop] : 0;  // If the crop is not in the harvest bin, set it to 0
+            const cropGoals_text = cropGoals[crop] ? cropGoals[crop] : 0;  // If the crop is not in the goals, set it to 0
+
+            goalText += `${crop}: ${harvest_bin_text}/${cropGoals_text}\n`;
+        }
+
+        this.goalTextBox.setText(goalText);
+
 
         // Toolbar
         this.toolSprite.setTexture(this.fieldScene.toolbar.getCurrentToolName())

@@ -189,17 +189,24 @@ export default class InputScene extends Phaser.Scene {
 		this.dialogueIndex = 0
         this.currentDialogueSet
         this.currentDialogueCharacter = 'mayor'
+        this.startsWithPreamble = roundNum === 1
 
         // Initially add the beginning dialogue
-        this.currentDialogueSet = this.roundDialogue.start.speech
-        this.currentDialogueCharacter = this.roundDialogue.start.character
+        this.currentDialogueSet = this.startsWithPreamble ? this.roundDialogue.preamble.speech : this.roundDialogue.start.speech
+        this.currentDialogueCharacter = this.startsWithPreamble ? this.roundDialogue.preamble.character : this.roundDialogue.start.character
 
 		this.dialogueBackground = this.add.image(width/2, 600, `${this.currentDialogueCharacter}_text`)
         this.dialogueBackground.setScale(6.25)
 		this.dialogueBackground.setInteractive(new Phaser.Geom.Rectangle(0, 0, width, height), Phaser.Geom.Rectangle.Contains)  // Make the whole screen interactive for this
 		.on('pointerdown', () => {
 			this.dialogueIndex += 1  // Increment dialogue
-			console.log(this.dialogueIndex)
+			
+            if (this.startsWithPreamble && this.dialogueIndex >= this.currentDialogueSet.length) {
+                this.currentDialogueSet = this.roundDialogue.start.speech
+                this.currentDialogueCharacter = this.roundDialogue.start.character
+                this.dialogueIndex = 0
+                this.startsWithPreamble = false
+            }
 
             // Unpause if we are paused
             if (this.dialogueIndex >= this.currentDialogueSet.length && !this.fieldScene.scene.isActive()) {

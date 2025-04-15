@@ -1,136 +1,192 @@
 [round]
 
-[round.1]
-
-[round.1.start]
+[round.1.preamble]
 character = "mayor"
 speech = [
-    "*thump*\nHello there!",
-    "General Kenobi!"
+    "Hi, it’s good to see you back!
+The town has been struggling since the farmland was abandoned.",
+    "Thank you for your willingness to take over
+your grandfather’s farmland. We really need you.",
+    "This land once fed the entire town and nearby city.
+But now people are losing jobs, farmers are giving up...",
+    "...and even the food bank is running low.
+It’s a tough situation.",
+    "Farming costs money—seeds, fertilizers,
+and advanced machines aren’t free.",
+    "Especially when compared to working in big cities.",
+    "Most people moved away. Aging farmers
+could no longer maintain their land.",
+    "But you’re different. You have the chance
+to change all that.",
+    "Let’s try our first real planting!
+Your goal is to harvest 5 corn plants.",
+    "You can check the objective anytime
+at the top right boxes."
+]
+
+[round.1.start]
+character = "biologist"
+speech = [
+    "Now we can plant our first crop—corn.
+It’s drought-resistant and grows quickly.",
+    "Corn is in high demand at the food bank.
+It yields 10 food units and stores well.",
+    "To plant, click the seed icon on the right,
+and drag the corn to the soil.",
+    "When the soil shows a droplet icon or turns pale,
+it means it’s dry. Water it!",
+    "Click the watering can in the top toolbar,
+then drag it to the crop.",
+    "Farming takes patience. Let’s wait
+for the corn to grow.",
+    "Once it’s ready, click the sickle icon
+and harvest the mature corn!"
 ]
 
 [round.1.end]
 character = "villager"
 speech = [
-    "Yippee"
+    "Yippee! We’re growing food again!"
 ]
 
-
-[round.2]
 
 [round.2.start]
 character = "biologist"
 speech = [
-    "Welcome to round 2.",
-    "Let’s explore some new ideas."
+    "Now we can plant our second crop—soybeans.
+They grow slowly, but are very beneficial for the soil.",
+    "Each plot shows its fertility level
+at the bottom.",
+    "You can use some of your fertilizer to add more nutrients,
+or you can plant soybeans!",
+    "Be careful, planting the same plant in the same plot
+multiple times in a row reduces how much the crops can produce.",
 ]
 
 [round.2.end]
-character = "villager"
+character = "mayor"
 speech = [
-    "Round 2 is over.",
-    "On to the next challenge!"
+    "You did it! The villagers feel safer already.",
+    "You’ve earned more land to expand your farm."
 ]
 
 
-[round.3]
-
 [round.3.start]
-character = "villager"
+character = "mayor"
 speech = [
-    "Round 3 has begun!",
-    "I feel lucky today."
+    "Our next goal is to build a long-term
+food supply chain.",
+    "Try to produce 300 food units.
+And keep all soil fertility above 50%.",
+    "This will help us maintain consistent
+yields for the village."
 ]
 
 [round.3.end]
 character = "mayor"
 speech = [
-    "Well done!",
-    "Keep up the good work."
+    "Great job! The village is on its way
+to becoming self-sufficient.",
+    "Here’s a new crop: potatoes.
+They are sturdy and yield 15 food units.",
+    "They take longer to grow (35s)
+and use more nutrients, but are very reliable.",
+    "Potatoes are a global staple,
+especially for energy and resilience."
 ]
 
 
-[round.4]
-
 [round.4.start]
-character = "mayor"
+character = "villager"
 speech = [
-    "Let’s make round 4 great.",
-    "Ready for action?"
+    "Hi! I’m Uzen, representing our villagers.",
+    "We see real change happening.
+Thank you for helping us!",
+    "Let’s diversify our crops
+to prepare for the seasons ahead."
 ]
 
 [round.4.end]
 character = "biologist"
 speech = [
-    "That was impressive.",
-    "Time to analyze the results."
+    "Use fertilizer when fertility drops below 60%.",
+    "Rotate your crops to restore the soil.",
+    "You’ve unlocked wheat—a staple crop.
+It grows slower (50s) but yields 25 units."
 ]
 
 
-[round.5]
-
 [round.5.start]
-character = "biologist"
+character = "mayor"
 speech = [
-    "Halfway there, round 5 starts now.",
-    "Science is in the air."
+    "Winter is coming, and we need a food reserve.",
+    "Let’s build a granary and start storing food.",
+    "Lauren, from the food center, will help us."
 ]
 
 [round.5.end]
-character = "villager"
+character = "biologist"
 speech = [
-    "Round 5 comes to an end.",
-    "Celebrations are in order!"
+    "Hi, I’m Lauren. Our goal is to collect
+1,600 food units for winter reserves.",
+    "Focus on large output while keeping
+the soil fertile.",
+    "Wheat and potatoes are great options
+for balancing volume and stability."
 ]
 
 
-[round.6]
-
 [round.6.start]
-character = "villager"
+character = "biologist"
 speech = [
-    "Round 6, here we go!",
-    "The excitement builds."
+    "The granary is built.
+Now it’s time to think about nutrition.",
+    "Let me introduce tomatoes!
+They grow fast (10s), yield 5 units, and are vitamin-rich.",
+    "They help fight malnutrition
+and bring balance to our diets."
 ]
 
 [round.6.end]
-character = "mayor"
+character = "biologist"
 speech = [
-    "Amazing effort!",
-    "Let’s prepare for the final rounds."
+    "Fantastic! Tomatoes have improved
+both our harvest and our health.",
+    "You’ve made the village stronger and better-fed."
 ]
 
 
-[round.7]
-
 [round.7.start]
-character = "mayor"
+character = "villager"
 speech = [
-    "Round 7 is upon us.",
-    "The stakes are higher now."
+    "You’ve come so far.
+The land is alive again!"
 ]
 
 [round.7.end]
-character = "biologist"
+character = "mayor"
 speech = [
-    "Round 7 is a breakthrough.",
-    "Things are getting interesting!"
+    "You did it! The village is thriving
+thanks to your hard work.",
+    "Agriculture never stops. There’s always
+more to learn, more to grow."
 ]
 
 
-[round.infinite]
-
 [round.infinite.start]
-character = "biologist"
+character = "villager"
 speech = [
-    "Infinite round starts now.",
-    "Time to give it your all."
+    "I’m Uzen, and on behalf of the village,
+thank you. This place is full of life again.",
+    "Children are smiling, families are stronger,
+and hope has returned."
 ]
 
 [round.infinite.end]
-character = "villager"
+character = "mayor"
 speech = [
-    "Round 8 is complete.",
-    "Next round"
+    "This is just the beginning.
+You’ve restored the village, but the journey continues.",
+    "With every season, new challenges await.
+Let’s see how far your farm can go!"
 ]
-

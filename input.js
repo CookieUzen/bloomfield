@@ -349,13 +349,16 @@ export default class InputScene extends Phaser.Scene {
 
         // Generate our goal text here
         let goalText = '';
-        goalText += 'Goal: \n\n';
         const roundFoodUnits = this.registry.get('roundFoodUnits');
         const goal = this.registry.get('goal');
+        if (goal <= 0) {
+           goalText += `Total Food: ${roundFoodUnits}\n\n`
+        }
+
+        goalText += 'Goals: \n\n';
+
         if (goal > 0) {
             goalText += `${roundFoodUnits >= goal ? '✓ ' : '✗ '}Total Food: ${roundFoodUnits}/${goal}\n`;
-        } else {
-            goalText += `Total Food: ${roundFoodUnits}\n`
         }
 
         for (const crop of cropsSet) {

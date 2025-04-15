@@ -148,7 +148,16 @@ export default class InputScene extends Phaser.Scene {
         this.notebookCloseButton.setVisible(false)
         this.notebookCloseButton.setAbove(this.pauseOverlay)
 
-        this.input.keyboard.on('keydown-T', () => {         // Triggers once when N is pressed
+        // Generate text
+        let pageOneText = ''
+        for (const crop of roundConfig.cropsUnlocked) {
+            pageOneText += `${crop.charAt(0).toUpperCase() + crop.slice(1)}: \n`;
+        }
+        const pageOneTextBox = this.add.text(10, 10, pageOneText)
+        pageOneTextBox.setColor('0x000000')
+        this.notebook.add(pageOneTextBox)
+
+        this.input.keyboard.on('keydown-T', () => {         // Triggers once when T is pressed
             this.fieldScene.notebookShowing = !this.fieldScene.notebookShowing; 
             if (!this.fieldScene.notebookShowing) this.fieldScene.togglePause()
         });

@@ -1,4 +1,4 @@
-import { UITextButton, UIImageButton, UIImageButtonWithText } from "./UIButton.js";
+import { UITextButton, UIImageButton, UIImageButtonWithText, FancyUITextButton } from "./UIButton.js";
 import { ToolTypes } from "./newToolbar.js";
 
 
@@ -21,6 +21,7 @@ export default class InputScene extends Phaser.Scene {
         this.fieldScene = this.scene.get('FieldScene'); 
 
         this.load.image('pause', "./public/assets/Pause.png")
+        this.load.image('notebook', "./public/assets/Notebook.png")
 
         this.load.image('mayor_text', "./public/assets/Mayor_text.png")
         this.load.image('biologist_text', "./public/assets/Biologist_text.png")
@@ -29,6 +30,8 @@ export default class InputScene extends Phaser.Scene {
         this.load.image('mayor_more_text', "./public/assets/More_text_orange.png")
         this.load.image('biologist_more_text', "./public/assets/More_text_blue.png")
         this.load.image('villager_more_text', "./public/assets/More_text_green.png")
+        
+        this.load.image('notebook_open', "./public/assets/Open_notebook.png")
     }
 
     create() {
@@ -119,7 +122,27 @@ export default class InputScene extends Phaser.Scene {
         this.add.existing(this.unpauseButton)
         this.unpauseButton.setAbove(this.pauseOverlay)
         this.unpauseButton.setVisible(false)
-    
+
+        // Notebook overlay
+        this.notebook = this.add.container(width/2, height/2)
+        this.notebookImage = this.add.image(0, 0, 'notebook_open')
+        this.notebook.add(this.notebookImage)
+        this.notebookImage.setScale(4)
+
+        this.notebook.setVisible(false)
+
+        this.notebookButton = new UIImageButton(this, 875, 75, 'notebook', () => {this.fieldScene.notebookShowing = true;})
+        this.notebookCloseButton = new FancyUITextButton(this, 1100, 75, 'X', () => {this.fieldScene.notebookShowing = false; this.fieldScene.togglePause()})
+        this.add.existing(this.notebookButton)
+        this.add.existing(this.notebookCloseButton)
+        this.notebookCloseButton.setVisible(false)
+        this.notebookCloseButton.setAbove(this.pauseOverlay)
+        this.notebookButton.setBelow(this.pauseOverlay)
+
+        this.input.keyboard.on('keydown-N', () => {         // Triggers once when N is pressed
+            this.fieldScene.notebookShowing = !this.fieldScene.notebookShowing; 
+            if (!this.fieldScene.notebookShowing) this.fieldScene.togglePause()
+        });
 
 		// Keybinder
         this.input.keyboard.on('keydown-ESC', () => {         // Triggers once when P is pressed
@@ -200,6 +223,20 @@ export default class InputScene extends Phaser.Scene {
         } else {
             this.pauseOverlay.setVisible(false)
             this.unpauseButton.setVisible(false)
+        }
+
+        // if we are showing the notebook, then show the notebook and force pause the game
+        if (this.fieldScene.notebookShowing) {
+            // Keep game paused while we are in the notebook
+            if (this.fieldScene.scene.isActive()) {
+                this.fieldScene.togglePause()
+            }
+            this.notebook.setVisible(true)
+            this.notebookCloseButton.setVisible(true)
+            this.unpauseButton.setVisible(false)  // Hide the button if the game is paused due to notebook
+        } else {
+            this.notebook.setVisible(false)
+            this.notebookCloseButton.setVisible(false)
         }
 
         // if we are reading dialogue, show the box and force pause the game

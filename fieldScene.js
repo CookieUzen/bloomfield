@@ -7,6 +7,7 @@ export default class FieldScene extends Phaser.Scene {
     timeRemaining;      // time remaining in seconds
     useTimeRemaining;   // If we are counting down or up, true for counting down
     roundInProgress;    // Stores if a round is over or not, checked by input scene
+    notebookShowing;    // Stores the state of the notebook display
 
     constructor() {
         super({ key: 'FieldScene' });

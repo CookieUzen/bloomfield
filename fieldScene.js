@@ -132,7 +132,7 @@ export default class FieldScene extends Phaser.Scene {
             }
 
             // Check total food units
-            if (harvest_bin['total'] < roundGoal.total) {
+            if (foodUnits < cropGoals.total) {
                 allCropsMet = false; // If total food units are not met, set the flag to false
             }
 

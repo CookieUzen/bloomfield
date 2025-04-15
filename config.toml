@@ -117,7 +117,7 @@ time = -1
 fertilizerNum = 16
 
 [round.5.cropGoals]
-total = 110
+total = 500
 minFertilizerLvl = 50
 soybean = 9
 tomato = 15
@@ -131,7 +131,7 @@ time = -1
 fertilizerNum = 25
 
 [round.6.cropGoals]
-total = 200
+total = 500
 minFertilizerLvl = 50
 tomato = 30
 
@@ -143,7 +143,7 @@ time = -1
 fertilizerNum = 25
 
 [round.7.cropGoals]
-total = 300
+total = 600
 minFertilizerLvl = 50
 
 [round.infinite]

@@ -48,7 +48,7 @@ export default class InputScene extends Phaser.Scene {
         this.topButtonRow.push(new UIImageButton(this, 0, 0, 'sickle', () => {this.fieldScene.toolbar.setToolEquipment('sickle')}))
         this.topButtonRow.push(new UIImageButtonWithText(this, 0, 0, 'fertilizer', 0, () => {this.fieldScene.toolbar.setToolEquipment('fertilizer')}))  
 		this.topButtonRow.push(new UITextButton(this, 0, 0, '', () => {}))  // Empty button to leave empty spot in toolbar (TODO: move the pause button to a real spot lol)
-        this.topButtonRow.push(new UIImageButton(this, 0, 0, 'pause', () => {this.fieldScene.togglePause()})) 
+        this.topButtonRow.push(new UIImageButton(this, 0, 0, 'notebook', () => {this.fieldScene.notebookShowing = true})) 
 
 		// load round config
         const config = this.registry.get('config').round
@@ -123,6 +123,9 @@ export default class InputScene extends Phaser.Scene {
 
         // Pause overlay
 
+        this.pauseButton = new UIImageButton(this, 875, 75, 'pause', () => {this.fieldScene.togglePause()})
+        this.add.existing(this.pauseButton)
+
         this.pauseOverlay = this.add.rectangle(width/2, height/2, width, height, '0x000000', 0.5)
         this.pauseOverlay.setInteractive()  // Eat the input before it gets to the rest of the game
         this.pauseOverlay.setVisible(false)
@@ -140,15 +143,12 @@ export default class InputScene extends Phaser.Scene {
 
         this.notebook.setVisible(false)
 
-        this.notebookButton = new UIImageButton(this, 875, 75, 'notebook', () => {this.fieldScene.notebookShowing = true;})
         this.notebookCloseButton = new FancyUITextButton(this, 1100, 75, 'X', () => {this.fieldScene.notebookShowing = false; this.fieldScene.togglePause()})
-        this.add.existing(this.notebookButton)
         this.add.existing(this.notebookCloseButton)
         this.notebookCloseButton.setVisible(false)
         this.notebookCloseButton.setAbove(this.pauseOverlay)
-        this.notebookButton.setBelow(this.pauseOverlay)
 
-        this.input.keyboard.on('keydown-N', () => {         // Triggers once when N is pressed
+        this.input.keyboard.on('keydown-T', () => {         // Triggers once when N is pressed
             this.fieldScene.notebookShowing = !this.fieldScene.notebookShowing; 
             if (!this.fieldScene.notebookShowing) this.fieldScene.togglePause()
         });
@@ -158,10 +158,7 @@ export default class InputScene extends Phaser.Scene {
             this.fieldScene.togglePause();                        // Toggle pause
         });
 
-		// TODO remove this when we move the pause button
-		this.input.keyboard.on('keydown-T', () => {         // Triggers once when P is pressed
-            this.fieldScene.togglePause();                        // Toggle pause
-        });
+
 
 		// Bind keys 1-9 for selecting tools
 		const keys = ['Q', 'W', 'E', 'R', 'ONE', 'TWO', 'THREE', 'FOUR'];
@@ -325,14 +322,35 @@ export default class InputScene extends Phaser.Scene {
         goalText += 'Goal: \n\n';
         const roundFoodUnits = this.registry.get('roundFoodUnits');
         const goal = this.registry.get('goal');
-        goalText += `Total: ${roundFoodUnits}/${goal}\n`;
+        if (goal > 0) {
+            goalText += `Total: ${roundFoodUnits}/${goal}\n`;
+        }
 
         for (const crop of cropsSet) {
             const harvest_bin_text = harvest_bin[crop] ? harvest_bin[crop] : 0;  // If the crop is not in the harvest bin, set it to 0
             const cropGoals_text = cropGoals[crop] ? cropGoals[crop] : 0;  // If the crop is not in the goals, set it to 0
-
-            goalText += `${crop}: ${harvest_bin_text}/${cropGoals_text}\n`;
+            if (cropGoals_text === 0) continue  // Skip crops that don't have goals
+            // ChatGPT wrote the uppercase thing
+            goalText += `${harvest_bin_text >= cropGoals_text ? '✓ ' : '✗ '}${crop.charAt(0).toUpperCase() + crop.slice(1)}: ${harvest_bin_text}/${cropGoals_text}\n`;
         }
+
+        // Fertilizer
+        let minFertilizerFound = 100
+        // Check if fertilizer level is met
+        if (cropGoals.minFertilizerLvl && cropGoals.minFertilizerLvl > 0) {
+            for (let row of this.fieldScene.farmland) {   // Loop through all tiles
+                for (let tile of row) {
+                    const fertilizerLevel = Math.floor(tile.getFertilizerLevel())
+                    if (fertilizerLevel < minFertilizerFound) {
+                        minFertilizerFound = fertilizerLevel
+                    }
+                }
+            }
+
+            goalText += `${minFertilizerFound >= cropGoals.minFertilizerLvl ? '✓ ' : '✗ '}Lowest Soil\nNutrients: ${minFertilizerFound}/${cropGoals.minFertilizerLvl}\n`
+        }
+
+        
 
         this.goalTextBox.setText(goalText);
 

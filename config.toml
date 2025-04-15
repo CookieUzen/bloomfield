@@ -60,7 +60,7 @@ monocroppingDisabled = true
 fertilizerNum = 4
 
 [round.1.cropGoals]
-total = 50
+total = 0
 minFertilizerLvl = -1
 corn = 5
 
@@ -72,8 +72,8 @@ time = -1
 fertilizerNum = 9
 
 [round.2.cropGoals]
-total = 50
-minFertilizerLvl = 80
+total = 0
+minFertilizerLvl = 60
 corn = 0
 soybean = 4
 
@@ -85,7 +85,7 @@ time = -1
 fertilizerNum = 16
 
 [round.3.cropGoals]
-total = 100
+total = 200
 minFertilizerLvl = 50
 potato = 10
 

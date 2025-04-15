@@ -119,6 +119,9 @@ export default class FieldScene extends Phaser.Scene {
                 if (cropName === 'total' || cropName === 'minFertilizerLvl') {
                     continue; // Skip the total key
                 }
+                if (cropGoals[cropName] === 0) {
+                    continue; // Skip crops with no goal
+                }
 
                 // Loop over the crop goals and check if they are met
                 let cropGoal = cropGoals[cropName];

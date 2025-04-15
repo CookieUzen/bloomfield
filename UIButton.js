@@ -50,20 +50,19 @@ export class UITextButton extends UIButton {
         this.background.setBelow(this.textSprite)
 
         // Create the hitbox manually, because containers and graphics don't have any
-        this.setUpHitbox()
-
-    }
-
-    setUpHitbox() {
-        this.removeInteractive()
         this.setInteractive(new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight), Phaser.Geom.Rectangle.Contains)
-        .on('pointerdown', () => {if (this.callback) this.callback() })  // Handle mouse down
+        .on('pointerdown', () => {if (this.callback) this.callback(); console.log("POINTER DOWN")})  // Handle mouse down
         .on('pointerover', () => {
             this.drawButtonBackground(this.backgroundHover)
         })  // Handle hovering and drag
         .on('pointerout', () => {
             this.drawButtonBackground(this.backgroundDefault)
         })  // Clear tint when mouse leaves
+
+    }
+
+    resizeHitbox() {
+        this.input.hitArea = new Phaser.Geom.Rectangle(-this.buttonWidth / 2, -this.buttonHeight / 2, this.buttonWidth, this.buttonHeight)
     }
 
     drawButtonBackground(fillColor, alpha = 1) {
@@ -169,7 +168,7 @@ export class FancyUITextButton extends UITextButton {
         this.textSprite.setColor(this.textColor)
         this.textSprite.setFontSize(40)
         this.drawButtonBackground(this.backgroundDefault)
-        this.setUpHitbox()
+        this.resizeHitbox()
 
     }
 }

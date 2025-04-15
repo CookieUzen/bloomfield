@@ -20,17 +20,57 @@ export default class RoundEndScene extends Phaser.Scene {
         // Get scene to place things in the middle
         let { width, height } = this.sys.game.canvas;
 
-        let round = this.registry.get("round");
-
         const backgroundImage = this.add.image(width/2, height/2, 'roundEndImage')
 
         // Will be joined by \n and displayed
-        // TODO put more in here
         const statsValuesText = [
-            `You harvested ${this.registry.get("roundFoodUnits")} food units this round!`,
-            `You needed ${this.registry.get("goal")} food units to win.`
+            `Time: ${formatTime(this.registry.get('prevRoundTime'))}`
         ]
-        const statsText = this.add.text(500, 300, statsValuesText.join('\n'))
+
+        // get round config
+        const config = this.registry.get('config').round
+        const roundNum = this.registry.get('round')     // Get the config for the current round
+        const roundConfig = (roundNum > config.roundInfinite) ? config['infinite'] : config[roundNum.toString()]
+        const cropGoals = roundConfig.cropGoals
+        const harvest_bin = this.registry.get('harvest_bin')
+        let cropsSet = new Set();
+
+        // Join the harvest bin and goal together
+        for (const crop in harvest_bin) {
+            cropsSet.add(crop);
+        }
+        for (const crop in cropGoals) {
+            if (crop === 'minFertilizerLvl') {
+                continue
+            }
+
+            if (crop === 'total') {
+                continue
+            }
+
+            cropsSet.add(crop);
+        }
+
+        const roundFoodUnits = this.registry.get('roundFoodUnits');
+        const goal = this.registry.get('goal');
+        if (goal > 0) {
+            statsValuesText.push(`${roundFoodUnits >= goal ? '✓ ' : '✗ '}Total Food: ${roundFoodUnits}/${goal}`)
+        } else {
+            statsValuesText.push(`Total Food: ${roundFoodUnits}`)
+        }
+
+        for (const crop of cropsSet) {
+            const harvest_bin_text = harvest_bin[crop] ? harvest_bin[crop] : 0;  // If the crop is not in the harvest bin, set it to 0
+            const cropGoals_text = cropGoals[crop] ? cropGoals[crop] : 0;  // If the crop is not in the goals, set it to 0
+            if (cropGoals_text > 0) {
+                statsValuesText.push(`${harvest_bin_text >= cropGoals_text ? '✓ ' : '✗ '}${crop.charAt(0).toUpperCase() + crop.slice(1)}: ${harvest_bin_text}/${cropGoals_text}`)
+            } else {
+                statsValuesText.push(`${crop.charAt(0).toUpperCase() + crop.slice(1)}: ${harvest_bin_text}`)
+            }
+            // ChatGPT wrote the uppercase thing ^
+        }
+
+        const statsText = this.add.text(360, 300, statsValuesText.join('\n'))
 
         const startButton = new FancyUITextButton(this, width/2, 500, "Next round!", () => {this.nextRound()})
         this.add.existing(startButton)
@@ -65,4 +105,12 @@ export default class RoundEndScene extends Phaser.Scene {
         this.scene.get('FieldScene').startRound();
         this.scene.stop();
     }
+}
+
+
+// ChatGPT wrote this
+function formatTime(seconds) {
+    let minutes = Math.floor(seconds / 60);
+    let secs = Math.floor(seconds % 60);
+    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }

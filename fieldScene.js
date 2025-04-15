@@ -344,6 +344,7 @@ export default class FieldScene extends Phaser.Scene {
     // This gets called by InputScene. It's a little scuffed, but that scene handles the dialogue so
     // it needs to decide when we're done
     closeRound() {
+        this.registry.set('prevRoundTime', this.timer)
         this.scene.get('InputScene').scene.stop()  // Stop this one because we want to restart it later
         this.scene.sleep(); // We don't destroy the scene because we want to keep tiles data intact
         this.scene.launch('RoundEndScene');

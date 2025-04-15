@@ -71,6 +71,7 @@ export default class RoundEndScene extends Phaser.Scene {
         }
 
         const statsText = this.add.text(360, 300, statsValuesText.join('\n'))
+        statsText.setFontSize(30)
 
         const startButton = new FancyUITextButton(this, width/2, 500, "Next round!", () => {this.nextRound()})
         this.add.existing(startButton)

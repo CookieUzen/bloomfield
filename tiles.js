@@ -121,8 +121,8 @@ export default class Tiles extends Phaser.GameObjects.Container {
             let weight = this.#crop.getWeight();
 
             // Earn less if you monocrop
-            money *= Math.floor(Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))
-            weight *= Math.floor(Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))
+            money = Math.floor(money * Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))
+            weight = Math.floor(weight * Math.max(0.2, 1 - (0.2 * this.#prevCropCount)))
 
             this.scene.registry.inc('money', money);
 

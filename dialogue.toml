@@ -59,8 +59,7 @@ They grow slowly, but are very beneficial for the soil.",
 at the bottom.",
     "You can use some of your fertilizer to add more nutrients,
 or you can plant soybeans!",
-    "Be careful, planting the same plant in the same plot
-multiple times in a row reduces how much the crops can produce.",
+    "Use the soybeans and fertilizer to return nutrients to your soil!"
 ]
 
 [round.2.end]
@@ -76,10 +75,16 @@ character = "mayor"
 speech = [
     "Our next goal is to build a long-term
 food supply chain.",
-    "Try to produce 300 food units.
+    "Try to produce 200 food units.
 And keep all soil fertility above 50%.",
     "This will help us maintain consistent
-yields for the village."
+yields for the village.",
+    "Here’s a new crop: potatoes.
+They are sturdy and yield a lot of food.",
+    "They take longer to grow
+and use more nutrients, but are very reliable.",
+    "Potatoes are a global staple,
+especially for energy and resilience."
 ]
 
 [round.3.end]
@@ -87,12 +92,8 @@ character = "mayor"
 speech = [
     "Great job! The village is on its way
 to becoming self-sufficient.",
-    "Here’s a new crop: potatoes.
-They are sturdy and yield 15 food units.",
-    "They take longer to grow (35s)
-and use more nutrients, but are very reliable.",
-    "Potatoes are a global staple,
-especially for energy and resilience."
+    "And be careful, planting the same plant in the same plot
+multiple times in a row reduces how much the crops can produce.",
 ]
 
 
@@ -109,16 +110,17 @@ to prepare for the seasons ahead."
 [round.4.end]
 character = "biologist"
 speech = [
-    "Use fertilizer when fertility drops below 60%.",
-    "Rotate your crops to restore the soil.",
-    "You’ve unlocked wheat—a staple crop.
-It grows slower (50s) but yields 25 units."
+    "Use fertilizer when you need more nutrients quickly,
+but plan ahead so you don't run out",
+    "Rotate your crops to restore the soil."
 ]
 
 
 [round.5.start]
 character = "mayor"
 speech = [
+    "You’ve unlocked wheat—a staple crop.
+It grows slower but yields a lot of food.",
     "Winter is coming, and we need a food reserve.",
     "Let’s build a granary and start storing food.",
     "Lauren, from the food center, will help us."
@@ -128,7 +130,7 @@ speech = [
 character = "biologist"
 speech = [
     "Hi, I’m Lauren. Our goal is to collect
-1,600 food units for winter reserves.",
+as much food as we can for winter reserves.",
     "Focus on large output while keeping
 the soil fertile.",
     "Wheat and potatoes are great options
@@ -141,8 +143,8 @@ character = "biologist"
 speech = [
     "The granary is built.
 Now it’s time to think about nutrition.",
-    "Let me introduce tomatoes!
-They grow fast (10s), yield 5 units, and are vitamin-rich.",
+    "Plants like tomatoes are great for this!
+They are super vitamin-rich.",
     "They help fight malnutrition
 and bring balance to our diets."
 ]

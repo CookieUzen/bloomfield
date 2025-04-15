@@ -74,6 +74,7 @@ gridSizeX = 3
 gridSizeY = 3
 cropsUnlocked = ["corn", "soybean"]
 time = -1
+monocroppingDisabled = true
 fertilizerNum = 9
 
 [round.2.cropGoals]
